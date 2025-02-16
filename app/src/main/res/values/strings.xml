@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">appDelivery</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Alertas</string>
+
+    <string-array name="State">
+        <item>Estado</item>
+        <item>Estado2</item>
+    </string-array>
+
+    <string-array name="entragador">
+        <item>Entragador1</item>
+        <item>Entragador2</item>
+    </string-array>
+
+    <string-array name="DishName">
+        <item>Feijoada</item>
+        <item>Moqueca</item>
+        <item>Pão de queijo</item>
+        <item>Acarajé</item>
+        <item>Baião de dois</item>
+        <item>Escondidinho de carne seca</item>
+        <item>Vatapá</item>
+        <item>Churrasco</item>
+        <item>Galinhada</item>
+        <item>Dobradinha</item>
+    </string-array>
+
+
+</resources>
+
