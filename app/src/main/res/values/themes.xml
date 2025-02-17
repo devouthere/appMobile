@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.AppDelivery" parent="Theme.AppCompat.Light.DarkActionBar" />
+    <style name="Theme.AppDelivery" parent="Base.Theme.AppDelivery" />
 </resources>

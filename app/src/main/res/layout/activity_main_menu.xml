@@ -18,7 +18,8 @@
         android:padding="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_section"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <!-- Texto "Login" -->
 
@@ -33,19 +34,75 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-
         <Button
             android:id="@+id/SignWithEmail"
             android:layout_width="300dp"
-            android:layout_height="65dp"
+            android:layout_height="67dp"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/btn"
-            android:fontFamily="sans-serif-medium"
+            android:drawableLeft="@drawable/emailvector"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp"
             android:text="EMAIL"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColorLink="#EDE8E8">
 
+        </Button>
+
+        <Button
+            android:id="@+id/SignWithTelefone"
+            android:layout_width="300dp"
+            android:layout_height="67dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:autoText="false"
+            android:background="@drawable/btn"
+            android:contextClickable="true"
+            android:drawableLeft="@drawable/telefonevector"
+            android:elegantTextHeight="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:text=" TELEFONE"
+            android:textAlignment="center"
+            android:textColor="@android:color/white">
+
+        </Button>
+
+        <TableRow
+            android:id="@+id/hr"
+            android:layout_width="380dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/top_background"
+            android:gravity="center">
+
+        </TableRow>
+
+        <Button
+            android:id="@+id/SignWithLogin"
+            android:layout_width="300dp"
+            android:layout_height="67dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:autoText="false"
+            android:background="@drawable/buttonshp"
+            android:contextClickable="true"
+            android:drawableLeft="@drawable/loginvector"
+            android:elegantTextHeight="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:text=" LOGAR"
+            android:textAlignment="center"
+            android:textColor="@android:color/white">
+
+
+        </Button>
 
     </LinearLayout>
 
@@ -58,6 +115,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.30"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -66,8 +124,6 @@
             android:layout_width="300dp"
             android:layout_height="200dp"
             app:srcCompat="@drawable/logo" />
-
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
