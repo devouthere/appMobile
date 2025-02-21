@@ -120,7 +120,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/logo"
+            android:id="@+id/back2"
             android:layout_width="300dp"
             android:layout_height="200dp"
             app:srcCompat="@drawable/logo" />
