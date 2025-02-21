@@ -13,5 +13,22 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
+    <style name="CustomButton" parent="Widget.MaterialComponents.Button">
+        <!-- Fundo branco -->
+        <item name="android:backgroundTint">@android:color/white</item>
+
+        <!-- Bordas arredondadas -->
+        <item name="cornerRadius">16dp</item>
+
+        <!-- Sombra -->
+        <item name="android:elevation">4dp</item>
+
+        <!-- Tamanho do texto e cor -->
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+
+        <!-- Cor de destaque ao clicar (ripple) -->
+        <item name="android:stateListAnimator">@android:animator/state_list_animator</item>
+    </style>
 
 </resources>
