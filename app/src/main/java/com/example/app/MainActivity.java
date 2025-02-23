@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.theme.overlay.MaterialThemeOverlay;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
