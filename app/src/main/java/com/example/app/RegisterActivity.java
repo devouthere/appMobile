@@ -60,8 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Criar um objeto User com os dados preenchidos
-                User user = new User(nome, email, senha, isBarbeiro ? endereco : null);
+                // Determinar o tipo de usuário (barbeiro ou cliente)
+                String tipoUsuario = isBarbeiro ? "barbeiro" : "cliente";
+
+                // Criar um objeto User com os dados preenchidos e o tipo de usuário
+                User user = new User(nome, email, senha, isBarbeiro ? endereco : null, tipoUsuario);
 
                 // Salvar o usuário no Firestore
                 db.collection("usuarios") // Nome da coleção
@@ -76,5 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

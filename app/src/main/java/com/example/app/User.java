@@ -4,16 +4,16 @@ public class User {
     private String nome;
     private String email;
     private String senha;
-    private String endereco; // Apenas para barbeiro, pode ser nulo
+    private String endereco;
+    private String tipoUsuario; // "barbeiro" ou "cliente"
 
-    // Construtor vazio (necessário para o Firebase)
-    public User() {}
-
-    public User(String nome, String email, String senha, String endereco) {
+    // Construtores
+    public User(String nome, String email, String senha, String endereco, String tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.endereco = endereco;
+        this.tipoUsuario = tipoUsuario;
     }
 
     // Getters e Setters
@@ -47,5 +47,13 @@ public class User {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 }
