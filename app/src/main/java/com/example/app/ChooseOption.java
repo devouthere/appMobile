@@ -13,11 +13,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class ChooseOption extends AppCompatActivity {
 
+    private boolean isPhoneLogin; // Variável para armazenar o tipo de login
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_choose);
+
+        // Recebe a informação do tipo de login
+        isPhoneLogin = getIntent().getBooleanExtra("isPhoneLogin", false);
 
         // Configuração do padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -28,15 +33,13 @@ public class ChooseOption extends AppCompatActivity {
 
         // Referências para os botões
         Button btnBarbeiro = findViewById(R.id.btnBarbeiro);
-        Button btnCliente = findViewById(R.id.btnCliente);  // Novo botão para cliente
+        Button btnCliente = findViewById(R.id.btnCliente);
 
         // Ação de clique para abrir a tela de Registro como Barbeiro
         btnBarbeiro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseOption.this, RegisterActivity.class);
-                intent.putExtra("isBarbeiro", true); // Passa a informação de que é barbeiro
-                startActivity(intent);
+                abrirTelaRegistro(true);
             }
         });
 
@@ -44,10 +47,16 @@ public class ChooseOption extends AppCompatActivity {
         btnCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChooseOption.this, RegisterActivity.class);
-                intent.putExtra("isBarbeiro", false); // Passa a informação de que é cliente
-                startActivity(intent);
+                abrirTelaRegistro(false);
             }
         });
+    }
+
+    // Método para abrir a tela de registro e passar os parâmetros necessários
+    private void abrirTelaRegistro(boolean isBarbeiro) {
+        Intent intent = new Intent(ChooseOption.this, RegisterActivity.class);
+        intent.putExtra("isBarbeiro", isBarbeiro);
+        intent.putExtra("isPhoneLogin", isPhoneLogin); // Passa se o login é via telefone ou não
+        startActivity(intent);
     }
 }
