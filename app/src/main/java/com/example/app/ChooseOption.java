@@ -54,9 +54,18 @@ public class ChooseOption extends AppCompatActivity {
 
     // Método para abrir a tela de registro e passar os parâmetros necessários
     private void abrirTelaRegistro(boolean isBarbeiro) {
-        Intent intent = new Intent(ChooseOption.this, RegisterActivity.class);
+        Intent intent;
+
+        if (isPhoneLogin) {
+            // Se for login por telefone, abre a tela de registro de telefone
+            intent = new Intent(ChooseOption.this, RegisterPhoneActivity.class);
+        } else {
+            // Se for login por e-mail, abre a tela de registro normal
+            intent = new Intent(ChooseOption.this, RegisterActivity.class);
+        }
+
         intent.putExtra("isBarbeiro", isBarbeiro);
-        intent.putExtra("isPhoneLogin", isPhoneLogin); // Passa se o login é via telefone ou não
+        intent.putExtra("isPhoneLogin", isPhoneLogin);
         startActivity(intent);
     }
 }
