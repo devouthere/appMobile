@@ -58,7 +58,7 @@ public class ChooseOption extends AppCompatActivity {
 
         if (isPhoneLogin) {
             // Se for login por telefone, abre a tela de registro de telefone
-            intent = new Intent(ChooseOption.this, RegisterPhoneActivity.class);
+            intent = new Intent(ChooseOption.this, SendCodeActivity.class);
         } else {
             // Se for login por e-mail, abre a tela de registro normal
             intent = new Intent(ChooseOption.this, RegisterActivity.class);

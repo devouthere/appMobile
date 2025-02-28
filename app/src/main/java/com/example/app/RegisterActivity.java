@@ -1,5 +1,6 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -77,7 +78,12 @@ public class RegisterActivity extends AppCompatActivity {
                                         .add(user) // Adiciona o usuário
                                         .addOnSuccessListener(documentReference -> {
                                             Toast.makeText(RegisterActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
-                                            finish(); // Fecha a atividade após sucesso
+
+                                            // Redirecionar para a tela principal (MainMenu)
+                                            Intent intent = new Intent(RegisterActivity.this, MainMenu.class);
+                                            startActivity(intent); // Inicia a MainMenuActivity
+
+                                            finish(); // Fecha a RegisterActivity
                                         })
                                         .addOnFailureListener(e -> {
                                             Toast.makeText(RegisterActivity.this, "Erro ao registrar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();

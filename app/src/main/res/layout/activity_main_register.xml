@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".RegisterActivity">
 
     <LinearLayout
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Tela de Registro"
             android:textSize="24sp"
+            android:textColor="#000000"
             android:textStyle="bold"
             android:layout_marginBottom="24dp"/>
 
@@ -26,34 +28,56 @@
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome"/>
+            android:hint="Nome"
+            android:background="@drawable/rounded_input"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp"/>
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"/>
+            android:hint="E-mail"
+            android:background="@drawable/rounded_input"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp"/>
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Senha"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:background="@drawable/rounded_input"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="12dp"/>
 
-        <!-- Campo de Endereço visível apenas se o usuário for barbeiro -->
         <EditText
             android:id="@+id/edtEndereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Endereço (somente barbeiro)"
-            android:visibility="gone"/>
+            android:background="@drawable/rounded_input"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"/>
 
         <Button
             android:id="@+id/btnRegistrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registrar"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
             android:layout_marginTop="16dp"/>
 
     </LinearLayout>
