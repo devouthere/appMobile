@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Login bem-sucedido
                         Toast.makeText(LoginActivity.this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
                         // Redirecionar para a tela principal após login
-                        Intent intent = new Intent(LoginActivity.this, MainMenu.class);
+                        Intent intent = new Intent(LoginActivity.this, BarberDashboardActivity.class);
                         startActivity(intent);
                         finish();
                     } else {

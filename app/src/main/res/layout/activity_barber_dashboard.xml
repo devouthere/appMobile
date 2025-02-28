@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".BarberDashboardActivity">
+
+    <!-- Nome do Barbeiro -->
+    <TextView
+        android:id="@+id/tvUserId"
+        android:textAlignment="inherit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtNome"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <!-- Endereço do Barbeiro -->
+    <TextView
+        android:id="@+id/txtEndereco"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+
+    <!-- Botão Criar Loja -->
+    <Button
+        android:id="@+id/btnCriarLoja"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Criar Loja"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:background="@drawable/button_style"
+        android:padding="10dp"/>
+</LinearLayout>

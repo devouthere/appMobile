@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -69,25 +70,34 @@ public class RegisterActivity extends AppCompatActivity {
                         .addOnCompleteListener(RegisterActivity.this, task -> {
                             if (task.isSuccessful()) {
                                 // Usuário criado com sucesso no Firebase Authentication
-                                // Agora, criar um objeto User para salvar no Firestore
-                                String tipoUsuario = isBarbeiro ? "barbeiro" : "cliente";
-                                User user = new User(nome, email, senha, isBarbeiro ? endereco : null, tipoUsuario);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                if (user != null) {
+                                    // UID do Firebase Authentication
+                                    String uid = user.getUid();
 
-                                // Salvar o usuário no Firestore
-                                db.collection("usuarios") // Nome da coleção
-                                        .add(user) // Adiciona o usuário
-                                        .addOnSuccessListener(documentReference -> {
-                                            Toast.makeText(RegisterActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
+                                    // Definir o tipo de usuário
+                                    String tipoUsuario = isBarbeiro ? "barbeiro" : "cliente";
 
-                                            // Redirecionar para a tela principal (MainMenu)
-                                            Intent intent = new Intent(RegisterActivity.this, MainMenu.class);
-                                            startActivity(intent); // Inicia a MainMenuActivity
+                                    // Criar um objeto User com os dados
+                                    User userObject = new User(nome, email, senha, isBarbeiro ? endereco : null, tipoUsuario);
 
-                                            finish(); // Fecha a RegisterActivity
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(RegisterActivity.this, "Erro ao registrar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        });
+                                    // Salvar o usuário no Firestore usando o UID do Firebase Authentication como o ID do documento
+                                    db.collection("usuarios") // Nome da coleção
+                                            .document(uid) // Usando o UID como ID do documento
+                                            .set(userObject) // Adiciona o usuário
+                                            .addOnSuccessListener(aVoid -> {
+                                                Toast.makeText(RegisterActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                                                // Redirecionar para a tela principal (MainMenu)
+                                                Intent intent = new Intent(RegisterActivity.this, BarberDashboardActivity.class);
+                                                startActivity(intent); // Inicia a MainMenuActivity
+
+                                                finish(); // Fecha a RegisterActivity
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Toast.makeText(RegisterActivity.this, "Erro ao registrar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            });
+                                }
                             } else {
                                 // Caso haja erro ao criar o usuário no Firebase Authentication
                                 Toast.makeText(RegisterActivity.this, "Erro ao registrar usuário: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
