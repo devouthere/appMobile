@@ -1,7 +1,9 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ public class BarberDashboardActivity extends AppCompatActivity {
     private TextView txtNome, txtEndereco, tvUserId;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private Button btnCriarLoja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,19 @@ public class BarberDashboardActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        btnCriarLoja = findViewById(R.id.btnCriarLoja);
+
+        btnCriarLoja.setOnClickListener(v -> {
+            // Criando uma Intent para navegar para a Activity CreateStore
+            Intent intent = new Intent(BarberDashboardActivity.this, CreateStoreActivity.class);
+            startActivity(intent);  // Iniciando a Activity
+        });
+
         // Buscar UID e exibir na tela
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
-            tvUserId.setText("UID Usuário: " + uid);
+            tvUserId.setText("ID: " + uid);
             Log.d("FirebaseAuth", "UID do usuário: " + uid);
             carregarDadosBarbeiro(uid);
         } else {

@@ -16,13 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="18dp"
-
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txtNome"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="18dp"

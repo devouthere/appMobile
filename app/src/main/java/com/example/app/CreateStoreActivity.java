@@ -1,54 +1,38 @@
 package com.example.app;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateStoreActivity extends AppCompatActivity {
 
-    private EditText edtEndereco;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
     private CheckBox chkCorte, chkBarba, chkSobrancelha;
     private CheckBox chkDia1, chkDia2, chkDia3, chkDia4, chkDia5, chkDia6, chkDia7;
-    private Button btnSalvar;
-
-    private DatabaseReference storeRef;
-    private String barberUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_store);
 
-        // Inicializa Firebase
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            Toast.makeText(this, "Erro: Usuário não autenticado!", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        // Inicializando Firebase
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        barberUid = user.getUid();
-        storeRef = FirebaseDatabase.getInstance().getReference("lojas").child(barberUid);
-
-        // Referências dos componentes
-        edtEndereco = findViewById(R.id.edtEndereco);
+        // Referências para os Checkboxes
         chkCorte = findViewById(R.id.chkCorte);
         chkBarba = findViewById(R.id.chkBarba);
         chkSobrancelha = findViewById(R.id.chkSobrancelha);
-
         chkDia1 = findViewById(R.id.chkDia1);
         chkDia2 = findViewById(R.id.chkDia2);
         chkDia3 = findViewById(R.id.chkDia3);
@@ -57,49 +41,47 @@ public class CreateStoreActivity extends AppCompatActivity {
         chkDia6 = findViewById(R.id.chkDia6);
         chkDia7 = findViewById(R.id.chkDia7);
 
-        btnSalvar = findViewById(R.id.btnSalvar);
-
-        // Ação do botão de salvar
-        btnSalvar.setOnClickListener(v -> salvarLoja());
+        // Botão de salvar
+        findViewById(R.id.btnSalvar).setOnClickListener(v -> salvarRespostas());
     }
 
-    private void salvarLoja() {
-        String endereco = edtEndereco.getText().toString().trim();
-        if (endereco.isEmpty()) {
-            Toast.makeText(this, "Digite um endereço!", Toast.LENGTH_SHORT).show();
+    private void salvarRespostas() {
+        // Coletando os serviços escolhidos
+        List<String> servicosEscolhidos = new ArrayList<>();
+        if (chkCorte.isChecked()) servicosEscolhidos.add("Corte de Cabelo");
+        if (chkBarba.isChecked()) servicosEscolhidos.add("Barba");
+        if (chkSobrancelha.isChecked()) servicosEscolhidos.add("Sobrancelha");
+
+        // Coletando os dias disponíveis
+        List<String> diasDisponiveis = new ArrayList<>();
+        if (chkDia1.isChecked()) diasDisponiveis.add("Segunda-feira");
+        if (chkDia2.isChecked()) diasDisponiveis.add("Terça-feira");
+        if (chkDia3.isChecked()) diasDisponiveis.add("Quarta-feira");
+        if (chkDia4.isChecked()) diasDisponiveis.add("Quinta-feira");
+        if (chkDia5.isChecked()) diasDisponiveis.add("Sexta-feira");
+        if (chkDia6.isChecked()) diasDisponiveis.add("Sábado");
+        if (chkDia7.isChecked()) diasDisponiveis.add("Domingo");
+
+        // Verificando se o usuário está logado
+        String userId = mAuth.getCurrentUser().getUid();
+
+        // Criando uma instância de BarbeiroResposta
+        if (servicosEscolhidos.isEmpty() || diasDisponiveis.isEmpty()) {
+            Toast.makeText(this, "Por favor, selecione ao menos um serviço e um dia.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Coletando serviços escolhidos
-        Map<String, Boolean> servicos = new HashMap<>();
-        servicos.put("Corte de Cabelo", chkCorte.isChecked());
-        servicos.put("Barba", chkBarba.isChecked());
-        servicos.put("Sobrancelha", chkSobrancelha.isChecked());
+        BarbeiroResposta respostas = new BarbeiroResposta(servicosEscolhidos, diasDisponiveis);
 
-        // Coletando dias de trabalho escolhidos
-        Map<String, Boolean> diasTrabalho = new HashMap<>();
-        diasTrabalho.put("01", chkDia1.isChecked());
-        diasTrabalho.put("02", chkDia2.isChecked());
-        diasTrabalho.put("03", chkDia3.isChecked());
-        diasTrabalho.put("04", chkDia4.isChecked());
-        diasTrabalho.put("05", chkDia5.isChecked());
-        diasTrabalho.put("06", chkDia6.isChecked());
-        diasTrabalho.put("07", chkDia7.isChecked());
-
-        // Criando o objeto Loja
-        Map<String, Object> lojaData = new HashMap<>();
-        lojaData.put("endereco", endereco);
-        lojaData.put("servicos", servicos);
-        lojaData.put("diasTrabalho", diasTrabalho);
-
-        // Salvando no Firebase
-        storeRef.setValue(lojaData).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(CreateStoreActivity.this, "Loja salva com sucesso!", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(CreateStoreActivity.this, "Erro ao salvar!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Salvando no Firestore
+        db.collection("barbeiros_respostas")
+                .document(userId)
+                .set(respostas)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Respostas salvas com sucesso!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao salvar as respostas: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }

@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         android:foregroundGravity="center"
         android:padding="50dp">
 
@@ -16,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_gravity="center"
+            android:gravity="start"> <!-- Alterado para 'start' -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,9 +28,26 @@
                 android:textStyle="bold"
                 android:paddingTop="10dp"/>
 
-            <CheckBox android:id="@+id/chkCorte" android:text="Corte de Cabelo" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkBarba" android:text="Barba" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkSobrancelha" android:text="Sobrancelha" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chkCorte"
+                android:text="Corte de Cabelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkBarba"
+                android:text="Barba"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkSobrancelha"
+                android:text="Sobrancelha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,13 +57,54 @@
                 android:textStyle="bold"
                 android:paddingTop="10dp"/>
 
-            <CheckBox android:id="@+id/chkDia1" android:text="Segunda-feira" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia2" android:text="Terça-feira" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia3" android:text="Quarta-feira" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia4" android:text="Quinta-feira" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia5" android:text="Sexta-feira" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia6" android:text="Sábado" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <CheckBox android:id="@+id/chkDia7" android:text="Domingo" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chkDia1"
+                android:text="Segunda-feira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia2"
+                android:text="Terça-feira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia3"
+                android:text="Quarta-feira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia4"
+                android:text="Quinta-feira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia5"
+                android:text="Sexta-feira"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia6"
+                android:text="Sábado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+
+            <CheckBox
+                android:id="@+id/chkDia7"
+                android:text="Domingo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
 
             <Button
                 android:id="@+id/btnSalvar"
