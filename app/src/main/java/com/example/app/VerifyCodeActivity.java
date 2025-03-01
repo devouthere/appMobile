@@ -51,7 +51,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(VerifyCodeActivity.this, "Verificação bem-sucedida!", Toast.LENGTH_SHORT).show();
                         // Navegue para a próxima atividade, por exemplo, Tela principal
-                        startActivity(new Intent(VerifyCodeActivity.this, MainActivity.class));
+                        startActivity(new Intent(VerifyCodeActivity.this, BarberDashboardActivity.class));
                         finish();
                     } else {
                         Toast.makeText(VerifyCodeActivity.this, "Falha na verificação: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

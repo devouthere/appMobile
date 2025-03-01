@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 Toast.makeText(RegisterActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
 
                                                 // Redirecionar para a tela principal (MainMenu)
-                                                Intent intent = new Intent(RegisterActivity.this, BarberDashboardActivity.class);
+                                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                                 startActivity(intent); // Inicia a MainMenuActivity
 
                                                 finish(); // Fecha a RegisterActivity
