@@ -7,7 +7,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,6 +24,8 @@ public class BarberDashboardActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private Button btnCriarLoja;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +43,38 @@ public class BarberDashboardActivity extends AppCompatActivity {
 
         btnCriarLoja = findViewById(R.id.btnCriarLoja);
 
+        // Configuração da Toolbar e do menu hambúrguer
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        // Adiciona o botão de abrir menu no Toolbar
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Clique nos itens do menu
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_profile) {
+                Toast.makeText(this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_logout) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(BarberDashboardActivity.this, MainMenu.class));
+                finish();
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
+        // Navegar para a tela de criar loja
         btnCriarLoja.setOnClickListener(v -> {
-            // Criando uma Intent para navegar para a Activity CreateStore
             Intent intent = new Intent(BarberDashboardActivity.this, CreateStoreActivity.class);
-            startActivity(intent);  // Iniciando a Activity
+            startActivity(intent);
         });
 
         // Buscar UID e exibir na tela

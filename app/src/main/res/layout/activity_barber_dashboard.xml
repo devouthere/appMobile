@@ -1,54 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp"
     tools:context=".BarberDashboardActivity">
 
-    <!-- Nome do Barbeiro -->
-    <TextView
-        android:id="@+id/tvUserId"
-        android:textAlignment="inherit"
+    <!-- Layout Principal -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/txtNome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        <!-- Botão do Menu Hamburguer -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Dashboard"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:navigationIcon="@drawable/ic_menu"/>
 
-    <!-- Endereço do Barbeiro -->
-    <TextView
-        android:id="@+id/txtEndereco"
+        <!-- Nome do Barbeiro -->
+        <TextView
+            android:id="@+id/tvUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:layout_marginBottom="20dp"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        <TextView
+            android:id="@+id/txtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <!-- Endereço do Barbeiro -->
+        <TextView
+            android:id="@+id/txtEndereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Botão Criar Loja -->
+        <Button
+            android:id="@+id/btnCriarLoja"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Criar Loja"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:background="@drawable/button_style"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+    <!-- Menu Lateral (Navigation Drawer) -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_drawer"
         />
 
-    <!-- Botão Criar Loja -->
-    <Button
-        android:id="@+id/btnCriarLoja"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Criar Loja"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:background="@drawable/button_style"
-        android:padding="10dp"/>
-</LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,32 +1,22 @@
 <resources>
-    <string name="app_name">appDelivery</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Alertas</string>
+    <string name="navigation_drawer_open">Abrir Menu</string>
+    <string name="navigation_drawer_close">Fechar Menu</string>
+    <string name="title_activity_test">test</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
-    <string-array name="State">
-        <item>Estado</item>
-        <item>Estado2</item>
-    </string-array>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
-    <string-array name="entragador">
-        <item>Entragador1</item>
-        <item>Entragador2</item>
-    </string-array>
 
-    <string-array name="DishName">
-        <item>Feijoada</item>
-        <item>Moqueca</item>
-        <item>Pão de queijo</item>
-        <item>Acarajé</item>
-        <item>Baião de dois</item>
-        <item>Escondidinho de carne seca</item>
-        <item>Vatapá</item>
-        <item>Churrasco</item>
-        <item>Galinhada</item>
-        <item>Dobradinha</item>
-    </string-array>
-
+        <string name="openDrawer">Abrir Menu</string>
+        <string name="closeDrawer">Fechar Menu</string>
 
 </resources>
+
+
+
 
