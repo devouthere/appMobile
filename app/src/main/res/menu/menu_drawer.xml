@@ -5,7 +5,7 @@
         android:title="Inicio"/>
     <item
         android:id="@+id/nav_profile"
-        android:title="Perfil"/>
+        android:title="Clientes"/>
     <item
         android:id="@+id/nav_logout"
         android:title="Sair"

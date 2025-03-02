@@ -3,11 +3,13 @@ package com.example.app;
 import java.util.List;
 
 public class BarbeiroResposta {
-
     private List<String> servicos;
     private List<String> diasDisponiveis;
 
-    // Construtor
+    // Construtor vazio necessário para o Firestore
+    public BarbeiroResposta() {
+    }
+
     public BarbeiroResposta(List<String> servicos, List<String> diasDisponiveis) {
         this.servicos = servicos;
         this.diasDisponiveis = diasDisponiveis;

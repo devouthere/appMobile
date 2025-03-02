@@ -4,114 +4,204 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".CreateStoreActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:foregroundGravity="center"
-        android:padding="50dp">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_max="480dp"
+        app:layout_constraintVertical_bias="0.5">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:gravity="start"> <!-- Alterado para 'start' -->
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Selecione os serviços disponíveis:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingTop="10dp"/>
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <CheckBox
-                android:id="@+id/chkCorte"
-                android:text="Corte de Cabelo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Configuração da Barbearia"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp"/>
 
-            <CheckBox
-                android:id="@+id/chkBarba"
-                android:text="Barba"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Serviços disponíveis"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
 
-            <CheckBox
-                android:id="@+id/chkSobrancelha"
-                android:text="Sobrancelha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dias disponíveis para agendamentos:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingTop="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-            <CheckBox
-                android:id="@+id/chkDia1"
-                android:text="Segunda-feira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                        <CheckBox
+                            android:id="@+id/chkCorte"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Corte de Cabelo"
+                            android:textSize="16sp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:layout_marginBottom="8dp"/>
 
-            <CheckBox
-                android:id="@+id/chkDia2"
-                android:text="Terça-feira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                        <CheckBox
+                            android:id="@+id/chkBarba"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Barba"
+                            android:textSize="16sp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:layout_marginBottom="8dp"/>
 
-            <CheckBox
-                android:id="@+id/chkDia3"
-                android:text="Quarta-feira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                        <CheckBox
+                            android:id="@+id/chkSobrancelha"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Sobrancelha"
+                            android:textSize="16sp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            <CheckBox
-                android:id="@+id/chkDia4"
-                android:text="Quinta-feira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dias disponíveis para agendamentos"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"/>
 
-            <CheckBox
-                android:id="@+id/chkDia5"
-                android:text="Sexta-feira"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="24dp">
 
-            <CheckBox
-                android:id="@+id/chkDia6"
-                android:text="Sábado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-            <CheckBox
-                android:id="@+id/chkDia7"
-                android:text="Domingo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"/> <!-- Alinhado à esquerda -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnSalvar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Salvar Loja"
-                android:layout_marginTop="20dp"/>
-        </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/chkDia1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Segunda"
+                                android:textSize="15sp"/>
+
+                            <CheckBox
+                                android:id="@+id/chkDia2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Terça"
+                                android:textSize="15sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/chkDia3"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Quarta"
+                                android:textSize="15sp"/>
+
+                            <CheckBox
+                                android:id="@+id/chkDia4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Quinta"
+                                android:textSize="15sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/chkDia5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sexta"
+                                android:textSize="15sp"/>
+
+                            <CheckBox
+                                android:id="@+id/chkDia6"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sábado"
+                                android:textSize="15sp"/>
+                        </LinearLayout>
+
+                        <CheckBox
+                            android:id="@+id/chkDia7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Domingo"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSalvar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Salvar"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    app:cornerRadius="8dp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

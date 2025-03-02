@@ -5,117 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Black"
+    android:background="@color/white"
     tools:context=".MainMenu">
-
-    <LinearLayout
-        android:id="@+id/bottom_section"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/backgroundmenu"
-        android:baselineAligned="false"
-        android:orientation="vertical"
-        android:padding="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_section"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
-
-        <!-- Texto "Login" -->
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Login"
-            android:textColor="@color/Black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/SignWithEmail"
-            android:layout_width="300dp"
-            android:layout_height="67dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/btn"
-            android:drawableLeft="@drawable/emailvector"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:text="EMAIL"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textColorLink="#EDE8E8">
-
-        </Button>
-
-        <Button
-            android:id="@+id/SignWithTelefone"
-            android:layout_width="300dp"
-            android:layout_height="67dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:autoText="false"
-            android:background="@drawable/btn"
-            android:contextClickable="true"
-            android:drawableLeft="@drawable/telefonevector"
-            android:elegantTextHeight="false"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:text=" TELEFONE"
-            android:textAlignment="center"
-            android:textColor="@android:color/white">
-
-        </Button>
-
-        <TableRow
-            android:id="@+id/hr"
-            android:layout_width="380dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/top_background"
-            android:gravity="center">
-
-        </TableRow>
-
-        <Button
-            android:id="@+id/SignWithLogin"
-            android:layout_width="300dp"
-            android:layout_height="67dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:autoText="false"
-            android:background="@drawable/buttonshp"
-            android:contextClickable="true"
-            android:drawableLeft="@drawable/loginvector"
-            android:elegantTextHeight="false"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="20dp"
-            android:text=" LOGAR"
-            android:textAlignment="center"
-            android:textColor="@android:color/white">
-
-
-        </Button>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/top_section"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/top_background"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.30"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHeight_percent="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -126,4 +27,98 @@
             app:srcCompat="@drawable/logo" />
     </LinearLayout>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_section">
+
+        <LinearLayout
+            android:id="@+id/bottom_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:text="Login"
+                android:textColor="@color/Black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignWithEmail"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="16dp"
+                android:text="ENTRAR COM EMAIL"
+                android:textAlignment="center"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/emailvector"
+                app:iconGravity="start"
+                app:iconPadding="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignWithTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginBottom="16dp"
+                android:text="ENTRAR COM TELEFONE"
+                android:textAlignment="center"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/telefonevector"
+                app:iconGravity="start"
+                app:iconPadding="12dp" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/SignWithLogin"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:text="JÁ TENHO CONTA"
+                android:textAlignment="center"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/loginvector"
+                app:iconGravity="start"
+                app:iconPadding="12dp" />
+
+            <TextView
+                android:id="@+id/footerText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif-light"
+                android:text="© 2025 BarberApp"
+                android:textColor="#757575"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
