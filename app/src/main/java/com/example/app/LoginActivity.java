@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(new Intent(LoginActivity.this, BarberDashboardActivity.class));
                     } else if ("cliente".equals(tipo)) {
                         // Redireciona para a Dashboard do Cliente
-                        startActivity(new Intent(LoginActivity.this, DashboardClientActivity.class));
+                        startActivity(new Intent(LoginActivity.this, ClientesBarbeiroActivity.class));
                     } else {
                         // Caso o tipo seja inválido
                         Toast.makeText(LoginActivity.this, "Tipo de usuário inválido.", Toast.LENGTH_SHORT).show();

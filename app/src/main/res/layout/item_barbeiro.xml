@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView android:id="@+id/txtNomeBarbeiro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView android:id="@+id/txtEmailBarbeiro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"/>
+
+        <TextView android:id="@+id/txtEnderecoBarbeiro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Endereço"/>
+
+        <TextView android:id="@+id/txtServicos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serviços"/>
+
+        <TextView android:id="@+id/txtDiasDisponiveis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dias Disponíveis"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

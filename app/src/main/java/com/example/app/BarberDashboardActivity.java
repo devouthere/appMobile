@@ -61,7 +61,8 @@ public class BarberDashboardActivity extends AppCompatActivity {
             if (id == R.id.nav_home) {
                 Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_profile) {
-                Toast.makeText(this, "Perfil selecionado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Clientes selecionado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(BarberDashboardActivity.this, ClientesBarbeiroActivity.class));
             } else if (id == R.id.nav_logout) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(BarberDashboardActivity.this, MainMenu.class));

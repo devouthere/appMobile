@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -100,31 +101,45 @@ public class CreateStoreActivity extends AppCompatActivity {
         // Obter o ID do usuário atual
         String userId = currentUser.getUid();
 
-        // Criar um objeto BarbeiroResposta
-        BarbeiroResposta respostas = new BarbeiroResposta(servicosEscolhidos, diasDisponiveis);
+        // Referências para as coleções 'usuarios' e 'barbeiro_respostas'
+        db.collection("usuarios").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Puxar os dados do usuário
+                        String nome = documentSnapshot.getString("nome");
+                        String email = documentSnapshot.getString("email");
+                        String endereco = documentSnapshot.getString("endereco");
+                        // Outros dados do usuário, se necessários
 
-        // Desabilitar o botão para evitar cliques múltiplos
-        btnSalvar.setEnabled(false);
+                        // Criar um objeto para salvar os dados do barbeiro
+                        BarbeiroResposta respostas = new BarbeiroResposta(servicosEscolhidos, diasDisponiveis);
 
-        // Exibir feedback visual de carregamento
-        btnSalvar.setText("Salvando...");
+                        // Criar um mapa com todos os dados para salvar na coleção "barbeiro"
+                        Map<String, Object> barbeiroData = new HashMap<>();
+                        barbeiroData.put("userId", userId);
+                        barbeiroData.put("nome", nome);
+                        barbeiroData.put("email", email);
+                        barbeiroData.put("endereco", endereco);
+                        barbeiroData.put("servicos", servicosEscolhidos);
+                        barbeiroData.put("diasDisponiveis", diasDisponiveis);
 
-        // Salvando no Firestore
-        db.collection("barbeiros_respostas")
-                .document(userId)
-                .set(respostas)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(CreateStoreActivity.this, "Configurações salvas com sucesso!", Toast.LENGTH_SHORT).show();
-                    // Opcionalmente, fechar a activity após o sucesso
-                    // finish();
+                        // Salvando no Firestore na coleção "barbeiro"
+                        db.collection("barbeiro").document(userId)
+                                .set(barbeiroData)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(CreateStoreActivity.this, "Configurações e dados salvos com sucesso!", Toast.LENGTH_SHORT).show();
+                                    // Opcionalmente, fechar a activity após o sucesso
+                                    // finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(CreateStoreActivity.this, "Erro ao salvar as configurações: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
+                    } else {
+                        Toast.makeText(CreateStoreActivity.this, "Dados do usuário não encontrados.", Toast.LENGTH_LONG).show();
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(CreateStoreActivity.this, "Erro ao salvar as configurações: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                })
-                .addOnCompleteListener(task -> {
-                    // Reabilitar o botão e restaurar o texto original
-                    btnSalvar.setEnabled(true);
-                    btnSalvar.setText("Salvar");
+                    Toast.makeText(CreateStoreActivity.this, "Erro ao recuperar dados do usuário: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 }

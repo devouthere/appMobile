@@ -12,8 +12,8 @@
     <string name="menu_slideshow">Slideshow</string>
 
 
-        <string name="openDrawer">Abrir Menu</string>
-        <string name="closeDrawer">Fechar Menu</string>
+    <string name="openDrawer">Abrir Menu</string>
+    <string name="closeDrawer">Fechar Menu</string>
 
 </resources>
 
