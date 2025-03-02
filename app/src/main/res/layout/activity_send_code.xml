@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Número de Telefone"
-                android:background="@drawable/rounded_input"
+                android:background="@drawable/thin_border_input"
                 android:padding="12dp"
                 android:textColor="#000000"
                 android:textColorHint="#888888"

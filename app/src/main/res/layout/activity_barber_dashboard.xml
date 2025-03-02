@@ -5,65 +5,118 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".BarberDashboardActivity">
 
     <!-- Layout Principal -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:background="@android:color/white">
 
-        <!-- Botão do Menu Hamburguer -->
+        <!-- Toolbar com Menu Hamburguer -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@android:color/black"
             app:title="Dashboard"
+            android:elevation="4dp"
+            app:titleTextColor="@android:color/white"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:navigationIcon="@drawable/ic_menu"/>
+            app:navigationIcon="@drawable/ic_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- Nome do Barbeiro -->
-        <TextView
-            android:id="@+id/tvUserId"
-            android:layout_width="match_parent"
+        <!-- Conteúdo Principal em Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="18dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginHorizontal="32dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_bias="0.4">
 
-        <TextView
-            android:id="@+id/txtNome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="18dp"
-            android:textSize="24sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <!-- Endereço do Barbeiro -->
-        <TextView
-            android:id="@+id/txtEndereco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="18dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+                <!-- ID do Usuário com Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvUserId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Nome do Barbeiro com Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/txtNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Endereço do Barbeiro com Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Endereço"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/txtEndereco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- Botão Criar Loja -->
         <Button
             android:id="@+id/btnCriarLoja"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Criar Loja"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:background="@drawable/button_style"
-            android:padding="10dp"/>
-    </LinearLayout>
+            android:textAllCaps="false"
+            android:background="@android:color/black"
+            android:padding="12dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Menu Lateral (Navigation Drawer) -->
     <com.google.android.material.navigation.NavigationView
@@ -71,7 +124,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/menu_drawer"
-        />
+        android:background="@android:color/white"
+        app:itemTextColor="@android:color/black"
+        app:itemIconTint="@android:color/black"
+        app:menu="@menu/menu_drawer"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

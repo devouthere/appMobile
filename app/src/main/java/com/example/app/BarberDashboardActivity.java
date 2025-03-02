@@ -81,7 +81,7 @@ public class BarberDashboardActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
-            tvUserId.setText("ID: " + uid);
+            tvUserId.setText(uid);
             Log.d("FirebaseAuth", "UID do usuário: " + uid);
             carregarDadosBarbeiro(uid);
         } else {
@@ -101,8 +101,8 @@ public class BarberDashboardActivity extends AppCompatActivity {
                     String nome = document.getString("nome");
                     String endereco = document.getString("endereco");
 
-                    txtNome.setText("Nome: " + nome);
-                    txtEndereco.setText("Endereço: " + endereco);
+                    txtNome.setText(nome);
+                    txtEndereco.setText(endereco);
 
                     Log.d("Firestore", "Nome: " + nome + ", Endereço: " + endereco);
                 } else {

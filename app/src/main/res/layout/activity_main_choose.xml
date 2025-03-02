@@ -1,53 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:gravity="center"
-    android:padding="30dp"
     tools:context=".ChooseOption">
 
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Selecione uma opção"
+        android:textColor="#333333"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/optionsContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <LinearLayout
+        android:id="@+id/optionsContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".MainActivity">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleText">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Selecione uma opção"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
+        <!-- Card para Barbeiro - Contém o ID original para manter funcionalidade -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/btnBarbeiro"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:backgroundTint="#000000"
-            android:gravity="center"
-            android:text="Sou barbeiro"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:layout_height="130dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
-        <Button
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Ícone de barbeiro"
+                    android:src="@drawable/ic_barber" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sou barbeiro"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Para profissionais que desejam gerenciar agenda, clientes e serviços"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card para Cliente - Contém o ID original para manter funcionalidade -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/btnCliente"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="#000000"
-            android:gravity="center"
-            android:text="Sou Cliente"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:layout_height="130dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Ícone de cliente"
+                    android:src="@drawable/ic_client" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sou Cliente"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Para agendar horários, descobrir barbearias próximas e avaliá-las"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/footerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text="© 2025 BarberApp"
+        android:textColor="#757575"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

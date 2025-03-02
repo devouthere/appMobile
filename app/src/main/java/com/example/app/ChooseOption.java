@@ -3,10 +3,10 @@ package com.example.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -31,9 +31,9 @@ public class ChooseOption extends AppCompatActivity {
             return insets;
         });
 
-        // Referências para os botões
-        Button btnBarbeiro = findViewById(R.id.btnBarbeiro);
-        Button btnCliente = findViewById(R.id.btnCliente);
+        // Referências para os cards (substituindo os botões)
+        CardView btnBarbeiro = findViewById(R.id.btnBarbeiro);
+        CardView btnCliente = findViewById(R.id.btnCliente);
 
         // Ação de clique para abrir a tela de Registro como Barbeiro
         btnBarbeiro.setOnClickListener(new View.OnClickListener() {
