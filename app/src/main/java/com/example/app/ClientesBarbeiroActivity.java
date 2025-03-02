@@ -1,28 +1,69 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import androidx.annotation.NonNull;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app.BarbeiroAdapter;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientesBarbeiroActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private BarbeiroAdapter adapter;
     private List<Barbeiro> listaBarbeiros = new ArrayList<>();
     private FirebaseFirestore db;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes_barbeiro);
 
+        // Configuração da Toolbar e do menu hambúrguer
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        // Adiciona o botão de abrir menu no Toolbar
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Clique nos itens do menu
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ClientesBarbeiroActivity.this, BarberDashboardActivity.class));
+                finish();
+            } else if (id == R.id.nav_profile) {
+                Toast.makeText(this, "Já está na tela de Clientes", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_logout) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ClientesBarbeiroActivity.this, MainMenu.class));
+                finish();
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
+
+        // Configuração do RecyclerView
         recyclerView = findViewById(R.id.recyclerViewBarbeiros);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -34,7 +75,7 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
     }
 
     private void carregarBarbeiros() {
-        db.collection("barbeiro")  // Mudado para a coleção barbeiro
+        db.collection("barbeiro")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
@@ -43,18 +84,16 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
                         String email = doc.getString("email");
                         String endereco = doc.getString("endereco");
 
-                        // Verificando se diasDisponiveis e servicos são nulos e inicializando como listas vazias se necessário
                         List<String> diasDisponiveis = (List<String>) doc.get("diasDisponiveis");
                         if (diasDisponiveis == null) {
-                            diasDisponiveis = new ArrayList<>();  // Inicializa com lista vazia se for nulo
+                            diasDisponiveis = new ArrayList<>();
                         }
 
                         List<String> servicos = (List<String>) doc.get("servicos");
                         if (servicos == null) {
-                            servicos = new ArrayList<>();  // Inicializa com lista vazia se for nulo
+                            servicos = new ArrayList<>();
                         }
 
-                        // Criando o objeto Barbeiro e adicionando à lista
                         Barbeiro barbeiro = new Barbeiro(barbeiroId, nome, email, endereco, diasDisponiveis, servicos);
                         listaBarbeiros.add(barbeiro);
                     }
@@ -62,5 +101,4 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Log.e("Firebase", "Erro ao carregar barbeiros", e));
     }
-
 }
