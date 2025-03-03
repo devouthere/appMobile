@@ -50,7 +50,7 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ClientesBarbeiroActivity.this, BarberDashboardActivity.class));
+                startActivity(new Intent(ClientesBarbeiroActivity.this, DashboardClientActivity.class));
                 finish();
             } else if (id == R.id.nav_profile) {
                 Toast.makeText(this, "Já está na tela de Clientes", Toast.LENGTH_SHORT).show();

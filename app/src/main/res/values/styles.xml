@@ -7,6 +7,15 @@
         <item name="colorPrimary">@color/yourSelectedColor</item>
         <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorAccent">@color/darkgray</item>
+
+    </style>
+
+    <style name="TimePickerMinimalist" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/blueish</item>
+        <item name="colorControlActivated">@color/blueish</item>
+        <item name="android:textColorPrimary">#303030</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="AppThemeNoActionbar" parent="AppTheme">

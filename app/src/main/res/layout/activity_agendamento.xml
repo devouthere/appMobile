@@ -6,93 +6,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AgendamentoActivity"
-    android:padding="16dp">
+    android:padding="24dp"
+    android:background="@android:color/white">
 
-    <!-- Título -->
+    <!-- Título - Estilo modernizado -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agendar Serviço"
-        android:textSize="22sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"
+        android:textColor="#202020"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginBottom="32dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Selecionar Serviço -->
+    <!-- Selecionar Serviço - Texto mais limpo -->
     <TextView
         android:id="@+id/tvServico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escolha um serviço:"
+        android:text="Serviço"
         android:textSize="16sp"
+        android:textColor="#505050"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- Spinner com estilo minimalista -->
     <Spinner
         android:id="@+id/spinnerServicos"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:background="@android:drawable/edit_text"
+        android:popupBackground="@android:color/white"
+        android:elevation="1dp"
         app:layout_constraintTop_toBottomOf="@id/tvServico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Selecionar Dia -->
+    <!-- Selecionar Dia - Texto mais limpo -->
     <TextView
         android:id="@+id/tvDia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escolha um dia:"
+        android:text="Dia"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:textColor="#505050"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/spinnerServicos"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- Spinner com estilo minimalista -->
     <Spinner
         android:id="@+id/spinnerDias"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:background="@android:drawable/edit_text"
+        android:popupBackground="@android:color/white"
+        android:elevation="1dp"
         app:layout_constraintTop_toBottomOf="@id/tvDia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Selecionar Horário -->
+    <!-- Selecionar Horário - Texto mais limpo -->
     <TextView
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escolha um horário:"
+        android:text="Horário"
         android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:textColor="#505050"
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="24dp"
         app:layout_constraintTop_toBottomOf="@id/spinnerDias"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- TimePicker com estilo minimalista -->
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:timePickerMode="spinner"
+        android:theme="@style/TimePickerMinimalist"
+        android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/tvHorario"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Botão de Agendamento -->
+    <!-- Botão de Agendamento - Mais moderno e elegante -->
     <Button
         android:id="@+id/btnConfirmar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Confirmar Agendamento"
-        android:backgroundTint="@color/blueish"
+        android:layout_height="56dp"
+        android:text="Confirmar"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/timePicker"
+        android:textSize="16sp"
+        android:backgroundTint="@color/Black"
+        android:layout_marginTop="32dp"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

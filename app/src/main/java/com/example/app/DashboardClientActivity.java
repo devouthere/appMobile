@@ -2,73 +2,100 @@ package com.example.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardClientActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    private RecyclerView recyclerViewAgendamentos;
+    private AgendamentoAdapter agendamentoAdapter;
     private FirebaseFirestore db;
-    private TextView tvClientName, tvClientEmail;
+    private String clienteId;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_client);
 
-        mAuth = FirebaseAuth.getInstance();
+        // Inicializando os componentes
+        recyclerViewAgendamentos = findViewById(R.id.recyclerViewAgendamentos);
+        recyclerViewAgendamentos.setLayoutManager(new LinearLayoutManager(this));
+
+        // Inicializando Firebase
         db = FirebaseFirestore.getInstance();
+        clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Inicializa os TextViews para mostrar informações do cliente
-        tvClientName = findViewById(R.id.tvClientName);
-        tvClientEmail = findViewById(R.id.tvClientEmail);
+        // Carregar agendamentos
+        carregarAgendamentos();
 
-        // Verifica se o usuário está logado
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            carregarDadosCliente(userId);
-        } else {
-            // Se não houver usuário autenticado, exibe mensagem ou redireciona
-            Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show();
-            // Redireciona para a tela de login
-            startActivity(new Intent(DashboardClientActivity.this, LoginActivity.class));
-            finish();
-        }
+        // Configuração da Toolbar e DrawerLayout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        // Configura o botão do menu hamburguer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Configuração do listener do menu
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
+                // Retornar para a tela de Dashboard
+                startActivity(new Intent(DashboardClientActivity.this, DashboardClientActivity.class));
+                finish();
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(DashboardClientActivity.this, ClientesBarbeiroActivity.class));
+                finish();
+            } else if (id == R.id.nav_logout) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(DashboardClientActivity.this, MainMenu.class));
+                finish();
+            }
+            drawerLayout.closeDrawers();
+            return true;
+        });
     }
 
-    private void carregarDadosCliente(String userId) {
-        DocumentReference docRef = db.collection("usuarios").document(userId);
+    private void carregarAgendamentos() {
+        db.collection("agendamentos")
+                .whereEqualTo("clienteId", clienteId)  // Filtra os agendamentos do cliente logado
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<Agendamento> agendamentos = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Recuperar os dados do agendamento
+                            Agendamento agendamento = document.toObject(Agendamento.class);
+                            agendamentos.add(agendamento);
+                        }
 
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    String nome = document.getString("nome");
-                    String email = document.getString("email");
-
-                    // Exibe os dados do cliente na UI
-                    tvClientName.setText("Nome: " + nome);
-                    tvClientEmail.setText("E-mail: " + email);
-                } else {
-                    Toast.makeText(DashboardClientActivity.this, "Documento não encontrado!", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(DashboardClientActivity.this, "Erro ao carregar dados!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                        // Configura o adapter com os dados
+                        agendamentoAdapter = new AgendamentoAdapter(agendamentos);
+                        recyclerViewAgendamentos.setAdapter(agendamentoAdapter);
+                    } else {
+                        Toast.makeText(DashboardClientActivity.this, "Erro ao carregar agendamentos", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
