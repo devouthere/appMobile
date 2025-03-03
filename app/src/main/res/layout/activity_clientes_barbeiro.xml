@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Dashboard"
+            app:title="Barbeiros Disponíveis"
             android:titleTextColor="@color/white"
             android:elevation="4dp"/>
 

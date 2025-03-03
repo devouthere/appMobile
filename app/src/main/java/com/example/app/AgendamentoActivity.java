@@ -1,14 +1,18 @@
 package com.example.app;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgendamentoActivity extends AppCompatActivity {
 
-    private Spinner spinnerServicos, spinnerDias;
+    private LinearLayout llServicos;
+    private Spinner spinnerDias;
     private TimePicker timePicker;
     private Button btnConfirmar;
     private String barbeiroId, nomeBarbeiro;
@@ -20,7 +24,7 @@ public class AgendamentoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agendamento);
 
         // Inicializando os componentes
-        spinnerServicos = findViewById(R.id.spinnerServicos);
+        llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
         timePicker = findViewById(R.id.timePicker);
         btnConfirmar = findViewById(R.id.btnConfirmar);
@@ -50,8 +54,14 @@ public class AgendamentoActivity extends AppCompatActivity {
             diasDisponiveis = new String[]{"Nenhum dia disponível"};
         }
 
-        // Configurar Spinners com os dados recebidos
-        spinnerServicos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, servicos));
+        // Configurar os Checkboxes dinamicamente para os serviços
+        for (String servico : servicos) {
+            CheckBox checkBox = new CheckBox(this);
+            checkBox.setText(servico);
+            llServicos.addView(checkBox);
+        }
+
+        // Configurar Spinner para dias
         spinnerDias.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, diasDisponiveis));
 
         // Botão para confirmar o agendamento
@@ -59,8 +69,16 @@ public class AgendamentoActivity extends AppCompatActivity {
     }
 
     private void salvarAgendamento() {
-        // Pegar os valores selecionados
-        String servicoSelecionado = spinnerServicos.getSelectedItem().toString();
+        // Pegar os serviços selecionados
+        List<String> servicosSelecionados = new ArrayList<>();
+        for (int i = 0; i < llServicos.getChildCount(); i++) {
+            CheckBox checkBox = (CheckBox) llServicos.getChildAt(i);
+            if (checkBox.isChecked()) {
+                servicosSelecionados.add(checkBox.getText().toString());
+            }
+        }
+
+        // Pegar o dia e o horário
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
         int hora = timePicker.getHour();
         int minuto = timePicker.getMinute();
@@ -69,8 +87,8 @@ public class AgendamentoActivity extends AppCompatActivity {
         // Obter ID do cliente logado
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Criar o objeto Agendamento
-        Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horario, servicoSelecionado, "pendente");
+        // Criar o objeto Agendamento com serviços selecionados
+        Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horario, String.join(", ", servicosSelecionados), "pendente");
 
         // Salvar no Firebase
         db.collection("agendamentos")

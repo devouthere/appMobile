@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:title="Dashboard"
+            app:title="Agendamentos"
             android:titleTextColor="@color/white"
             android:elevation="4dp"
             app:layout_constraintTop_toTopOf="parent"

@@ -36,18 +36,20 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Spinner com estilo minimalista -->
-    <Spinner
-        android:id="@+id/spinnerServicos"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
+    <!-- Checkboxes para serviços -->
+    <LinearLayout
+        android:id="@+id/llServicos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@android:drawable/edit_text"
-        android:popupBackground="@android:color/white"
-        android:elevation="1dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/tvServico"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Exemplo de checkbox - será preenchido dinamicamente -->
+        <!-- Os Checkboxes serão adicionados programaticamente na Activity -->
+    </LinearLayout>
 
     <!-- Selecionar Dia - Texto mais limpo -->
     <TextView
@@ -59,10 +61,10 @@
         android:textColor="#505050"
         android:fontFamily="sans-serif-medium"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/spinnerServicos"
+        app:layout_constraintTop_toBottomOf="@id/llServicos"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Spinner com estilo minimalista -->
+    <!-- Spinner com estilo minimalista para Dias -->
     <Spinner
         android:id="@+id/spinnerDias"
         android:layout_width="0dp"
