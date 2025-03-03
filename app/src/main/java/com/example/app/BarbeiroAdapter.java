@@ -1,28 +1,21 @@
 package com.example.app;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BarbeiroAdapter extends RecyclerView.Adapter<BarbeiroAdapter.BarbeiroViewHolder> {
     private List<Barbeiro> listaBarbeiros;
-    private BarbeiroClickListener clickListener;
 
     public BarbeiroAdapter(List<Barbeiro> listaBarbeiros) {
         this.listaBarbeiros = listaBarbeiros != null ? listaBarbeiros : new ArrayList<>();
-    }
-
-    public interface BarbeiroClickListener {
-        void onBarbeiroClick(Barbeiro barbeiro, int position);
-    }
-
-    public void setClickListener(BarbeiroClickListener clickListener) {
-        this.clickListener = clickListener;
     }
 
     public void updateData(List<Barbeiro> novaLista) {
@@ -41,24 +34,28 @@ public class BarbeiroAdapter extends RecyclerView.Adapter<BarbeiroAdapter.Barbei
     public void onBindViewHolder(@NonNull BarbeiroViewHolder holder, int position) {
         Barbeiro barbeiro = listaBarbeiros.get(position);
 
-        // Verificar valores nulos
-        holder.txtNomeBarbeiro.setText(barbeiro.getNome() != null ? barbeiro.getNome() : "");
-        holder.txtEmailBarbeiro.setText("Email: " + (barbeiro.getEmail() != null ? barbeiro.getEmail() : ""));
-        holder.txtEnderecoBarbeiro.setText("Endereço: " + (barbeiro.getEndereco() != null ? barbeiro.getEndereco() : ""));
+        if (holder.txtNomeBarbeiro != null) {
+            holder.txtNomeBarbeiro.setText(barbeiro.getNome() != null ? barbeiro.getNome() : "");
+        }
 
-        // Verificar se as listas não são nulas antes de usar join
+        if (holder.txtEmailBarbeiro != null) {
+            holder.txtEmailBarbeiro.setText("Email: " + (barbeiro.getEmail() != null ? barbeiro.getEmail() : ""));
+        }
+
+        if (holder.txtEnderecoBarbeiro != null) {
+            holder.txtEnderecoBarbeiro.setText("Endereço: " + (barbeiro.getEndereco() != null ? barbeiro.getEndereco() : ""));
+        }
+
         List<String> servicos = barbeiro.getServicos();
-        if (servicos != null && !servicos.isEmpty()) {
-            holder.txtServicos.setText("Serviços: " + String.join(", ", servicos));
-        } else {
-            holder.txtServicos.setText("Serviços: Nenhum");
+        if (holder.txtServicos != null) {
+            holder.txtServicos.setText(servicos != null && !servicos.isEmpty() ?
+                    "Serviços: " + String.join(", ", servicos) : "Serviços: Nenhum");
         }
 
         List<String> diasDisponiveis = barbeiro.getDiasDisponiveis();
-        if (diasDisponiveis != null && !diasDisponiveis.isEmpty()) {
-            holder.txtDiasDisponiveis.setText("Dias Disponíveis: " + String.join(", ", diasDisponiveis));
-        } else {
-            holder.txtDiasDisponiveis.setText("Dias Disponíveis: Nenhum");
+        if (holder.txtDiasDisponiveis != null) {
+            holder.txtDiasDisponiveis.setText(diasDisponiveis != null && !diasDisponiveis.isEmpty() ?
+                    "Dias Disponíveis: " + String.join(", ", diasDisponiveis) : "Dias Disponíveis: Nenhum");
         }
     }
 
@@ -78,13 +75,14 @@ public class BarbeiroAdapter extends RecyclerView.Adapter<BarbeiroAdapter.Barbei
             txtServicos = itemView.findViewById(R.id.txtServicos);
             txtDiasDisponiveis = itemView.findViewById(R.id.txtDiasDisponiveis);
 
-            // Configurar clique do item
+            // Configurar clique do item para abrir a AgendamentoActivity
             itemView.setOnClickListener(v -> {
-                if (clickListener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        clickListener.onBarbeiroClick(listaBarbeiros.get(position), position);
-                    }
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Barbeiro barbeiroSelecionado = listaBarbeiros.get(position);
+                    Intent intent = new Intent(itemView.getContext(), AgendamentoActivity.class);
+                    intent.putExtra("barbeiro", barbeiroSelecionado); // Passa o objeto barbeiro
+                    itemView.getContext().startActivity(intent);
                 }
             });
         }

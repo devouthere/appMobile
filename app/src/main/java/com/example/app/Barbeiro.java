@@ -1,8 +1,10 @@
 package com.example.app;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Barbeiro {
+public class Barbeiro implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String nome;
     private String email;
