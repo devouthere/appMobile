@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardPerfilBarbeiro"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    app:cardElevation="4dp"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,55 +19,55 @@
 
         <TextView
             android:id="@+id/txtNomeBarbeiro"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:text="Nome Barbeiro"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="48dp"
+        <View
+            android:layout_width="40dp"
             android:layout_height="1dp"
-            android:layout_marginBottom="12dp" />
+            android:background="#3F51B5"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/txtEmailBarbeiro"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:drawableStart="@android:drawable/ic_dialog_email"
-            android:drawablePadding="8dp"
             android:text="Email"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:drawablePadding="8dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            />
 
         <TextView
             android:id="@+id/txtEnderecoBarbeiro"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:drawableStart="@android:drawable/ic_dialog_map"
-            android:drawablePadding="8dp"
             android:text="Endereço"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:drawablePadding="8dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/txtServicos"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:drawableStart="@android:drawable/ic_menu_edit"
-            android:drawablePadding="8dp"
             android:text="Serviços"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:drawablePadding="8dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/txtDiasDisponiveis"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@android:drawable/ic_menu_my_calendar"
-            android:drawablePadding="8dp"
             android:text="Dias Disponíveis"
-            android:textAppearance="?attr/textAppearanceBody2" />
+            android:drawablePadding="8dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+
+</androidx.cardview.widget.CardView>
