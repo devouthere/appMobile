@@ -6,18 +6,17 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.DocumentReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AgendamentoActivity extends AppCompatActivity {
 
-    private LinearLayout llServicos;
+    private LinearLayout llServicos, llHorarios; // Adicionando LinearLayout para os horários
     private Spinner spinnerDias;
-    private TimePicker timePicker;
     private Button btnConfirmar;
-    private String barbeiroId, nomeBarbeiro;
+    private String barbeiroId, nomeBarbeiro, horarioSelecionado;
     private FirebaseFirestore db;
 
     @Override
@@ -28,7 +27,6 @@ public class AgendamentoActivity extends AppCompatActivity {
         // Inicializando os componentes
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
-        timePicker = findViewById(R.id.timePicker);
         btnConfirmar = findViewById(R.id.btnConfirmar);
         db = FirebaseFirestore.getInstance();
 
@@ -66,9 +64,40 @@ public class AgendamentoActivity extends AppCompatActivity {
         // Configurar Spinner para dias
         spinnerDias.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, diasDisponiveis));
 
+        // Criar os botões de horários fixos
+        criarBotoesDeHorario();
+
         // Botão para confirmar o agendamento
         btnConfirmar.setOnClickListener(v -> salvarAgendamento());
     }
+
+    private void criarBotoesDeHorario() {
+        // Criar botões de horários fixos, como 8:00, 8:30, 9:00, etc.
+        String[] horarios = new String[]{"08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
+
+        GridLayout gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
+
+        gridLayoutHorarios.removeAllViews();
+
+        gridLayoutHorarios.setColumnCount(4);
+
+        for (String horario : horarios) {
+            Button btnHorario = new Button(this);
+            btnHorario.setText(horario);
+            btnHorario.setLayoutParams(new GridLayout.LayoutParams());
+
+            // Definir o clique para salvar o horário selecionado
+            btnHorario.setOnClickListener(v -> {
+                horarioSelecionado = horario;
+                Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
+            });
+
+            // Adicionar o botão ao GridLayout
+            gridLayoutHorarios.addView(btnHorario);
+        }
+    }
+
 
     private void salvarAgendamento() {
         // Pegar os serviços selecionados
@@ -80,24 +109,20 @@ public class AgendamentoActivity extends AppCompatActivity {
             }
         }
 
-        // Pegar o dia e o horário
-        String diaSelecionado = spinnerDias.getSelectedItem().toString();
-        int hora = timePicker.getHour();
-        int minuto = timePicker.getMinute();
-
-        // Verificar se o horário está dentro do permitido (6h às 20h)
-        if (hora < 6 || (hora == 20 && minuto > 0) || hora > 20) {
-            Toast.makeText(this, "Horário fora do intervalo permitido (6h - 20h).", Toast.LENGTH_SHORT).show();
+        // Verificar se o horário foi selecionado
+        if (horarioSelecionado == null || horarioSelecionado.isEmpty()) {
+            Toast.makeText(this, "Por favor, selecione um horário.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String horario = String.format("%02d:%02d", hora, minuto);
+        // Pegar o dia selecionado
+        String diaSelecionado = spinnerDias.getSelectedItem().toString();
 
         // Obter ID do cliente logado
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Criar o objeto Agendamento com serviços selecionados
-        Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horario, String.join(", ", servicosSelecionados), "pendente");
+        Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horarioSelecionado, String.join(", ", servicosSelecionados), "pendente");
 
         // Salvar o agendamento no Firebase
         db.collection("agendamentos")

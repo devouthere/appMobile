@@ -52,6 +52,9 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         // Definir título
         setTitle("Alterar Agendamento");
 
+        // Logo após this.timePicker = findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
+
         // Receber os dados passados pelo Intent
         if (getIntent().hasExtra("id")) {
             agendamentoId = getIntent().getStringExtra("id");

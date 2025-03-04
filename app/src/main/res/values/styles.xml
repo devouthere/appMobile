@@ -18,9 +18,13 @@
         <item name="colorControlActivated">#212121</item>
     </style>
 
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/design_default_color_primary</item>
+        <item name="android:textColorPrimary">@color/design_default_color_primary</item>
+    </style>
 
     <style name="TimePickerMinimalist" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/blueish</item>
+        <item name="colorControlNormal">@color/Black</item>
         <item name="colorControlActivated">@color/blueish</item>
         <item name="android:textColorPrimary">#303030</item>
         <item name="android:textSize">16sp</item>
