@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
 
@@ -72,31 +73,68 @@ public class AgendamentoActivity extends AppCompatActivity {
     }
 
     private void criarBotoesDeHorario() {
-        // Criar botões de horários fixos, como 8:00, 8:30, 9:00, etc.
+        // Lista de horários fixos
         String[] horarios = new String[]{"08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
 
         GridLayout gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
-
         gridLayoutHorarios.removeAllViews();
+        gridLayoutHorarios.setColumnCount(4); // Define 4 colunas no GridLayout
 
-        gridLayoutHorarios.setColumnCount(4);
+        // Buscar agendamentos do barbeiro
+        db.collection("agendamentos")
+                .whereEqualTo("barbeiroId", barbeiroId)
+                .whereIn("status", List.of("pendente", "confirmado"))  // Apenas status pendente ou confirmado
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    // Lista de horários já reservados
+                    List<String> horariosReservados = new ArrayList<>();
 
-        for (String horario : horarios) {
-            Button btnHorario = new Button(this);
-            btnHorario.setText(horario);
-            btnHorario.setLayoutParams(new GridLayout.LayoutParams());
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        Agendamento agendamento = document.toObject(Agendamento.class);
+                        if (agendamento != null && agendamento.getHorario() != null) {
+                            horariosReservados.add(agendamento.getHorario());
+                        }
+                    }
 
-            // Definir o clique para salvar o horário selecionado
-            btnHorario.setOnClickListener(v -> {
-                horarioSelecionado = horario;
-                Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
-            });
+                    // Criar os botões de horário
+                    for (String horario : horarios) {
+                        Button btnHorario = new Button(this);
+                        btnHorario.setText(horario);
 
-            // Adicionar o botão ao GridLayout
-            gridLayoutHorarios.addView(btnHorario);
-        }
+                        // Definir margens para espaçamento entre os botões
+                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                        params.setMargins(16, 16, 16, 16); // Esquerda, topo, direita, baixo
+                        params.width = 200; // Largura fixa do botão
+                        params.height = 100; // Altura fixa do botão
+                        btnHorario.setLayoutParams(params);
+
+                        // Verificar se o horário está reservado
+                        if (horariosReservados.contains(horario)) {
+                            btnHorario.setEnabled(false);
+                            btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
+                            btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                        } else {
+                            btnHorario.setBackgroundResource(R.drawable.botao_disponivel); // Cor para horário disponível
+                            btnHorario.setTextColor(getResources().getColor(android.R.color.black));
+
+                            // Evento de clique para selecionar o horário
+                            btnHorario.setOnClickListener(v -> {
+                                horarioSelecionado = horario;
+                                Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
+                            });
+                        }
+
+                        // Adicionar botão ao GridLayout
+                        gridLayoutHorarios.addView(btnHorario);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(AgendamentoActivity.this, "Erro ao carregar horários", Toast.LENGTH_SHORT).show();
+                });
     }
+
+
 
 
     private void salvarAgendamento() {
