@@ -42,13 +42,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/background_services_container"
+        android:padding="12dp"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         app:layout_constraintTop_toBottomOf="@id/tvServico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Exemplo de checkbox - será preenchido dinamicamente -->
-        <!-- Os Checkboxes serão adicionados programaticamente na Activity -->
     </LinearLayout>
 
     <!-- Selecionar Dia - Texto mais limpo -->
@@ -64,15 +66,19 @@
         app:layout_constraintTop_toBottomOf="@id/llServicos"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Spinner com estilo minimalista para Dias -->
     <Spinner
         android:id="@+id/spinnerDias"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@android:drawable/edit_text"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/custom_spinner_background"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="48dp"
         android:popupBackground="@android:color/white"
-        android:elevation="1dp"
+        android:elevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/tvDia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -111,11 +117,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-
             >
-
-
-
     </GridLayout>
 
 </ScrollView>

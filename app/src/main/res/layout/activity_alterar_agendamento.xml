@@ -38,7 +38,7 @@
         android:id="@+id/tvServico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Serviços"
+        android:text="Serviço"
         android:textSize="16sp"
         android:textColor="#505050"
         android:fontFamily="sans-serif-medium"
@@ -46,24 +46,26 @@
         app:layout_constraintTop_toBottomOf="@id/tvBarbeiroNome"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Checkboxes para serviços (sem alteração) -->
     <LinearLayout
         android:id="@+id/llServicos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/background_services_container"
+        android:padding="12dp"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         app:layout_constraintTop_toBottomOf="@id/tvServico"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Selecionar Dia -->
     <TextView
         android:id="@+id/tvDia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dia(s) Disponíveis"
+        android:text="Dia"
         android:textSize="16sp"
         android:textColor="#505050"
         android:fontFamily="sans-serif-medium"
@@ -71,16 +73,19 @@
         app:layout_constraintTop_toBottomOf="@id/llServicos"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Spinner com estilo atualizado mas mantendo o tipo Spinner -->
     <Spinner
         android:id="@+id/spinnerDias"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/custom_spinner_background"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        android:spinnerMode="dropdown"
+        android:dropDownVerticalOffset="48dp"
         android:popupBackground="@android:color/white"
-        android:elevation="1dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
+        android:elevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/tvDia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -98,18 +103,31 @@
         app:layout_constraintTop_toBottomOf="@id/spinnerDias"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- TimePicker com estilo minimalista -->
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!-- ScrollView para rolar os horários verticalmente -->
+    <ScrollView
+        android:id="@+id/scrollViewHorarios"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:timePickerMode="spinner"
-        android:theme="@style/TimePickerMinimalist"
-        android:background="@android:color/transparent"
+        android:layout_marginBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/tvHorario"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirmar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- GridLayout para os horários -->
+        <GridLayout
+            android:id="@+id/gridLayoutHorarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            >
+        </GridLayout>
+
+    </ScrollView>
 
     <!-- Botão de Confirmação com estilo Material -->
     <com.google.android.material.button.MaterialButton

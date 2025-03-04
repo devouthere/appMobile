@@ -17,6 +17,7 @@ public class AgendamentoActivity extends AppCompatActivity {
     private LinearLayout llServicos, llHorarios; // Adicionando LinearLayout para os horários
     private Spinner spinnerDias;
     private Button btnConfirmar;
+    private Button btnHorarioSelecionado;
     private String barbeiroId, nomeBarbeiro, horarioSelecionado;
     private FirebaseFirestore db;
 
@@ -120,7 +121,21 @@ public class AgendamentoActivity extends AppCompatActivity {
 
                             // Evento de clique para selecionar o horário
                             btnHorario.setOnClickListener(v -> {
+                                // Restaurar a cor do botão anteriormente selecionado (se existir)
+                                if (btnHorarioSelecionado != null) {
+                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_disponivel); // Volta ao padrão
+                                    btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
+                                }
+
+                                // Atualizar o botão selecionado
+                                btnHorarioSelecionado = btnHorario;
                                 horarioSelecionado = horario;
+
+                                // Mudar a cor do botão selecionado para branco
+                                btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_disponivel);
+                                btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.white));
+
+                                // Mensagem de confirmação
                                 Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
                             });
                         }
