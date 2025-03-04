@@ -1,5 +1,8 @@
 package com.example.app;
 
+import com.google.firebase.firestore.ServerTimestamp;
+import java.util.Date;
+
 public class Agendamento {
     private String id;
     private String barbeiroId;
@@ -9,6 +12,8 @@ public class Agendamento {
     private String horario;
     private String servico;
     private String status;
+    @ServerTimestamp
+    private Date dataCriacao;  // Data de criação do agendamento
 
     // Construtor vazio necessário para Firebase
     public Agendamento() {
@@ -49,4 +54,7 @@ public class Agendamento {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public Date getDataCriacao() { return dataCriacao; }
+    public void setDataCriacao(Date dataCriacao) { this.dataCriacao = dataCriacao; }
 }

@@ -21,6 +21,9 @@
         android:theme="@style/Theme.AppDelivery"
         tools:targetApi="31">
         <activity
+            android:name=".AlterarAgendamentoActivity"
+            android:exported="false" />
+        <activity
             android:name=".AgendamentoActivity"
             android:exported="false" />
         <activity

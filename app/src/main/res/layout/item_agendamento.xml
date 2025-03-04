@@ -48,6 +48,42 @@
             android:layout_marginTop="8dp"
             android:textColor="@android:color/holo_green_dark"/>
 
+        <!-- Adicionado: Campo para exibir a data de criação -->
+        <TextView
+            android:id="@+id/txtDataCriacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Criado em: "
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Adicionado: Botões para cancelar e alterar -->
+        <LinearLayout
+            android:id="@+id/layoutBotoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btnCancelar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancelar"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="@android:color/holo_red_light"/>
+
+            <Button
+                android:id="@+id/btnAlterar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Alterar"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@android:color/holo_blue_light"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

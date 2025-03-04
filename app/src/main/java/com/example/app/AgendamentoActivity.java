@@ -6,6 +6,8 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.DocumentReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,13 @@ public class AgendamentoActivity extends AppCompatActivity {
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
         int hora = timePicker.getHour();
         int minuto = timePicker.getMinute();
+
+        // Verificar se o horário está dentro do permitido (6h às 20h)
+        if (hora < 6 || (hora == 20 && minuto > 0) || hora > 20) {
+            Toast.makeText(this, "Horário fora do intervalo permitido (6h - 20h).", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String horario = String.format("%02d:%02d", hora, minuto);
 
         // Obter ID do cliente logado
@@ -90,10 +99,17 @@ public class AgendamentoActivity extends AppCompatActivity {
         // Criar o objeto Agendamento com serviços selecionados
         Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horario, String.join(", ", servicosSelecionados), "pendente");
 
-        // Salvar no Firebase
+        // Salvar o agendamento no Firebase
         db.collection("agendamentos")
-                .add(agendamento)
+                .add(agendamento)  // Firestore irá adicionar a data automaticamente
                 .addOnSuccessListener(documentReference -> {
+                    // Atribuir o ID gerado pelo Firestore ao objeto agendamento
+                    agendamento.setId(documentReference.getId());
+
+                    // Atualizar o agendamento no Firestore com o ID atribuído
+                    documentReference.update("id", documentReference.getId());
+
+                    // Mostrar mensagem de sucesso
                     Toast.makeText(this, "Agendamento confirmado!", Toast.LENGTH_SHORT).show();
                     finish(); // Fecha a tela após confirmar
                 })

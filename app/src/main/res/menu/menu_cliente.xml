@@ -7,12 +7,12 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_24dp"
-            android:title="Início" />
+            android:title="Meus Agendamentos" />
 
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_24dp"
-            android:title="Barbeiros" />
+            android:title="Barbeiros Disponiveis" />
     </group>
 
     <item android:title="Conta">
