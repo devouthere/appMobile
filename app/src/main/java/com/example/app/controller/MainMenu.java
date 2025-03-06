@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.app.R;
 import com.example.app.view.LoginActivity;
 
+//test
 public class MainMenu extends AppCompatActivity {
 
     @Override
