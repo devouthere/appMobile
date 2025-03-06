@@ -49,7 +49,7 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
         holder.txtDiaHorario.setText(agendamento.getDia() + " - " + agendamento.getHorario());
         holder.txtStatus.setText(agendamento.getStatus());
 
-        // Configurar a cor do status
+
         if ("pendente".equals(agendamento.getStatus().toLowerCase())) {
             holder.txtStatus.setTextColor(context.getResources().getColor(android.R.color.holo_orange_dark));
             holder.layoutBotoes.setVisibility(View.VISIBLE);
@@ -58,12 +58,12 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
             holder.layoutBotoes.setVisibility(View.VISIBLE);
         } else if ("cancelado".equals(agendamento.getStatus().toLowerCase())) {
             holder.txtStatus.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
-            holder.layoutBotoes.setVisibility(View.GONE); // Esconder botões se cancelado
+            holder.layoutBotoes.setVisibility(View.GONE); 
         } else {
             holder.txtStatus.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
         }
 
-        // Configurar a data de criação
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         if (agendamento.getDataCriacao() != null) {
             holder.txtDataCriacao.setText("Criado em: " + sdf.format(agendamento.getDataCriacao()));
@@ -71,19 +71,19 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
             holder.txtDataCriacao.setText("Criado em: N/A");
         }
 
-        // Configurar ação do botão Cancelar
+
         holder.btnCancelar.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Cancelar Agendamento")
                     .setMessage("Tem certeza que deseja cancelar este agendamento?")
                     .setPositiveButton("Sim", (dialog, which) -> {
-                        // Verifica se o ID do agendamento não é nulo
+
                         if (agendamento.getId() != null) {
-                            // Atualiza o status no Firestore
+
                             db.collection("agendamentos").document(agendamento.getId())
                                     .update("status", "cancelado")
                                     .addOnSuccessListener(aVoid -> {
-                                        // Atualiza localmente
+
                                         agendamento.setStatus("cancelado");
                                         notifyItemChanged(position);
                                         Toast.makeText(context, "Agendamento cancelado com sucesso", Toast.LENGTH_SHORT).show();
@@ -101,23 +101,23 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
                     .show();
         });
 
-        // Configurar ação do botão Alterar para usar a nova activity
+
         holder.btnAlterar.setOnClickListener(v -> {
             if (agendamento.getId() != null) {
-                // Mostrar uma mensagem de carregamento
+
                 Toast.makeText(context, "Carregando dados para alterar o agendamento...", Toast.LENGTH_SHORT).show();
 
-                // Passar os dados do agendamento para a Activity de alteração
+
                 Intent intent = new Intent(context, AlterarAgendamentoActivity.class);
 
-                // Passando os dados para a nova Activity
-                intent.putExtra("id", agendamento.getId()); // Passar o ID do agendamento
-                intent.putExtra("servico", agendamento.getServico()); // Passar o serviço
-                intent.putExtra("dia", agendamento.getDia()); // Passar o dia
-                intent.putExtra("barbeiroId", agendamento.getBarbeiroId()); // Passar o barbeiroId
-                intent.putExtra("horario", agendamento.getHorario()); // Passar o horário
 
-                // Iniciar a nova Activity
+                intent.putExtra("id", agendamento.getId());
+                intent.putExtra("servico", agendamento.getServico());
+                intent.putExtra("dia", agendamento.getDia());
+                intent.putExtra("barbeiroId", agendamento.getBarbeiroId());
+                intent.putExtra("horario", agendamento.getHorario());
+
+
                 context.startActivity(intent);
             } else {
                 Toast.makeText(context, "Erro: ID do agendamento não encontrado", Toast.LENGTH_SHORT).show();

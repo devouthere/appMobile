@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,13 +80,13 @@ public class BarbeiroAdapter extends RecyclerView.Adapter<BarbeiroAdapter.Barbei
             txtServicos = itemView.findViewById(R.id.txtServicos);
             txtDiasDisponiveis = itemView.findViewById(R.id.txtDiasDisponiveis);
 
-            // Configurar clique do item para abrir a AgendamentoActivity
+
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Barbeiro barbeiroSelecionado = listaBarbeiros.get(position);
                     Intent intent = new Intent(itemView.getContext(), AgendamentoActivity.class);
-                    intent.putExtra("barbeiro", barbeiroSelecionado); // Passa o objeto barbeiro
+                    intent.putExtra("barbeiro", barbeiroSelecionado); 
                     itemView.getContext().startActivity(intent);
                 }
             });
