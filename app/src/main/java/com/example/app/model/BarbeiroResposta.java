@@ -6,7 +6,7 @@ public class BarbeiroResposta {
     private List<String> servicos;
     private List<String> diasDisponiveis;
 
-    // Construtor vazio necessário para o Firestore
+
     public BarbeiroResposta() {
     }
 
@@ -15,7 +15,7 @@ public class BarbeiroResposta {
         this.diasDisponiveis = diasDisponiveis;
     }
 
-    // Getters e Setters
+
     public List<String> getServicos() {
         return servicos;
     }

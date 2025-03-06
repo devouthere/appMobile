@@ -1,6 +1,7 @@
 package com.example.app.model;
 
 import com.google.firebase.firestore.ServerTimestamp;
+
 import java.util.Date;
 
 public class Agendamento {
@@ -13,13 +14,13 @@ public class Agendamento {
     private String servico;
     private String status;
     @ServerTimestamp
-    private Date dataCriacao;  // Data de criação do agendamento
+    private Date dataCriacao;
 
-    // Construtor vazio necessário para Firebase
+
     public Agendamento() {
     }
 
-    // Construtor com parâmetros
+
     public Agendamento(String barbeiroId, String barbeiroNome, String clienteId, String dia, String horario, String servico, String status) {
         this.barbeiroId = barbeiroId;
         this.barbeiroNome = barbeiroNome;
@@ -30,7 +31,7 @@ public class Agendamento {
         this.status = status;
     }
 
-    // Getters e Setters
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

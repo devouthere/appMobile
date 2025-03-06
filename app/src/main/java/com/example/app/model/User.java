@@ -5,9 +5,9 @@ public class User {
     private String email;
     private String senha;
     private String endereco;
-    private String tipoUsuario; // "barbeiro" ou "cliente"
+    private String tipoUsuario;
 
-    // Construtores
+
     public User(String nome, String email, String senha, String endereco, String tipoUsuario) {
         this.nome = nome;
         this.email = email;
@@ -16,7 +16,7 @@ public class User {
         this.tipoUsuario = tipoUsuario;
     }
 
-    // Getters e Setters
+
     public String getNome() {
         return nome;
     }

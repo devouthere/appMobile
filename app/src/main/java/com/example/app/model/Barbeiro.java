@@ -13,7 +13,7 @@ public class Barbeiro implements Serializable {
     private List<String> servicos;
 
     public Barbeiro() {
-        // Construtor vazio necessário para o Firebase
+
     }
 
     public Barbeiro(String id, String nome, String email, String endereco, List<String> diasDisponiveis, List<String> servicos) {
@@ -25,7 +25,7 @@ public class Barbeiro implements Serializable {
         this.servicos = servicos;
     }
 
-    // Getters e Setters
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
