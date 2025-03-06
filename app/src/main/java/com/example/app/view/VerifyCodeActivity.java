@@ -30,7 +30,6 @@ public class VerifyCodeActivity extends AppCompatActivity {
         edtVerificationCode = findViewById(R.id.edtVerificationCode);
         btnVerifyCode = findViewById(R.id.btnVerifyCode);
 
-        // Recebe o ID de verificação da Intent
         verificationId = getIntent().getStringExtra("verificationId");
 
         btnVerifyCode.setOnClickListener(v -> {
@@ -51,7 +50,6 @@ public class VerifyCodeActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(VerifyCodeActivity.this, "Verificação bem-sucedida!", Toast.LENGTH_SHORT).show();
-                        // Navegue para a próxima atividade, por exemplo, Tela principal
                         startActivity(new Intent(VerifyCodeActivity.this, BarberDashboardActivity.class));
                         finish();
                     } else {

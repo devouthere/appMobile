@@ -12,13 +12,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app.R;
 import com.example.app.controller.BarbeiroAdapter;
 import com.example.app.controller.MainMenu;
-import com.example.app.R;
 import com.example.app.model.Barbeiro;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.*;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +38,16 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.example.app.R.layout.activity_clientes_barbeiro);
 
-        // Configuração da Toolbar e do menu hambúrguer
         Toolbar toolbar = findViewById(com.example.app.R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(com.example.app.R.id.drawer_layout);
         navigationView = findViewById(com.example.app.R.id.nav_view);
 
-        // Adiciona o botão de abrir menu no Toolbar
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, com.example.app.R.string.openDrawer, com.example.app.R.string.closeDrawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Clique nos itens do menu
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == com.example.app.R.id.nav_home) {
@@ -67,7 +65,6 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
             return true;
         });
 
-        // Configuração do RecyclerView
         recyclerView = findViewById(R.id.recyclerViewBarbeiros);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
