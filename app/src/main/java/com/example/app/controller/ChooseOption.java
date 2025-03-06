@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.app.R;
+import com.example.app.view.RegisterActivity;
+import com.example.app.view.SendCodeActivity;
 
 public class ChooseOption extends AppCompatActivity {
 

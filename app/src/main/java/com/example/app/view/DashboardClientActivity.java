@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +8,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.app.controller.AgendamentoAdapter;
+import com.example.app.controller.MainMenu;
+import com.example.app.R;
+import com.example.app.model.Agendamento;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;

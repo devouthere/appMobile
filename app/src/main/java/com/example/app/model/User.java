@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.model;
 
 public class User {
     private String nome;

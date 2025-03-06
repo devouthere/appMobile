@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -9,7 +9,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.theme.overlay.MaterialThemeOverlay;
+import com.example.app.controller.MainMenu;
+import com.example.app.R;
 
 public class MainActivity extends AppCompatActivity {
 

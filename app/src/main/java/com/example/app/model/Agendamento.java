@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.model;
 
 import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;

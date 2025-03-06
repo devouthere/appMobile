@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.controller;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.io.Serializable;
+
+import com.example.app.R;
+import com.example.app.model.Barbeiro;
+import com.example.app.view.AgendamentoActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 

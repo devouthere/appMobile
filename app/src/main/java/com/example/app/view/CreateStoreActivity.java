@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,10 +7,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app.R;
+import com.example.app.model.BarbeiroResposta;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;

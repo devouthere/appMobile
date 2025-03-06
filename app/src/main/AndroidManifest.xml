@@ -21,43 +21,43 @@
         android:theme="@style/Theme.AppDelivery"
         tools:targetApi="31">
         <activity
-            android:name=".AlterarAgendamentoActivity"
+            android:name=".view.AlterarAgendamentoActivity"
             android:exported="false" />
         <activity
-            android:name=".AgendamentoActivity"
+            android:name=".view.AgendamentoActivity"
             android:exported="false" />
         <activity
-            android:name=".ClientesBarbeiroActivity"
+            android:name=".view.ClientesBarbeiroActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardClientActivity"
+            android:name=".view.DashboardClientActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateStoreActivity"
+            android:name=".view.CreateStoreActivity"
             android:exported="false" />
         <activity
-            android:name=".BarberDashboardActivity"
+            android:name=".view.BarberDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifyCodeActivity"
+            android:name=".view.VerifyCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".SendCodeActivity"
+            android:name=".view.SendCodeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ChooseOption"
+            android:name=".controller.ChooseOption"
             android:exported="false" />
         <activity
-            android:name=".MainMenu"
+            android:name=".controller.MainMenu"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

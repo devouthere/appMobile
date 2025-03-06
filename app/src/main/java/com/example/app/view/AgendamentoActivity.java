@@ -1,13 +1,15 @@
-package com.example.app;
+package com.example.app.view;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.app.R;
+import com.example.app.model.Agendamento;
+import com.example.app.model.Barbeiro;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentReference;
 
 import java.util.ArrayList;
 import java.util.List;
