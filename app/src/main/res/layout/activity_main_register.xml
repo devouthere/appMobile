@@ -8,7 +8,6 @@
     android:background="@android:color/white"
     tools:context=".view.RegisterActivity">
 
-    <!-- Card centralizado com formulário -->
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -37,7 +36,6 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <!-- Nome -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +55,6 @@
                 android:textColorHint="#888888"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- E-mail -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,7 +74,6 @@
                 android:textColorHint="#888888"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Senha -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +94,6 @@
                 android:textColorHint="#888888"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Endereço (oculto por padrão) -->
             <TextView
                 android:id="@+id/labelEndereco"
                 android:layout_width="wrap_content"
@@ -121,7 +116,6 @@
                 android:visibility="gone"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Botão de Registro -->
             <Button
                 android:id="@+id/btnRegistrar"
                 android:layout_width="match_parent"

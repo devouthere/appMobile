@@ -35,7 +35,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText">
 
-        <!-- Card para Barbeiro - Contém o ID original para manter funcionalidade -->
         <androidx.cardview.widget.CardView
             android:id="@+id/btnBarbeiro"
             android:layout_width="match_parent"
@@ -86,7 +85,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Card para Cliente - Contém o ID original para manter funcionalidade -->
         <androidx.cardview.widget.CardView
             android:id="@+id/btnCliente"
             android:layout_width="match_parent"

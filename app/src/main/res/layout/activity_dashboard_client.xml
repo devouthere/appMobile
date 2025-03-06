@@ -7,36 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".view.DashboardClientActivity">
 
-    <!-- Container principal -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Toolbar com o botão do menu -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Agendamentos"
-            android:titleTextColor="@color/white"
             android:elevation="4dp"
+            android:titleTextColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:title="Agendamentos" />
 
-        <!-- RecyclerView para exibir os agendamentos -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAgendamentos"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Menu Lateral -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

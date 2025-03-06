@@ -8,13 +8,11 @@
     android:background="@android:color/white"
     tools:context=".view.BarberDashboardActivity">
 
-    <!-- Layout Principal -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
 
-        <!-- Toolbar com Menu Hamburguer -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
@@ -28,7 +26,6 @@
             app:title="Perfil"
             app:titleTextColor="@color/Black" />
 
-        <!-- Conteúdo Principal em Card -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="0dp"
@@ -48,7 +45,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- ID do Usuário com Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +61,6 @@
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="16dp"/>
 
-                <!-- Nome do Barbeiro com Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +77,6 @@
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="16dp"/>
 
-                <!-- Endereço do Barbeiro com Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,7 +94,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Botão Criar Loja -->
         <Button
             android:id="@+id/btnCriarLoja"
             android:layout_width="0dp"
@@ -117,7 +110,6 @@
             app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Menu Lateral (Navigation Drawer) -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

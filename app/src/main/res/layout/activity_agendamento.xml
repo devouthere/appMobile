@@ -9,7 +9,6 @@
     android:padding="24dp"
     android:background="@android:color/white">
 
-    <!-- Título - Estilo modernizado -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Selecionar Serviço - Texto mais limpo -->
     <TextView
         android:id="@+id/tvServico"
         android:layout_width="wrap_content"
@@ -36,7 +34,6 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Checkboxes para serviços -->
     <LinearLayout
         android:id="@+id/llServicos"
         android:layout_width="match_parent"
@@ -53,7 +50,6 @@
 
     </LinearLayout>
 
-    <!-- Selecionar Dia - Texto mais limpo -->
     <TextView
         android:id="@+id/tvDia"
         android:layout_width="wrap_content"
@@ -83,7 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Selecionar Horário - Texto mais limpo -->
     <TextView
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
@@ -96,7 +91,6 @@
         app:layout_constraintTop_toBottomOf="@id/spinnerDias"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- ScrollView para rolar os horários verticalmente -->
     <ScrollView
         android:id="@+id/scrollViewHorarios"
         android:layout_width="match_parent"
@@ -108,7 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- GridLayout para os horários -->
         <GridLayout
             android:id="@+id/gridLayoutHorarios"
             android:layout_width="wrap_content"

@@ -7,13 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".view.ClientesBarbeiroActivity">
 
-    <!-- Container principal que inclui a Toolbar e o conteúdo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -22,7 +20,6 @@
             android:titleTextColor="@color/white"
             android:elevation="4dp"/>
 
-        <!-- Conteúdo principal da activity -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewBarbeiros"
             android:layout_width="match_parent"
@@ -31,7 +28,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
 
-    <!-- Menu Lateral -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
