@@ -5,7 +5,6 @@ public class User {
     private String email;
     private String senha;
     private String endereco;
-
     private String phoneNumber;
     private String tipoUsuario;
 

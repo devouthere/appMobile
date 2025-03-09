@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,13 @@ public class LoginActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
+        TextView txtTelefone = findViewById(R.id.txtTelefone);
 
+        txtTelefone.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, LogarPhone.class);
+            startActivity(intent);
+        });
+        
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
