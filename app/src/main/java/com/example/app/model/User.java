@@ -5,16 +5,20 @@ public class User {
     private String email;
     private String senha;
     private String endereco;
+
+    private String phoneNumber;
     private String tipoUsuario;
 
 
-    public User(String nome, String email, String senha, String endereco, String tipoUsuario) {
+    public User(String nome, String email, String senha, String phoneNumber, String endereco, String tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.phoneNumber = phoneNumber;
         this.endereco = endereco;
         this.tipoUsuario = tipoUsuario;
     }
+
 
 
     public String getNome() {
@@ -41,6 +45,15 @@ public class User {
         this.senha = senha;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
     public String getEndereco() {
         return endereco;
     }
@@ -56,4 +69,5 @@ public class User {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
 }

@@ -51,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String nome = edtNome.getText().toString().trim();
                 String email = edtEmail.getText().toString().trim();
                 String senha = edtSenha.getText().toString().trim();
+                String phoneNumber = "";
                 String endereco = edtEndereco.getText().toString().trim();
 
                 if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
@@ -67,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     String tipoUsuario = isBarbeiro ? "barbeiro" : "cliente";
 
-                                    User userObject = new User(nome, email, senha, isBarbeiro ? endereco : null, tipoUsuario);
+                                    User userObject = new User(nome, email, senha, phoneNumber, isBarbeiro ? endereco : null, tipoUsuario);
 
                                     db.collection("usuarios").document(uid).set(userObject).addOnSuccessListener(aVoid -> {
                                                 Toast.makeText(RegisterActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
