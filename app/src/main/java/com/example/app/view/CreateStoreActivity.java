@@ -1,6 +1,7 @@
 package com.example.app.view;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -111,7 +112,10 @@ public class CreateStoreActivity extends AppCompatActivity {
                         db.collection("barbeiro").document(userId)
                                 .set(barbeiroData)
                                 .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(CreateStoreActivity.this, "Configurações e dados salvos com sucesso!", Toast.LENGTH_SHORT).show();
+                                    // Redireciona para a tela de confirmação
+                                    Intent intent = new Intent(CreateStoreActivity.this, ConfirmationActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(CreateStoreActivity.this, "Erro ao salvar as configurações: " + e.getMessage(), Toast.LENGTH_LONG).show();
