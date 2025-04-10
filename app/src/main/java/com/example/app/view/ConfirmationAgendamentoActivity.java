@@ -47,10 +47,9 @@ public class ConfirmationAgendamentoActivity extends AppCompatActivity {
         tvServico.setText("Serviço: " + servico);
         tvDataHora.setText("Data/Hora: " + dataHora);
 
-        // Configura o botão de voltar
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
-            Intent intent = new Intent(ConfirmationAgendamentoActivity.this, MainActivity.class);
+            Intent intent = new Intent(this, DashboardClientActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
             finish();
