@@ -71,6 +71,11 @@
             android:exported="false"
             android:theme="@style/AppThemeNoActionbar" />
 
+        <activity
+            android:name=".view.ConfirmationAgendamentoActivity"
+            android:exported="false"
+            android:theme="@style/AppThemeNoActionbar" />
+
         <!-- MainActivity (LAUNCHER) deve ficar por último -->
         <activity
             android:name=".view.MainActivity"
