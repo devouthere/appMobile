@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +37,16 @@ public class AgendamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agendamento);
 
+        // Implementação da seta de voltar (igual à ConfirmationActivity)
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(AgendamentoActivity.this, ClientesBarbeiroActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
+
+        // Restante do seu código existente...
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
         btnConfirmar = findViewById(R.id.btnConfirmar);
@@ -109,19 +120,19 @@ public class AgendamentoActivity extends AppCompatActivity {
                             btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                             btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
                         } else {
-                            btnHorario.setBackgroundResource(R.drawable.botao_disponivel);
+                            btnHorario.setBackgroundResource(R.drawable.btntwo);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.black));
 
                             btnHorario.setOnClickListener(v -> {
                                 if (btnHorarioSelecionado != null) {
-                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_disponivel);
+                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.btntwo);
                                     btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
                                 }
 
                                 btnHorarioSelecionado = btnHorario;
                                 horarioSelecionado = horario;
 
-                                btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_selected);
+                                btnHorarioSelecionado.setBackgroundResource(R.drawable.btn);
                                 btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.white));
 
                                 Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
