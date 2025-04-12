@@ -127,7 +127,7 @@
         android:id="@+id/btnConfirmar"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:text="Alterar Agendamento"
+        android:text="ALTERAR AGENDAMENTO"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="16sp"
