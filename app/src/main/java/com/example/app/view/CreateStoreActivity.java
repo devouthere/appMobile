@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class CreateStoreActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private ImageView backArrow; // Adicione esta linha
 
     private CheckBox chkCorte, chkBarba, chkSobrancelha;
     private CheckBox chkDia1, chkDia2, chkDia3, chkDia4, chkDia5, chkDia6, chkDia7;
@@ -40,6 +42,13 @@ public class CreateStoreActivity extends AppCompatActivity {
 
             inicializarViews();
 
+            backArrow.setOnClickListener(v -> {
+                Intent intent = new Intent(CreateStoreActivity.this, BarberDashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            });
+
             btnSalvar.setOnClickListener(v -> salvarRespostas());
 
         } catch (Exception e) {
@@ -49,6 +58,8 @@ public class CreateStoreActivity extends AppCompatActivity {
     }
 
     private void inicializarViews() {
+        backArrow = findViewById(R.id.backArrow);
+
         chkCorte = findViewById(R.id.chkCorte);
         chkBarba = findViewById(R.id.chkBarba);
         chkSobrancelha = findViewById(R.id.chkSobrancelha);

@@ -37,7 +37,6 @@ public class AgendamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agendamento);
 
-        // Implementação da seta de voltar (igual à ConfirmationActivity)
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
             Intent intent = new Intent(AgendamentoActivity.this, ClientesBarbeiroActivity.class);
@@ -46,7 +45,6 @@ public class AgendamentoActivity extends AppCompatActivity {
             finish();
         });
 
-        // Restante do seu código existente...
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
         btnConfirmar = findViewById(R.id.btnConfirmar);
