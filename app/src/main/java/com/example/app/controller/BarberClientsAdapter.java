@@ -1,5 +1,6 @@
 package com.example.app.controller;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +71,36 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
     }
 
     private void setupStatusUI(ViewHolder holder, Agendamento agendamento) {
-        if ("confirmado".equals(agendamento.getStatus())) {
-            holder.btnConfirm.setEnabled(false);
-            holder.btnConfirm.setText("Confirmado");
-        } else if ("cancelado".equals(agendamento.getStatus())) {
-            holder.btnCancel.setEnabled(false);
-            holder.btnCancel.setText("Cancelado");
+        String status = agendamento.getStatus();
+
+        if ("pendente".equalsIgnoreCase(status)) {
+            holder.btnConfirm.setVisibility(View.VISIBLE);
+            holder.btnCancel.setVisibility(View.VISIBLE);
+            holder.tvStatus.setVisibility(View.GONE);
+        } else {
+            holder.btnConfirm.setVisibility(View.GONE);
+            holder.btnCancel.setVisibility(View.GONE);
+
+            holder.tvStatus.setVisibility(View.VISIBLE);
+            holder.tvStatus.setText(capitalize(status));
+
+            switch (status.toLowerCase()) {
+                case "confirmado":
+                    holder.tvStatus.setTextColor(Color.parseColor("#4CAF50")); // verde
+                    break;
+                case "cancelado":
+                    holder.tvStatus.setTextColor(Color.parseColor("#F44336")); // vermelho
+                    break;
+                default:
+                    holder.tvStatus.setTextColor(Color.GRAY); // fallback
+                    break;
+            }
         }
+    }
+
+    private String capitalize(String text) {
+        if (text == null || text.isEmpty()) return "";
+        return text.substring(0, 1).toUpperCase() + text.substring(1).toLowerCase();
     }
 
     @Override
@@ -88,6 +112,7 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
         final TextView tvClientName;
         final TextView tvService;
         final TextView tvDateTime;
+        final TextView tvStatus;
         final Button btnConfirm;
         final Button btnCancel;
 
@@ -96,6 +121,7 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
             tvClientName = itemView.findViewById(R.id.tv_client_name);
             tvService = itemView.findViewById(R.id.tv_service);
             tvDateTime = itemView.findViewById(R.id.tv_date_time);
+            tvStatus = itemView.findViewById(R.id.tv_status); // Certifique-se de ter esse ID no layout
             btnConfirm = itemView.findViewById(R.id.btn_confirm);
             btnCancel = itemView.findViewById(R.id.btn_cancel);
         }

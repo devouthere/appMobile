@@ -90,7 +90,6 @@ public class BarberClientsActivity extends AppCompatActivity {
                             processAppointmentDocument(doc);
                         }
 
-                        // Ordena os agendamentos manualmente após carregar
                         clientList.sort((a1, a2) -> {
                             // Comparando primeiro por dia e depois por horário
                             int compareDia = a1.getDia().compareToIgnoreCase(a2.getDia());
