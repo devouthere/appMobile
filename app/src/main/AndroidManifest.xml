@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppDelivery"
         tools:targetApi="31">
+
+        <!-- Suas activities existentes... -->
         <activity
             android:name=".view.CodeVerifyLogin"
             android:exported="false" />
@@ -62,12 +64,29 @@
         <activity
             android:name=".controller.MainMenu"
             android:exported="false" />
+
+        <!-- Adicione a ConfirmationActivity AQUI, como uma activity separada -->
+        <activity
+            android:name=".view.ConfirmationActivity"
+            android:exported="false"
+            android:theme="@style/AppThemeNoActionbar" />
+
+        <activity
+            android:name=".view.ConfirmationAgendamentoActivity"
+            android:exported="false"
+            android:theme="@style/AppThemeNoActionbar" />
+
+        <activity
+            android:name=".view.BarberClientsActivity"
+            android:label="Meus Clientes"
+            android:parentActivityName=".view.BarberDashboardActivity"/>
+
+        <!-- MainActivity (LAUNCHER) deve ficar por último -->
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

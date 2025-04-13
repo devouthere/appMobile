@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +46,15 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alterar_agendamento);
 
+        // Configuração da seta de voltar
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(AlterarAgendamentoActivity.this, DashboardClientActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
+
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
         tvBarbeiroNome = findViewById(R.id.tvBarbeiroNome);
@@ -61,7 +71,6 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
             Toast.makeText(this, "Erro: ID do agendamento não fornecido.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
         btnConfirmar.setOnClickListener(v -> salvarAlteracoes());
     }
@@ -188,7 +197,7 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         }
     }
 
-    private String horarioSelecionado; 
+    private String horarioSelecionado;
     private void configurarHorariosDisponiveis() {
         String[] horarios = new String[]{"08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
@@ -232,7 +241,7 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                             btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                             btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
                         } else {
-                            btnHorario.setBackgroundResource(R.drawable.botao_disponivel);
+                            btnHorario.setBackgroundResource(R.drawable.btntwo);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.black));
                         }
 
@@ -244,19 +253,19 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                                     btn.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                                     btn.setTextColor(getResources().getColor(android.R.color.darker_gray));
                                 } else {
-                                    btn.setBackgroundResource(R.drawable.botao_disponivel);
+                                    btn.setBackgroundResource(R.drawable.btntwo);
                                     btn.setTextColor(getResources().getColor(android.R.color.black));
                                 }
                             }
 
                             horarioSelecionado = horario;
 
-                            v.setBackgroundResource(R.drawable.botao_disponivel);
+                            v.setBackgroundResource(R.drawable.btntwo);
                             ((Button)v).setTextColor(getResources().getColor(android.R.color.white));
                         });
 
                         if (horario.equals(agendamentoAtual.getHorario())) {
-                            btnHorario.setBackgroundResource(R.drawable.botao_disponivel);
+                            btnHorario.setBackgroundResource(R.drawable.btntwo);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.white));
 
                             horarioSelecionado = horario;
@@ -315,7 +324,7 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                                             "servico", String.join(", ", servicosSelecionados)
                                     )
                                     .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(AlterarAgendamentoActivity.this,
+                                        Toast.makeText(AlterarAgendamentoActivity.this,
                                                 "Agendamento atualizado com sucesso", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(AlterarAgendamentoActivity.this, DashboardClientActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
