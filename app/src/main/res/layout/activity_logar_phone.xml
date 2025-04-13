@@ -44,7 +44,7 @@
                 android:id="@+id/btnSendCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enviar Código"
+                android:text="ENVIAR CÓDIGO"
                 android:background="@drawable/rounded_button"
                 android:textColor="#FFFFFF"
                 android:padding="12dp"

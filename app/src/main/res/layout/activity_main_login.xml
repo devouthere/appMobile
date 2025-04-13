@@ -85,6 +85,20 @@
                 app:cornerRadius="10dp" />
 
             <TextView
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:id="@+id/txtEsqueciSenha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esqueci minha senha"
+                android:textColor="@color/Black"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
                 android:id="@+id/txtTelefone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

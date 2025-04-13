@@ -1,10 +1,12 @@
 package com.example.app.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,6 +36,14 @@ public class AgendamentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agendamento);
+
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(AgendamentoActivity.this, ClientesBarbeiroActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
 
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
@@ -108,19 +118,19 @@ public class AgendamentoActivity extends AppCompatActivity {
                             btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                             btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
                         } else {
-                            btnHorario.setBackgroundResource(R.drawable.botao_disponivel);
+                            btnHorario.setBackgroundResource(R.drawable.btntwo);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.black));
 
                             btnHorario.setOnClickListener(v -> {
                                 if (btnHorarioSelecionado != null) {
-                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_disponivel);
+                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.btntwo);
                                     btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
                                 }
 
                                 btnHorarioSelecionado = btnHorario;
                                 horarioSelecionado = horario;
 
-                                btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_disponivel);
+                                btnHorarioSelecionado.setBackgroundResource(R.drawable.btn);
                                 btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.white));
 
                                 Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
@@ -134,9 +144,6 @@ public class AgendamentoActivity extends AppCompatActivity {
                     Toast.makeText(AgendamentoActivity.this, "Erro ao carregar horários", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
 
     private void salvarAgendamento() {
         List<String> servicosSelecionados = new ArrayList<>();
@@ -153,20 +160,35 @@ public class AgendamentoActivity extends AppCompatActivity {
         }
 
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
-
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String nomeCliente = "Nome do Cliente";
 
-        Agendamento agendamento = new Agendamento(barbeiroId, nomeBarbeiro, clienteId, diaSelecionado, horarioSelecionado, String.join(", ", servicosSelecionados), "pendente");
+        Agendamento agendamento = new Agendamento(
+                barbeiroId,
+                nomeBarbeiro,
+                clienteId,
+                nomeCliente,
+                diaSelecionado,
+                horarioSelecionado,
+                String.join(", ", servicosSelecionados),
+                "pendente"
+        );
 
         db.collection("agendamentos")
-                .add(agendamento).addOnSuccessListener(documentReference -> {
+                .add(agendamento)
+                .addOnSuccessListener(documentReference -> {
                     agendamento.setId(documentReference.getId());
-
                     documentReference.update("id", documentReference.getId());
 
-                    Toast.makeText(this, "Agendamento confirmado!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    Intent intent = new Intent(AgendamentoActivity.this, ConfirmationAgendamentoActivity.class);
+                    intent.putExtra("BARBEIRO_NOME", nomeBarbeiro);
+                    intent.putExtra("SERVICO", String.join(", ", servicosSelecionados));
+                    intent.putExtra("DATA_HORA", diaSelecionado + " - " + horarioSelecionado);
+                    startActivity(intent);
+
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Erro ao agendar", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Erro ao agendar: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }
