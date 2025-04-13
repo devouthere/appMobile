@@ -1,7 +1,9 @@
 package com.example.app.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +31,15 @@ public class BarberClientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_clients);
+
+        // Configuração da seta de voltar
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(BarberClientsActivity.this, BarberDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
 
         initializeFirebase();
         setupRecyclerView();
