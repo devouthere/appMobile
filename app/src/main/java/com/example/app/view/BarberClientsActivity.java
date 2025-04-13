@@ -89,26 +89,12 @@ public class BarberClientsActivity extends AppCompatActivity {
                         for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                             processAppointmentDocument(doc);
                         }
-
-                        clientList.sort((a1, a2) -> {
-                            // Comparando primeiro por dia e depois por horário
-                            int compareDia = a1.getDia().compareToIgnoreCase(a2.getDia());
-                            if (compareDia == 0) {
-                                return a1.getHorario().compareTo(a2.getHorario());
-                            } else {
-                                return compareDia;
-                            }
-                        });
-
-                        adapter.notifyDataSetChanged();
-
                     } else {
                         Log.d(TAG, "Nenhum agendamento encontrado");
                         Toast.makeText(this, "Nenhum agendamento encontrado", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
 
     private void processAppointmentDocument(DocumentSnapshot doc) {
         Agendamento agendamento = doc.toObject(Agendamento.class);
@@ -126,17 +112,54 @@ public class BarberClientsActivity extends AppCompatActivity {
                             agendamento.setClienteNome("Cliente não encontrado");
                             Log.w(TAG, "Documento do cliente não encontrado para ID: " + agendamento.getClienteId());
                         }
-
                         clientList.add(agendamento);
+                        sortAppointments();
+
                         adapter.notifyDataSetChanged();
                     })
                     .addOnFailureListener(e -> {
                         Log.e(TAG, "Erro ao buscar cliente", e);
                         agendamento.setClienteNome("Erro ao carregar");
                         clientList.add(agendamento);
+
+
+                        sortAppointments();
+
                         adapter.notifyDataSetChanged();
                     });
         }
+    }
+
+    private void sortAppointments() {
+        clientList.sort((a1, a2) -> {
+            int compareStatus = compareStatus(a1.getStatus(), a2.getStatus());
+            if (compareStatus != 0) {
+                return compareStatus;
+            }
+
+            int compareDia = a1.getDia().compareToIgnoreCase(a2.getDia());
+            if (compareDia == 0) {
+                return a1.getHorario().compareTo(a2.getHorario());
+            } else {
+                return compareDia;
+            }
+        });
+    }
+
+    private int compareStatus(String status1, String status2) {
+        if ("pendente".equals(status1)) {
+            return -1;
+        } else if ("pendente".equals(status2)) {
+            return 1;
+        }
+
+        if ("confirmado".equals(status1)) {
+            return -1;
+        } else if ("confirmado".equals(status2)) {
+            return 1;
+        }
+
+        return 0;
     }
 
     private void updateAppointmentStatus(Agendamento agendamento, String status) {
@@ -157,3 +180,4 @@ public class BarberClientsActivity extends AppCompatActivity {
                 });
     }
 }
+

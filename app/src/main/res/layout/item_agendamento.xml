@@ -68,17 +68,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancelar"
-                android:layout_marginEnd="4dp"
-                android:backgroundTint="@android:color/holo_red_light"/>
+                android:backgroundTint="@color/Red"
+                android:textColor="@android:color/white"/>
 
             <Button
                 android:id="@+id/btnAlterar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginStart="8dp"
                 android:text="Alterar"
-                android:layout_marginStart="4dp"
-                android:backgroundTint="@android:color/holo_blue_light"/>
+                android:backgroundTint="@color/blueish"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
 
     </LinearLayout>
