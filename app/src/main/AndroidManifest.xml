@@ -76,6 +76,11 @@
             android:exported="false"
             android:theme="@style/AppThemeNoActionbar" />
 
+        <activity
+            android:name=".view.BarberClientsActivity"
+            android:label="Meus Clientes"
+            android:parentActivityName=".view.BarberDashboardActivity"/>
+
         <!-- MainActivity (LAUNCHER) deve ficar por último -->
         <activity
             android:name=".view.MainActivity"

@@ -3,13 +3,16 @@ package com.example.app.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.app.R;
@@ -21,95 +24,111 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class BarberDashboardActivity extends AppCompatActivity {
+public class BarberDashboardActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView txtNome, txtEndereco, tvUserId;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private Button btnCriarLoja;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_dashboard);
 
+        // Inicializa componentes
+        initViews();
+        setupFirebase();
+        setupNavigationDrawer();
+        loadUserData();
+    }
+
+    private void initViews() {
         txtNome = findViewById(R.id.txtNome);
         txtEndereco = findViewById(R.id.txtEndereco);
         tvUserId = findViewById(R.id.tvUserId);
+        Button btnCriarLoja = findViewById(R.id.btnCriarLoja);
 
+        btnCriarLoja.setOnClickListener(v -> {
+            startActivity(new Intent(this, CreateStoreActivity.class));
+        });
+    }
+
+    private void setupFirebase() {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+    }
 
-        btnCriarLoja = findViewById(R.id.btnCriarLoja);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+    private void setupNavigationDrawer() {
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.openDrawer, R.string.closeDrawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+    }
 
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_home) {
-                Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.nav_profile) {
-                Toast.makeText(this, "Clientes selecionado", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(BarberDashboardActivity.this, ClientesBarbeiroActivity.class));
-            } else if (id == R.id.nav_logout) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(BarberDashboardActivity.this, MainMenu.class));
-                finish();
-            }
-            drawerLayout.closeDrawers();
-            return true;
-        });
-
-        btnCriarLoja.setOnClickListener(v -> {
-            Intent intent = new Intent(BarberDashboardActivity.this, CreateStoreActivity.class);
-            startActivity(intent);
-        });
-
+    private void loadUserData() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
             tvUserId.setText(uid);
-            Log.d("FirebaseAuth", "UID do usuário: " + uid);
-            carregarDadosBarbeiro(uid);
-        } else {
-            tvUserId.setText("Nenhum usuário logado");
-            Log.d("FirebaseAuth", "Nenhum usuário logado.");
-            Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show();
+
+            db.collection("usuarios").document(uid)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                txtNome.setText(document.getString("nome"));
+                                txtEndereco.setText(document.getString("endereco"));
+                            }
+                        }
+                    });
         }
     }
 
-    private void carregarDadosBarbeiro(String userId) {
-        DocumentReference docRef = db.collection("usuarios").document(userId);
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    String nome = document.getString("nome");
-                    String endereco = document.getString("endereco");
+        if (id == R.id.nav_home) {
+            // Já estamos na home
+            Toast.makeText(this, "Início", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_clientes) {
+            // CORREÇÃO AQUI: Alterado para BarberClientsActivity
+            startActivity(new Intent(this, BarberClientsActivity.class));
+        }
+        else if (id == R.id.nav_logout) {
+            logout();
+        }
 
-                    txtNome.setText(nome);
-                    txtEndereco.setText(endereco);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
-                    Log.d("Firestore", "Nome: " + nome + ", Endereço: " + endereco);
-                } else {
-                    Log.w("Firestore", "Documento não encontrado para UID: " + userId);
-                    Toast.makeText(this, "Dados do barbeiro não encontrados!", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Log.e("Firestore", "Erro ao buscar documento", task.getException());
-                Toast.makeText(this, "Erro ao buscar dados: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+    private void logout() {
+        mAuth.signOut();
+        startActivity(new Intent(this, MainMenu.class));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

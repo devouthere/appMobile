@@ -161,15 +161,17 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String nomeCliente = "Nome do Cliente";
 
         Agendamento agendamento = new Agendamento(
                 barbeiroId,
                 nomeBarbeiro,
                 clienteId,
+                nomeCliente,  // Adicione esta linha - você precisará obter o nome do cliente
                 diaSelecionado,
                 horarioSelecionado,
                 String.join(", ", servicosSelecionados),
-                "pendente"
+                "pendente"   // Status inicial
         );
 
         db.collection("agendamentos")
