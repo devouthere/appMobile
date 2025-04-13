@@ -75,8 +75,6 @@ public class BarberClientsActivity extends AppCompatActivity {
 
         db.collection("agendamentos")
                 .whereEqualTo("barbeiroId", barberId)
-                .orderBy("dia", Query.Direction.ASCENDING)
-                .orderBy("horario", Query.Direction.ASCENDING)
                 .addSnapshotListener((queryDocumentSnapshots, error) -> {
                     if (error != null) {
                         Log.e(TAG, "Erro ao escutar agendamentos", error);
@@ -91,12 +89,27 @@ public class BarberClientsActivity extends AppCompatActivity {
                         for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                             processAppointmentDocument(doc);
                         }
+
+                        // Ordena os agendamentos manualmente após carregar
+                        clientList.sort((a1, a2) -> {
+                            // Comparando primeiro por dia e depois por horário
+                            int compareDia = a1.getDia().compareToIgnoreCase(a2.getDia());
+                            if (compareDia == 0) {
+                                return a1.getHorario().compareTo(a2.getHorario());
+                            } else {
+                                return compareDia;
+                            }
+                        });
+
+                        adapter.notifyDataSetChanged();
+
                     } else {
                         Log.d(TAG, "Nenhum agendamento encontrado");
                         Toast.makeText(this, "Nenhum agendamento encontrado", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     private void processAppointmentDocument(DocumentSnapshot doc) {
         Agendamento agendamento = doc.toObject(Agendamento.class);
