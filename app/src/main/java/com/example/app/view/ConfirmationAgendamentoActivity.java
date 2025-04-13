@@ -20,7 +20,6 @@ public class ConfirmationAgendamentoActivity extends AppCompatActivity {
 
         Log.d("CONFIRMATION", "Activity iniciada");
 
-        // Verifica se os dados foram recebidos
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             Log.e("CONFIRMATION", "Nenhum dado recebido");
@@ -38,7 +37,6 @@ public class ConfirmationAgendamentoActivity extends AppCompatActivity {
             return;
         }
 
-        // Preenche os dados na tela
         TextView tvBarbeiroNome = findViewById(R.id.tvBarbeiroNome);
         TextView tvServico = findViewById(R.id.tvServico);
         TextView tvDataHora = findViewById(R.id.tvDataHora);

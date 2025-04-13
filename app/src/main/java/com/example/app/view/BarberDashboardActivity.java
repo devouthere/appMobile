@@ -39,7 +39,6 @@ public class BarberDashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_dashboard);
 
-        // Inicializa componentes
         initViews();
         setupFirebase();
         setupNavigationDrawer();
@@ -102,11 +101,9 @@ public class BarberDashboardActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Já estamos na home
             Toast.makeText(this, "Início", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.nav_clientes) {
-            // CORREÇÃO AQUI: Alterado para BarberClientsActivity
             startActivity(new Intent(this, BarberClientsActivity.class));
         }
         else if (id == R.id.nav_logout) {

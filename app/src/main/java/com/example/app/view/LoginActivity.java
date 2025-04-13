@@ -179,12 +179,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showLoading(String mensagem) {
-        // Implementar um ProgressDialog ou loading customizado
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
 
     private void dismissLoading() {
-        // Fechar o loading
     }
 
     private void showErrorDialog(String mensagem) {

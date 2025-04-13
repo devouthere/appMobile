@@ -32,7 +32,6 @@ public class BarberClientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barber_clients);
 
-        // Configuração da seta de voltar
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
             Intent intent = new Intent(BarberClientsActivity.this, BarberDashboardActivity.class);
@@ -134,7 +133,6 @@ public class BarberClientsActivity extends AppCompatActivity {
                 .update("status", status)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Status atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-                    // Atualiza localmente
                     int position = clientList.indexOf(agendamento);
                     if (position != -1) {
                         clientList.get(position).setStatus(status);

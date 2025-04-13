@@ -167,11 +167,11 @@ public class AgendamentoActivity extends AppCompatActivity {
                 barbeiroId,
                 nomeBarbeiro,
                 clienteId,
-                nomeCliente,  // Adicione esta linha - você precisará obter o nome do cliente
+                nomeCliente,
                 diaSelecionado,
                 horarioSelecionado,
                 String.join(", ", servicosSelecionados),
-                "pendente"   // Status inicial
+                "pendente"
         );
 
         db.collection("agendamentos")
@@ -180,14 +180,12 @@ public class AgendamentoActivity extends AppCompatActivity {
                     agendamento.setId(documentReference.getId());
                     documentReference.update("id", documentReference.getId());
 
-                    // Navega para a tela de confirmação
                     Intent intent = new Intent(AgendamentoActivity.this, ConfirmationAgendamentoActivity.class);
                     intent.putExtra("BARBEIRO_NOME", nomeBarbeiro);
                     intent.putExtra("SERVICO", String.join(", ", servicosSelecionados));
                     intent.putExtra("DATA_HORA", diaSelecionado + " - " + horarioSelecionado);
                     startActivity(intent);
 
-                    // Não chame finish() aqui para manter o histórico de navegação
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Erro ao agendar: " + e.getMessage(), Toast.LENGTH_LONG).show();

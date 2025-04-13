@@ -25,7 +25,7 @@ public class CreateStoreActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private ImageView backArrow; // Adicione esta linha
+    private ImageView backArrow;
 
     private CheckBox chkCorte, chkBarba, chkSobrancelha;
     private CheckBox chkDia1, chkDia2, chkDia3, chkDia4, chkDia5, chkDia6, chkDia7;
