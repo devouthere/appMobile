@@ -16,7 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ScrollView com o conteúdo principal -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
