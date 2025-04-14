@@ -115,7 +115,9 @@
                 android:textColor="#757575"
                 android:textSize="14sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <View
                 android:layout_width="match_parent"

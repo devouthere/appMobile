@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtSenha;
     private Button btnLogin;
-    private TextView txtTelefone, txtEsqueciSenha;
+    private TextView txtTelefone, txtEsqueciSenha, txtRegistrar;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         txtTelefone = findViewById(R.id.txtTelefone);
         txtEsqueciSenha = findViewById(R.id.txtEsqueciSenha);
+        txtRegistrar = findViewById(R.id.txtRegistrar);
     }
 
     private void setupClickListeners() {
@@ -71,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
             if (validarCampos(email, senha)) {
                 loginWithEmailPassword(email, senha);
             }
+        });
+
+        txtRegistrar.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, MainMenu.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -193,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void dismissLoading() {
+        // Implementação opcional para dismiss de loading
     }
 
     private void showErrorDialog(String mensagem) {
