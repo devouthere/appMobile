@@ -110,7 +110,6 @@ public class BarberDashboardActivity extends AppCompatActivity
     private void loadUserData() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            // Mostra o email ou telefone conforme o método de login
             if (user.getEmail() != null && !user.getEmail().isEmpty()) {
                 tvUserEmail.setText(user.getEmail());
                 tvUserPhone.setText("Não informado");
@@ -126,7 +125,6 @@ public class BarberDashboardActivity extends AppCompatActivity
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 txtNome.setText(document.getString("nome"));
-                                // Atualiza telefone se existir no Firestore
                                 if (document.contains("telefone")) {
                                     tvUserPhone.setText(document.getString("telefone"));
                                 }
