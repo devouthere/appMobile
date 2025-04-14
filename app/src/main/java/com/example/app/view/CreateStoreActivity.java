@@ -1,7 +1,7 @@
 package com.example.app.view;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
-import com.example.app.model.BarbeiroResposta;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,47 +22,45 @@ import java.util.Map;
 
 public class CreateStoreActivity extends AppCompatActivity {
 
+    private static final String TAG = "CreateStoreActivity";
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private ImageView backArrow;
-
     private CheckBox chkCorte, chkBarba, chkSobrancelha;
     private CheckBox chkDia1, chkDia2, chkDia3, chkDia4, chkDia5, chkDia6, chkDia7;
     private MaterialButton btnSalvar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_create_store);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_store);
 
+        try {
             mAuth = FirebaseAuth.getInstance();
             db = FirebaseFirestore.getInstance();
 
             inicializarViews();
 
             backArrow.setOnClickListener(v -> {
-                Intent intent = new Intent(CreateStoreActivity.this, BarberDashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                setResult(RESULT_CANCELED);
                 finish();
             });
 
             btnSalvar.setOnClickListener(v -> salvarRespostas());
 
         } catch (Exception e) {
-            Toast.makeText(this, "Erro ao inicializar: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("CreateStoreActivity", "Erro no onCreate", e);
+            Log.e(TAG, "Erro no onCreate: " + e.getMessage(), e);
+            Toast.makeText(this, "Erro ao inicializar", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 
     private void inicializarViews() {
         backArrow = findViewById(R.id.backArrow);
-
         chkCorte = findViewById(R.id.chkCorte);
         chkBarba = findViewById(R.id.chkBarba);
         chkSobrancelha = findViewById(R.id.chkSobrancelha);
-
         chkDia1 = findViewById(R.id.chkDia1);
         chkDia2 = findViewById(R.id.chkDia2);
         chkDia3 = findViewById(R.id.chkDia3);
@@ -71,14 +68,13 @@ public class CreateStoreActivity extends AppCompatActivity {
         chkDia5 = findViewById(R.id.chkDia5);
         chkDia6 = findViewById(R.id.chkDia6);
         chkDia7 = findViewById(R.id.chkDia7);
-
         btnSalvar = findViewById(R.id.btnSalvar);
     }
 
     private void salvarRespostas() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(this, "Você precisa estar logado para salvar as configurações.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Você precisa estar logado", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -97,7 +93,7 @@ public class CreateStoreActivity extends AppCompatActivity {
         if (chkDia7.isChecked()) diasDisponiveis.add("Domingo");
 
         if (servicosEscolhidos.isEmpty() || diasDisponiveis.isEmpty()) {
-            Toast.makeText(this, "Por favor, selecione ao menos um serviço e um dia.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Selecione ao menos um serviço e um dia", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -106,36 +102,29 @@ public class CreateStoreActivity extends AppCompatActivity {
         db.collection("usuarios").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        String nome = documentSnapshot.getString("nome");
-                        String email = documentSnapshot.getString("email");
-                        String endereco = documentSnapshot.getString("endereco");
-
-                        BarbeiroResposta respostas = new BarbeiroResposta(servicosEscolhidos, diasDisponiveis);
-
                         Map<String, Object> barbeiroData = new HashMap<>();
                         barbeiroData.put("userId", userId);
-                        barbeiroData.put("nome", nome);
-                        barbeiroData.put("email", email);
-                        barbeiroData.put("endereco", endereco);
+                        barbeiroData.put("nome", documentSnapshot.getString("nome"));
+                        barbeiroData.put("email", documentSnapshot.getString("email"));
+                        barbeiroData.put("endereco", documentSnapshot.getString("endereco"));
                         barbeiroData.put("servicos", servicosEscolhidos);
                         barbeiroData.put("diasDisponiveis", diasDisponiveis);
 
                         db.collection("barbeiro").document(userId)
                                 .set(barbeiroData)
                                 .addOnSuccessListener(aVoid -> {
-                                    Intent intent = new Intent(CreateStoreActivity.this, ConfirmationActivity.class);
-                                    startActivity(intent);
+                                    setResult(RESULT_OK);
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {
-                                    Toast.makeText(CreateStoreActivity.this, "Erro ao salvar as configurações: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Log.e(TAG, "Erro ao salvar: " + e.getMessage(), e);
+                                    Toast.makeText(this, "Erro ao salvar", Toast.LENGTH_LONG).show();
                                 });
-                    } else {
-                        Toast.makeText(CreateStoreActivity.this, "Dados do usuário não encontrados.", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(CreateStoreActivity.this, "Erro ao recuperar dados do usuário: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Erro ao buscar usuário: " + e.getMessage(), e);
+                    Toast.makeText(this, "Erro ao carregar dados", Toast.LENGTH_LONG).show();
                 });
     }
 }
