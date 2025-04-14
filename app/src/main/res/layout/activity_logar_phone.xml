@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.SendCodeActivity">
 
-    <!-- Seta de voltar no topo -->
     <ImageView
         android:id="@+id/backArrow"
         android:layout_width="wrap_content"
@@ -17,7 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ScrollView com o conteúdo principal -->
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"

@@ -123,7 +123,6 @@ public class CreateStoreActivity extends AppCompatActivity {
                         db.collection("barbeiro").document(userId)
                                 .set(barbeiroData)
                                 .addOnSuccessListener(aVoid -> {
-                                    // Redireciona para a tela de confirmação
                                     Intent intent = new Intent(CreateStoreActivity.this, ConfirmationActivity.class);
                                     startActivity(intent);
                                     finish();

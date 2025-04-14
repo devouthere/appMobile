@@ -201,7 +201,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void dismissLoading() {
-        // Implementação opcional para dismiss de loading
     }
 
     private void showErrorDialog(String mensagem) {

@@ -80,11 +80,10 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         spinnerDias.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, diasDisponiveis));
 
-        // Listener para quando o dia selecionado mudar
         spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                criarBotoesDeHorario(); // Atualiza os horários quando o dia muda
+                criarBotoesDeHorario();
             }
 
             @Override
@@ -92,7 +91,6 @@ public class AgendamentoActivity extends AppCompatActivity {
             }
         });
 
-        // Cria os botões de horário para o dia inicial selecionado
         criarBotoesDeHorario();
 
         btnConfirmar.setOnClickListener(v -> salvarAgendamento());
@@ -106,16 +104,14 @@ public class AgendamentoActivity extends AppCompatActivity {
         gridLayoutHorarios.removeAllViews();
         gridLayoutHorarios.setColumnCount(4);
 
-        // Obtém o dia atualmente selecionado no spinner
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
 
-        // Limpa a seleção de horário quando muda o dia
         btnHorarioSelecionado = null;
         horarioSelecionado = null;
 
         db.collection("agendamentos")
                 .whereEqualTo("barbeiroId", barbeiroId)
-                .whereEqualTo("dia", diaSelecionado) // Filtra apenas agendamentos no dia selecionado
+                .whereEqualTo("dia", diaSelecionado)
                 .whereIn("status", List.of("pendente", "confirmado"))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -191,7 +187,7 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String nomeCliente = "Nome do Cliente"; // Você pode substituir pelo nome real do cliente
+        String nomeCliente = "Nome do Cliente";
 
         Agendamento agendamento = new Agendamento(
                 barbeiroId,
