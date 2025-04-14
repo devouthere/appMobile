@@ -46,7 +46,6 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alterar_agendamento);
 
-        // Configuração da seta de voltar
         ImageView backArrow = findViewById(R.id.backArrow);
         backArrow.setOnClickListener(v -> {
             Intent intent = new Intent(AlterarAgendamentoActivity.this, DashboardClientActivity.class);
