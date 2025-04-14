@@ -2,6 +2,8 @@ package com.example.app.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,7 +27,7 @@ import java.util.List;
 
 public class AgendamentoActivity extends AppCompatActivity {
 
-    private LinearLayout llServicos, llHorarios;
+    private LinearLayout llServicos;
     private Spinner spinnerDias;
     private Button btnConfirmar;
     private Button btnHorarioSelecionado;
@@ -78,6 +80,19 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         spinnerDias.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, diasDisponiveis));
 
+        // Listener para quando o dia selecionado mudar
+        spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                criarBotoesDeHorario(); // Atualiza os horários quando o dia muda
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        // Cria os botões de horário para o dia inicial selecionado
         criarBotoesDeHorario();
 
         btnConfirmar.setOnClickListener(v -> salvarAgendamento());
@@ -90,9 +105,19 @@ public class AgendamentoActivity extends AppCompatActivity {
         GridLayout gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
         gridLayoutHorarios.removeAllViews();
         gridLayoutHorarios.setColumnCount(4);
+
+        // Obtém o dia atualmente selecionado no spinner
+        String diaSelecionado = spinnerDias.getSelectedItem().toString();
+
+        // Limpa a seleção de horário quando muda o dia
+        btnHorarioSelecionado = null;
+        horarioSelecionado = null;
+
         db.collection("agendamentos")
                 .whereEqualTo("barbeiroId", barbeiroId)
-                .whereIn("status", List.of("pendente", "confirmado")).get()
+                .whereEqualTo("dia", diaSelecionado) // Filtra apenas agendamentos no dia selecionado
+                .whereIn("status", List.of("pendente", "confirmado"))
+                .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     List<String> horariosReservados = new ArrayList<>();
 
@@ -154,6 +179,11 @@ public class AgendamentoActivity extends AppCompatActivity {
             }
         }
 
+        if (servicosSelecionados.isEmpty()) {
+            Toast.makeText(this, "Por favor, selecione pelo menos um serviço.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (horarioSelecionado == null || horarioSelecionado.isEmpty()) {
             Toast.makeText(this, "Por favor, selecione um horário.", Toast.LENGTH_SHORT).show();
             return;
@@ -161,7 +191,7 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
         String clienteId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String nomeCliente = "Nome do Cliente";
+        String nomeCliente = "Nome do Cliente"; // Você pode substituir pelo nome real do cliente
 
         Agendamento agendamento = new Agendamento(
                 barbeiroId,
@@ -185,7 +215,7 @@ public class AgendamentoActivity extends AppCompatActivity {
                     intent.putExtra("SERVICO", String.join(", ", servicosSelecionados));
                     intent.putExtra("DATA_HORA", diaSelecionado + " - " + horarioSelecionado);
                     startActivity(intent);
-
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Erro ao agendar: " + e.getMessage(), Toast.LENGTH_LONG).show();
