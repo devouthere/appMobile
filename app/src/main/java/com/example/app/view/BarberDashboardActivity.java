@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ public class BarberDashboardActivity extends AppCompatActivity
     private static final int REQUEST_CODE_CREATE_STORE = 1;
     private static final String TAG = "BarberDashboard";
 
-    private TextView txtNome, tvUserEmail, txtEnderecoLoja, txtServicos, txtDiasFuncionamento;
+    private TextView txtNome, tvUserEmail, tvUserPhone, txtEnderecoLoja, txtServicos, txtDiasFuncionamento;
     private Button btnLoja;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -62,6 +61,7 @@ public class BarberDashboardActivity extends AppCompatActivity
     private void initViews() {
         txtNome = findViewById(R.id.txtNome);
         tvUserEmail = findViewById(R.id.tvUserEmail);
+        tvUserPhone = findViewById(R.id.tvUserPhone);
         txtEnderecoLoja = findViewById(R.id.txtEnderecoLoja);
         txtServicos = findViewById(R.id.txtServicos);
         txtDiasFuncionamento = findViewById(R.id.txtDiasFuncionamento);
@@ -110,8 +110,14 @@ public class BarberDashboardActivity extends AppCompatActivity
     private void loadUserData() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            // Mostra o email diretamente do Firebase Auth
-            tvUserEmail.setText(user.getEmail());
+            // Mostra o email ou telefone conforme o método de login
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                tvUserEmail.setText(user.getEmail());
+                tvUserPhone.setText("Não informado");
+            } else if (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty()) {
+                tvUserPhone.setText(user.getPhoneNumber());
+                tvUserEmail.setText("Não informado");
+            }
 
             db.collection("usuarios").document(user.getUid())
                     .get()
@@ -120,6 +126,10 @@ public class BarberDashboardActivity extends AppCompatActivity
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 txtNome.setText(document.getString("nome"));
+                                // Atualiza telefone se existir no Firestore
+                                if (document.contains("telefone")) {
+                                    tvUserPhone.setText(document.getString("telefone"));
+                                }
                             }
                         } else {
                             Log.e(TAG, "Erro ao carregar dados do usuário", task.getException());
