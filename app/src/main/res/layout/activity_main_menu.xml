@@ -54,37 +54,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="32dp"
-                android:text="Login"
+                android:text="Registre-se"
                 android:textColor="@color/Black"
-                android:textSize="24sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/SignWithEmail"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:text="ENTRAR COM EMAIL"
+                android:textSize="16sp"
                 android:textAlignment="center"
                 app:cornerRadius="10dp"
                 app:icon="@drawable/emailvector"
                 app:iconGravity="start"
                 app:iconPadding="12dp" />
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/Black"
+                android:textSize="14sp"
+                android:text="OU" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/SignWithLogin"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
+                android:layout_marginTop="10dp"
                 android:text="JÁ TENHO CONTA"
+                android:textSize="16sp"
                 android:textAlignment="center"
                 app:cornerRadius="10dp"
                 app:icon="@drawable/loginvector"
