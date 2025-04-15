@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="100dp"
                 android:fontFamily="sans-serif-light"
                 android:text="© 2025 BarberApp"
                 android:textColor="#757575"

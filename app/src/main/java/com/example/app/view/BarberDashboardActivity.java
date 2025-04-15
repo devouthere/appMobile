@@ -187,7 +187,7 @@ public class BarberDashboardActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Já está na home
+
         }
         else if (id == R.id.nav_clientes) {
             startActivity(new Intent(this, BarberClientsActivity.class));

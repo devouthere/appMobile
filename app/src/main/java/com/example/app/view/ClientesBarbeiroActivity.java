@@ -70,7 +70,6 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
                 finish();
             }
             else if (id == R.id.nav_profile) {
-                // Já está na tela de barbeiros
             }
             else if (id == R.id.nav_logout) {
                 realizarLogout();
