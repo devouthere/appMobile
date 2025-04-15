@@ -16,8 +16,7 @@ public class Agendamento {
     @ServerTimestamp
     private Date dataCriacao;
 
-    public Agendamento() {
-    }
+    public Agendamento() {}
 
     public Agendamento(String barbeiroId, String barbeiroNome, String clienteId, String clienteNome,
                        String dia, String horario, String servico, String status) {
