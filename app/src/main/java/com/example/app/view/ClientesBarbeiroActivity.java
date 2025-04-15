@@ -51,11 +51,11 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == com.example.app.R.id.nav_home) {
-                Toast.makeText(this, "Início selecionado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Agendamentos selecionado", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ClientesBarbeiroActivity.this, DashboardClientActivity.class));
                 finish();
             } else if (id == com.example.app.R.id.nav_profile) {
-                Toast.makeText(this, "Já está na tela de Clientes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Já está na tela de barbeiros disponíveis", Toast.LENGTH_SHORT).show();
             } else if (id == com.example.app.R.id.nav_logout) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(ClientesBarbeiroActivity.this, MainMenu.class));
