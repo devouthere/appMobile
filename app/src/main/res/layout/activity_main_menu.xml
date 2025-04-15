@@ -71,18 +71,6 @@
                 app:iconGravity="start"
                 app:iconPadding="12dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/SignWithTelefone"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_marginBottom="16dp"
-                android:text="ENTRAR COM TELEFONE"
-                android:textAlignment="center"
-                app:cornerRadius="10dp"
-                app:icon="@drawable/telefonevector"
-                app:iconGravity="start"
-                app:iconPadding="12dp" />
-
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
