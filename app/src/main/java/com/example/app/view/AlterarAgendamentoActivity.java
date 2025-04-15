@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app.R;
 import com.example.app.model.Agendamento;
 import com.example.app.model.Barbeiro;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -66,7 +67,6 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Limpa a seleção ao mudar de dia
                 if (btnHorarioAtualmenteSelecionado != null) {
                     btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.btntwo);
                     btnHorarioAtualmenteSelecionado.setTextColor(getResources().getColor(android.R.color.black));
@@ -259,7 +259,6 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                             btnHorario.setTextColor(getResources().getColor(android.R.color.black));
 
                             btnHorario.setOnClickListener(v -> {
-                                // Resetar todos os botões primeiro
                                 for (int i = 0; i < gridLayoutHorarios.getChildCount(); i++) {
                                     Button btn = (Button) gridLayoutHorarios.getChildAt(i);
                                     if (!horariosReservados.contains(btn.getText().toString())) {
@@ -268,17 +267,14 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                                     }
                                 }
 
-                                // Selecionar o novo horário
                                 v.setBackgroundResource(R.drawable.btn);
-                                ((Button)v).setTextColor(getResources().getColor(android.R.color.white));
+                                ((Button) v).setTextColor(getResources().getColor(android.R.color.white));
 
-                                // Atualizar referências
                                 btnHorarioAtualmenteSelecionado = (Button) v;
                                 horarioSelecionado = horario;
                             });
                         }
 
-                        // Pré-selecionar o horário atual se for o mesmo dia
                         if (diaSelecionado.equals(agendamentoAtual.getDia()) &&
                                 horario.equals(agendamentoAtual.getHorario())) {
                             btnHorario.setBackgroundResource(R.drawable.btn);
@@ -324,9 +320,11 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
             return;
         }
 
-        agendamentoAtual.setDia(diaSelecionado);
-        agendamentoAtual.setHorario(horarioSelecionado);
-        agendamentoAtual.setServico(String.join(", ", servicosSelecionados));
+        boolean houveAlteracoes = !diaSelecionado.equals(agendamentoAtual.getDia()) ||
+                !horarioSelecionado.equals(agendamentoAtual.getHorario()) ||
+                !String.join(", ", servicosSelecionados).equals(agendamentoAtual.getServico());
+
+        String novoStatus = houveAlteracoes ? "pendente" : agendamentoAtual.getStatus();
 
         db.collection("agendamentos").whereEqualTo("id", agendamentoId)
                 .get()
@@ -337,11 +335,18 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                                     .update(
                                             "dia", diaSelecionado,
                                             "horario", horarioSelecionado,
-                                            "servico", String.join(", ", servicosSelecionados)
+                                            "servico", String.join(", ", servicosSelecionados),
+                                            "status", novoStatus,
+                                            "dataAlteracao", FieldValue.serverTimestamp()
                                     )
                                     .addOnSuccessListener(aVoid -> {
+                                        String mensagem = houveAlteracoes ?
+                                                "Agendamento alterado e aguardando confirmação do barbeiro" :
+                                                "Agendamento atualizado";
+
                                         Toast.makeText(AlterarAgendamentoActivity.this,
-                                                "Agendamento atualizado com sucesso", Toast.LENGTH_SHORT).show();
+                                                mensagem, Toast.LENGTH_SHORT).show();
+
                                         Intent intent = new Intent(AlterarAgendamentoActivity.this, DashboardClientActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
