@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,6 +33,15 @@ public class LogarPhone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logar_phone);
+
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(LogarPhone.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
+
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

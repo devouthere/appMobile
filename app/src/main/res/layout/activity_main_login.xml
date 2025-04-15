@@ -8,6 +8,15 @@
     android:background="@android:color/white"
     tools:context=".view.LoginActivity">
 
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="32dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -106,7 +115,9 @@
                 android:textColor="#757575"
                 android:textSize="14sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <View
                 android:layout_width="match_parent"

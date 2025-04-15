@@ -3,6 +3,7 @@ package com.example.app.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,14 @@ public class CodeVerifyLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code_verify_login);
+
+        ImageView backArrow = findViewById(R.id.backArrow);
+        backArrow.setOnClickListener(v -> {
+            Intent intent = new Intent(CodeVerifyLogin.this, SendCodeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        });
 
 
         mAuth = FirebaseAuth.getInstance();
