@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,13 +33,14 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
 
     private LinearLayout llServicos;
     private Spinner spinnerDias;
-    private TimePicker timePicker;
     private TextView tvBarbeiroNome;
     private Button btnConfirmar;
     private FirebaseFirestore db;
     private String agendamentoId;
     private Agendamento agendamentoAtual;
     private final String TAG = "AlterarAgendamento";
+    private Button btnHorarioAtualmenteSelecionado = null;
+    private String horarioSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,24 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         setTitle("Alterar Agendamento");
+
+        spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Limpa a seleção ao mudar de dia
+                if (btnHorarioAtualmenteSelecionado != null) {
+                    btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.btntwo);
+                    btnHorarioAtualmenteSelecionado.setTextColor(getResources().getColor(android.R.color.black));
+                    btnHorarioAtualmenteSelecionado = null;
+                }
+                horarioSelecionado = null;
+                configurarHorariosDisponiveis();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         if (getIntent().hasExtra("id")) {
             agendamentoId = getIntent().getStringExtra("id");
@@ -84,8 +103,6 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
 
                             if (agendamentoAtual != null) {
                                 Log.d(TAG, "Agendamento encontrado: " + agendamentoAtual.toString());
-
-                                Log.d(TAG, "BarbeiroId: " + agendamentoAtual.getBarbeiroId());
                                 String barbeiroId = agendamentoAtual.getBarbeiroId();
 
                                 if (barbeiroId != null && !barbeiroId.isEmpty()) {
@@ -123,9 +140,7 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
 
                         if (barbeiro != null) {
                             Log.d(TAG, "Barbeiro encontrado: " + barbeiro.getNome());
-
                             tvBarbeiroNome.setText(barbeiro.getNome());
-
                             configurarDiasDisponiveis(barbeiro.getDiasDisponiveis());
                             configurarServicos(barbeiro.getServicos(), agendamentoAtual.getServico());
                             configurarHorariosDisponiveis();
@@ -189,14 +204,11 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
             CheckBox checkBox = new CheckBox(this);
             checkBox.setText(servico);
             checkBox.setTextSize(16);
-
             checkBox.setChecked(servicosSelecionados.contains(servico));
-
             llServicos.addView(checkBox);
         }
     }
 
-    private String horarioSelecionado;
     private void configurarHorariosDisponiveis() {
         String[] horarios = new String[]{"08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
                 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
@@ -204,14 +216,17 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
         GridLayout gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
         gridLayoutHorarios.removeAllViews();
         gridLayoutHorarios.setColumnCount(4);
+
         if (agendamentoAtual == null || agendamentoAtual.getBarbeiroId() == null) {
             Toast.makeText(this, "Erro: Barbeiro não encontrado", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        String diaSelecionado = spinnerDias.getSelectedItem().toString();
+
         db.collection("agendamentos")
                 .whereEqualTo("barbeiroId", agendamentoAtual.getBarbeiroId())
-                .whereEqualTo("dia", spinnerDias.getSelectedItem().toString())
+                .whereEqualTo("dia", diaSelecionado)
                 .whereIn("status", Arrays.asList("pendente", "confirmado"))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -242,31 +257,33 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                         } else {
                             btnHorario.setBackgroundResource(R.drawable.btntwo);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.black));
+
+                            btnHorario.setOnClickListener(v -> {
+                                // Resetar todos os botões primeiro
+                                for (int i = 0; i < gridLayoutHorarios.getChildCount(); i++) {
+                                    Button btn = (Button) gridLayoutHorarios.getChildAt(i);
+                                    if (!horariosReservados.contains(btn.getText().toString())) {
+                                        btn.setBackgroundResource(R.drawable.btntwo);
+                                        btn.setTextColor(getResources().getColor(android.R.color.black));
+                                    }
+                                }
+
+                                // Selecionar o novo horário
+                                v.setBackgroundResource(R.drawable.btn);
+                                ((Button)v).setTextColor(getResources().getColor(android.R.color.white));
+
+                                // Atualizar referências
+                                btnHorarioAtualmenteSelecionado = (Button) v;
+                                horarioSelecionado = horario;
+                            });
                         }
 
-                        btnHorario.setOnClickListener(v -> {
-                            for (int i = 0; i < gridLayoutHorarios.getChildCount(); i++) {
-                                Button btn = (Button) gridLayoutHorarios.getChildAt(i);
-
-                                if (horariosReservados.contains(btn.getText().toString())) {
-                                    btn.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                                    btn.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                                } else {
-                                    btn.setBackgroundResource(R.drawable.btntwo);
-                                    btn.setTextColor(getResources().getColor(android.R.color.black));
-                                }
-                            }
-
-                            horarioSelecionado = horario;
-
-                            v.setBackgroundResource(R.drawable.btntwo);
-                            ((Button)v).setTextColor(getResources().getColor(android.R.color.white));
-                        });
-
-                        if (horario.equals(agendamentoAtual.getHorario())) {
-                            btnHorario.setBackgroundResource(R.drawable.btntwo);
+                        // Pré-selecionar o horário atual se for o mesmo dia
+                        if (diaSelecionado.equals(agendamentoAtual.getDia()) &&
+                                horario.equals(agendamentoAtual.getHorario())) {
+                            btnHorario.setBackgroundResource(R.drawable.btn);
                             btnHorario.setTextColor(getResources().getColor(android.R.color.white));
-
+                            btnHorarioAtualmenteSelecionado = btnHorario;
                             horarioSelecionado = horario;
                         }
 
