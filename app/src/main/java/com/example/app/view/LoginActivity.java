@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app.R;
+import com.example.app.controller.ChooseOption;
 import com.example.app.controller.MainMenu;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtSenha;
     private Button btnLogin;
-    private TextView txtTelefone, txtEsqueciSenha, txtRegistrar;
+    private TextView txtRegistrar;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
@@ -53,17 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtSenha = findViewById(R.id.edtSenha);
         btnLogin = findViewById(R.id.btnLogin);
-        txtTelefone = findViewById(R.id.txtTelefone);
-        txtEsqueciSenha = findViewById(R.id.txtEsqueciSenha);
         txtRegistrar = findViewById(R.id.txtRegistrar);
     }
 
     private void setupClickListeners() {
-        txtTelefone.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, LogarPhone.class));
-        });
-
-        txtEsqueciSenha.setOnClickListener(v -> showResetPasswordDialog());
 
         btnLogin.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
@@ -75,10 +69,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         txtRegistrar.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, MainMenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Intent intent = new Intent(LoginActivity.this, ChooseOption.class);
             startActivity(intent);
-            finish();
         });
     }
 

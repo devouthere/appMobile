@@ -12,21 +12,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.app.R;
 import com.example.app.model.Agendamento;
 import com.example.app.model.Barbeiro;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AgendamentoActivity extends AppCompatActivity {
-
     private LinearLayout llServicos;
     private Spinner spinnerDias;
     private Button btnConfirmar;

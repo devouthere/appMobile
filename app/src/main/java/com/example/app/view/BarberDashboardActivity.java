@@ -32,13 +32,14 @@ public class BarberDashboardActivity extends AppCompatActivity
     private static final int REQUEST_CODE_CREATE_STORE = 1;
     private static final String TAG = "BarberDashboard";
 
-    private TextView txtNome, tvUserEmail, tvUserPhone, txtEnderecoLoja, txtServicos, txtDiasFuncionamento;
+    private TextView txtNome, tvUserEmail, txtEnderecoLoja, txtServicos, txtDiasFuncionamento;
     private Button btnLoja;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Toolbar toolbar;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,77 +47,72 @@ public class BarberDashboardActivity extends AppCompatActivity
         setContentView(R.layout.activity_barber_dashboard);
 
         try {
-            initViews();
-            setupFirebase();
-            setupNavigationDrawer();
-            loadUserData();
-            checkIfBarberDataExists();
+            inicializarComponentes();
+            configurarFirebase();
+            configurarNavigationDrawer();
+            carregarDadosUsuario();
+            verificarDadosBarbearia();
         } catch (Exception e) {
             Log.e(TAG, "Erro no onCreate: " + e.getMessage(), e);
-            Toast.makeText(this, "Erro ao inicializar a tela", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro ao carregar o painel", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
-    private void initViews() {
+    private void inicializarComponentes() {
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
         txtNome = findViewById(R.id.txtNome);
         tvUserEmail = findViewById(R.id.tvUserEmail);
-        tvUserPhone = findViewById(R.id.tvUserPhone);
         txtEnderecoLoja = findViewById(R.id.txtEnderecoLoja);
         txtServicos = findViewById(R.id.txtServicos);
         txtDiasFuncionamento = findViewById(R.id.txtDiasFuncionamento);
-        btnLoja = findViewById(R.id.btnLoja);
 
-        btnLoja.setOnClickListener(v -> {
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user != null) {
-                db.collection("barbeiro").document(user.getUid())
-                        .get()
-                        .addOnSuccessListener(document -> {
-                            Intent intent = new Intent(BarberDashboardActivity.this, CreateStoreActivity.class);
-                            if (document.exists()) {
-                                intent.putExtra("editing", true);
-                            }
-                            startActivityForResult(intent, REQUEST_CODE_CREATE_STORE);
-                        })
-                        .addOnFailureListener(e -> {
-                            Log.e(TAG, "Erro ao verificar loja existente", e);
-                            Toast.makeText(BarberDashboardActivity.this, "Erro ao verificar dados", Toast.LENGTH_SHORT).show();
-                        });
-            }
-        });
+        btnLoja = findViewById(R.id.btnLoja);
+        btnLoja.setOnClickListener(v -> gerenciarBarbearia());
     }
 
-    private void setupFirebase() {
+    private void configurarFirebase() {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
     }
 
-    private void setupNavigationDrawer() {
-        toolbar = findViewById(R.id.toolbar);
+    private void configurarNavigationDrawer() {
         setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.openDrawer, R.string.closeDrawer);
+
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void loadUserData() {
+    private void gerenciarBarbearia() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
-                tvUserEmail.setText(user.getEmail());
-                tvUserPhone.setText("Não informado");
-            } else if (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty()) {
-                tvUserPhone.setText(user.getPhoneNumber());
-                tvUserEmail.setText("Não informado");
-            }
+            db.collection("barbeiro").document(user.getUid())
+                    .get()
+                    .addOnSuccessListener(document -> {
+                        Intent intent = new Intent(this, CreateStoreActivity.class);
+                        if (document.exists()) {
+                            intent.putExtra("editing", true);
+                        }
+                        startActivityForResult(intent, REQUEST_CODE_CREATE_STORE);
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Erro ao verificar loja existente", e);
+                    });
+        }
+    }
+
+    private void carregarDadosUsuario() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            tvUserEmail.setText(user.getEmail() != null ? user.getEmail() : "Não informado");
 
             db.collection("usuarios").document(user.getUid())
                     .get()
@@ -125,9 +121,6 @@ public class BarberDashboardActivity extends AppCompatActivity
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 txtNome.setText(document.getString("nome"));
-                                if (document.contains("telefone")) {
-                                    tvUserPhone.setText(document.getString("telefone"));
-                                }
                             }
                         } else {
                             Log.e(TAG, "Erro ao carregar dados do usuário", task.getException());
@@ -136,7 +129,7 @@ public class BarberDashboardActivity extends AppCompatActivity
         }
     }
 
-    private void checkIfBarberDataExists() {
+    private void verificarDadosBarbearia() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             db.collection("barbeiro").document(user.getUid())
@@ -146,10 +139,11 @@ public class BarberDashboardActivity extends AppCompatActivity
                             DocumentSnapshot document = task.getResult();
                             runOnUiThread(() -> {
                                 if (document != null && document.exists()) {
-                                    displayBarberData(document);
+                                    exibirDadosBarbearia(document);
                                     btnLoja.setText("ALTERAR LOJA");
                                 } else {
                                     btnLoja.setText("CRIAR LOJA");
+                                    Toast.makeText(this, "Complete seu cadastro profissional", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -157,7 +151,7 @@ public class BarberDashboardActivity extends AppCompatActivity
         }
     }
 
-    private void displayBarberData(DocumentSnapshot document) {
+    private void exibirDadosBarbearia(DocumentSnapshot document) {
         try {
             txtEnderecoLoja.setText(document.getString("endereco"));
 
@@ -177,14 +171,15 @@ public class BarberDashboardActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CREATE_STORE && resultCode == RESULT_OK) {
-            checkIfBarberDataExists();
+            Toast.makeText(this, "Dados atualizados com sucesso!", Toast.LENGTH_SHORT).show();
+            verificarDadosBarbearia();
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkIfBarberDataExists();
+        verificarDadosBarbearia();
     }
 
     @Override
@@ -192,20 +187,21 @@ public class BarberDashboardActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            startActivity(new Intent(this, BarberDashboardActivity.class));
-            finish();
-        } else if (id == R.id.nav_clientes) {
+
+        }
+        else if (id == R.id.nav_clientes) {
             startActivity(new Intent(this, BarberClientsActivity.class));
             finish();
-        } else if (id == R.id.nav_logout) {
-            logout();
+        }
+        else if (id == R.id.nav_logout) {
+            realizarLogout();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void logout() {
+    private void realizarLogout() {
         mAuth.signOut();
         startActivity(new Intent(this, MainMenu.class));
         finish();

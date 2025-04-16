@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancelar"
+                android:textSize="14sp"
                 android:backgroundTint="@color/Red"
                 android:textColor="@android:color/white"/>
 
@@ -78,6 +79,7 @@
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
                 android:text="Alterar"
+                android:textSize="14sp"
                 android:backgroundTint="@color/blueish"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
