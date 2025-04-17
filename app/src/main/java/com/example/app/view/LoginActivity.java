@@ -25,11 +25,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText edtEmail, edtSenha;
-    private Button btnLogin;
-    private TextView txtRegistrar;
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
+    public EditText edtEmail;
+    public EditText edtSenha;
+    public Button btnLogin;
+    public TextView txtRegistrar;
+    public FirebaseFirestore db;
+    public FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

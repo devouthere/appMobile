@@ -41,6 +41,10 @@ android {
 }
 
 dependencies {
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.mockito:mockito-core:4.3.1")
+    testImplementation ("org.mockito:mockito-inline:4.3.1")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.android.material:material:1.7.0")
     implementation(libs.androidx.core.ktx)
