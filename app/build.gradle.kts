@@ -41,9 +41,12 @@ android {
 }
 
 dependencies {
+    testImplementation ("org.robolectric:robolectric:4.10")
+    testImplementation ("net.bytebuddy:byte-buddy:1.14.8")
+    testImplementation ("net.bytebuddy:byte-buddy-agent:1.14.8")
     testImplementation ("junit:junit:4.13.2")
-    testImplementation ("org.mockito:mockito-core:4.3.1")
-    testImplementation ("org.mockito:mockito-inline:4.3.1")
+    testImplementation ("org.mockito:mockito-core:5.3.1")
+    testImplementation ("org.mockito:mockito-inline:4.11.0")
     testImplementation ("androidx.arch.core:core-testing:2.2.0")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.android.material:material:1.7.0")
