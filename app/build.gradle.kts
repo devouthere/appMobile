@@ -33,6 +33,16 @@ android {
         }
         debug {
             enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
+        }
+        getByName("debug") {
+            enableAndroidTestCoverage = true  // Habilita cobertura de código para o buildType debug
+        }
+        packagingOptions {
+            exclude("META-INF/LICENSE.md")
+            exclude("META-INF/LICENSE-notice.md")
+            exclude("META-INF/DEPENDENCIES")
+            exclude("META-INF/ASL2.0")
         }
     }
 
@@ -55,46 +65,47 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for androidTest"
 
+    // Diretórios de origem
     val coverageSourceDirs = listOf(
-        "src/main/java",
-        "src/main/kotlin"  // Adicionando diretório Kotlin
+        "${project.projectDir}/src/main/java",
+        "${project.projectDir}/src/main/kotlin"
     )
 
-    val classFiles = fileTree(
-        mapOf(
-            "dir" to "$buildDir/tmp/kotlin-classes/debug",
-            "excludes" to listOf(
-                "**/R.class",
-                "**/R$*.class",
-                "**/BuildConfig.*",
-                "**/Manifest*.*",
-                "**/*Test*.*",
-                "android/**/*.*",
-                "com/sun/tools/*"  // Excluindo pacotes internos da JVM
-            )
-        )
-    )
-
-    val executionData = fileTree(buildDir) {
+    // Arquivos de classes
+    val classFiles = fileTree("${buildDir}") {
         include(
-            "outputs/code_coverage/debugAndroidTest/connected/*.ec"
+            "intermediates/javac/debug/**/*.class",
+            "tmp/kotlin-classes/debug/**/*.class"
+        )
+        exclude(
+            "**/R.class",
+            "**/R$*.class",
+            "**/BuildConfig.*",
+            "**/Manifest*.*",
+            "**/*Test*.*",
+            "**/com/example/app/controller/AgendamentoAdapter\$AgendamentoViewHolder.class"
         )
     }
 
-    sourceDirectories.setFrom(files(coverageSourceDirs))
-    classDirectories.setFrom(files(classFiles))
+    // Arquivos de execução
+    val executionDataFiles = fileTree(buildDir) {
+        include(
+            "outputs/code_coverage/debugAndroidTest/connected/**/*.ec",
+            "outputs/code-coverage/connected/**/*.ec"
+        )
+    }
+
+    // Use a sintaxe com from()
+    sourceDirectories.from(files(coverageSourceDirs))
+    classDirectories.from(files(classFiles))
+    executionData.from(files(executionDataFiles))
 
     reports {
         html.required.set(true)
         xml.required.set(true)
-        csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReportAndroid/html"))
+        html.outputLocation.set(file("${buildDir}/reports/jacoco/androidTest/html"))
     }
 }
-
-
-
-
 
 
 dependencies {
