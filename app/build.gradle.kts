@@ -1,10 +1,14 @@
+import org.gradle.testing.jacoco.tasks.JacocoReport
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    jacoco
 }
 
 android {
+
     namespace = "com.example.app"
     compileSdk = 35
 
@@ -27,7 +31,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+            enableUnitTestCoverage = true
+        }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -38,34 +46,104 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+}
+tasks.register<JacocoReport>("jacocoTestReportAndroid") {
+    dependsOn("connectedDebugAndroidTest")
+
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for androidTest"
+
+    val coverageSourceDirs = listOf(
+        "src/main/java"
+    )
+
+    val classFiles = fileTree(
+        mapOf(
+            "dir" to "$buildDir/tmp/kotlin-classes/debug",
+            "excludes" to listOf(
+                "**/R.class",
+                "**/R$*.class",
+                "**/BuildConfig.*",
+                "**/Manifest*.*",
+                "**/*Test*.*",
+                "android/**/*.*"
+            )
+        )
+    )
+
+    val executionData = fileTree(buildDir) {
+        include(
+            "outputs/code_coverage/debugAndroidTest/connected/*.ec"
+        )
+    }
+
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+    classDirectories.setFrom(files(classFiles))
+
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReportAndroid/html"))
+    }
 }
 
+
+
+
+
 dependencies {
-    testImplementation ("org.robolectric:robolectric:4.10")
-    testImplementation ("net.bytebuddy:byte-buddy:1.14.8")
-    testImplementation ("net.bytebuddy:byte-buddy-agent:1.14.8")
-    testImplementation ("junit:junit:4.13.2")
-    testImplementation ("org.mockito:mockito-core:5.3.1")
-    testImplementation ("org.mockito:mockito-inline:4.11.0")
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.google.android.material:material:1.7.0")
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-    testImplementation(libs.junit)
+    implementation(libs.androidx.espresso.intents)
+
+    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-inline:4.11.0")
+    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation ("org.hamcrest:hamcrest:2.2")
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("org.mockito:mockito-core:5.3.1")
+
+
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+
+
+    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
+    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+
+
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+
+
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 }
+
+
+jacoco{
+    toolVersion = "0.8.8"
+}
+
+
+
+
