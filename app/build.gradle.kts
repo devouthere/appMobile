@@ -48,6 +48,7 @@ android {
     }
 
 }
+
 tasks.register<JacocoReport>("jacocoTestReportAndroid") {
     dependsOn("connectedDebugAndroidTest")
 
@@ -55,7 +56,8 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
     description = "Generate Jacoco coverage reports for androidTest"
 
     val coverageSourceDirs = listOf(
-        "src/main/java"
+        "src/main/java",
+        "src/main/kotlin"  // Adicionando diretório Kotlin
     )
 
     val classFiles = fileTree(
@@ -67,7 +69,8 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
                 "**/BuildConfig.*",
                 "**/Manifest*.*",
                 "**/*Test*.*",
-                "android/**/*.*"
+                "android/**/*.*",
+                "com/sun/tools/*"  // Excluindo pacotes internos da JVM
             )
         )
     )
@@ -88,6 +91,7 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
         html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/jacocoTestReportAndroid/html"))
     }
 }
+
 
 
 
