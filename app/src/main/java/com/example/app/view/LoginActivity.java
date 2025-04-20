@@ -157,38 +157,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void showResetPasswordDialog() {
-        String email = edtEmail.getText().toString().trim();
-
-        new AlertDialog.Builder(this)
-                .setTitle("Redefinir senha")
-                .setMessage("Enviar e-mail de redefinição para " + (email.isEmpty() ? "seu endereço?" : email))
-                .setPositiveButton("Enviar", (dialog, which) -> {
-                    if (email.isEmpty()) {
-                        edtEmail.setError("Digite seu e-mail para redefinir");
-                        return;
-                    }
-                    enviarEmailRedefinicao(email);
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
-    }
-
-    private void enviarEmailRedefinicao(String email) {
-        showLoading("Enviando e-mail...");
-
-        mAuth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(task -> {
-                    dismissLoading();
-
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "E-mail de redefinição enviado!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        showErrorDialog("Falha ao enviar e-mail: " + task.getException().getMessage());
-                    }
-                });
-    }
-
     private void showLoading(String mensagem) {
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }

@@ -16,13 +16,16 @@
       <SelectionState runConfigName="LoginActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testLogin_withEmptyFields_shouldShowErrors()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="LoginActivity">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="testBackArrowClick_shouldNavigateToMainMenu()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testLoginWithEmailPassword_validCredentials()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testEsqueciSenha_showsDialog()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testLoginError_handlesAuthExceptions()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
