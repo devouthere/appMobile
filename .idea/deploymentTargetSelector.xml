@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest">
+      <SelectionState runConfigName="testLoginErrorDialog_shouldShowErrorMessage()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testLoginSuccess_shouldCallVerificarTipoDeUsuario()">
+      <SelectionState runConfigName="testTratarErroLogin_InvalidUserException()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testLoginFailure_shouldShowErrorDialog()">
+      <SelectionState runConfigName="testTratarErroLogin_InvalidCredentialsException()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testVerificarTipoDeUsuario_userFound_success()">
+      <SelectionState runConfigName="testTratarErroLogin_GenericException()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testVerificarTipoDeUsuario_redirecionaParaBarbeiro()">
+      <SelectionState runConfigName="testTratarErroLogin_ExceptionWithNullMessage()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

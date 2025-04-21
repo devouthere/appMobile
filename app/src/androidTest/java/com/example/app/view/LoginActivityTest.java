@@ -6,8 +6,12 @@ package com.example.app.view;
 
 import com.example.app.R;
 import com.example.app.controller.MainMenu;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,10 +33,12 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -191,5 +197,81 @@ public class LoginActivityTest {
         intended(hasComponent(ClientesBarbeiroActivity.class.getName()));
     }
 
+    @Test
+    public void testTratarErroLogin_InvalidUserException() {
 
+        activityRule.getScenario().onActivity(activity -> {
+            // Chamar diretamente o método que exibe o diálogo com a mensagem específica
+            activity.showErrorDialog("E-mail não cadastrado ou conta desativada");
+        });
+
+        try {
+            Thread.sleep(1000); // 1 segundo
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withText("E-mail não cadastrado ou conta desativada"))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+
+        onView(withText("OK"))
+                .inRoot(isDialog())
+                .perform(click());
+    }
+
+
+    @Test
+    public void testTratarErroLogin_InvalidCredentialsException() {
+        activityRule.getScenario().onActivity(activity -> {
+            FirebaseAuthInvalidCredentialsException mockException = Mockito.mock(FirebaseAuthInvalidCredentialsException.class);
+
+            activity.tratarErroLogin(mockException);
+        });
+
+        onView(withText("Senha incorreta ou e-mail inválido"))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+
+        onView(withText("OK"))
+                .inRoot(isDialog())
+                .perform(click());
+    }
+
+    @Test
+    public void testTratarErroLogin_GenericException() {
+        activityRule.getScenario().onActivity(activity -> {
+
+            Exception mockException = Mockito.mock(Exception.class);
+            when(mockException.getMessage()).thenReturn("Erro genérico");
+
+            activity.tratarErroLogin(mockException);
+        });
+
+        onView(withText("Erro ao fazer login: Erro genérico"))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+
+        onView(withText("OK"))
+                .inRoot(isDialog())
+                .perform(click());
+    }
+
+    @Test
+    public void testTratarErroLogin_ExceptionWithNullMessage() {
+        activityRule.getScenario().onActivity(activity -> {
+            Exception mockException = Mockito.mock(Exception.class);
+            when(mockException.getMessage()).thenReturn(null);
+            activity.tratarErroLogin(mockException);
+        });
+
+
+        onView(withText("Erro ao fazer login: null"))
+                .inRoot(isDialog())
+                .check(matches(isDisplayed()));
+
+        onView(withText("OK"))
+                .inRoot(isDialog())
+                .perform(click());
+    }
 }

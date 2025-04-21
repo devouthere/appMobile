@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void tratarErroLogin(Exception exception) {
+    public void tratarErroLogin(Exception exception) {
         try {
             throw exception;
         } catch (FirebaseAuthInvalidUserException e) {
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
     private void dismissLoading() {
     }
 
-    private void showErrorDialog(String mensagem) {
+    void showErrorDialog(String mensagem) {
         new AlertDialog.Builder(this)
                 .setTitle("Erro")
                 .setMessage(mensagem)
