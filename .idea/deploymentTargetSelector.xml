@@ -16,16 +16,16 @@
       <SelectionState runConfigName="LoginActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testBackArrowClick_shouldNavigateToMainMenu()">
+      <SelectionState runConfigName="testLoginSuccess_shouldCallVerificarTipoDeUsuario()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testLoginWithEmailPassword_validCredentials()">
+      <SelectionState runConfigName="testLoginFailure_shouldShowErrorDialog()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testEsqueciSenha_showsDialog()">
+      <SelectionState runConfigName="testVerificarTipoDeUsuario_userFound_success()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testLoginError_handlesAuthExceptions()">
+      <SelectionState runConfigName="testVerificarTipoDeUsuario_redirecionaParaBarbeiro()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

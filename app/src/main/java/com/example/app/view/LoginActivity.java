@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void verificarTipoDeUsuario(String userId) {
+    void verificarTipoDeUsuario(String userId) {
         showLoading("Verificando perfil...");
 
         DocumentReference docRef = db.collection("usuarios").document(userId);

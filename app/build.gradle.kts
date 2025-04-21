@@ -128,22 +128,17 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.androidx.espresso.intents)
 
-    testImplementation("org.mockito:mockito-core:5.3.1")
-    testImplementation("org.mockito:mockito-inline:4.11.0")
-    testImplementation("io.mockk:mockk:1.13.4")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation ("org.hamcrest:hamcrest:2.2")
-
+    androidTestImplementation("org.mockito:mockito-android:5.11.0")
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation("org.mockito:mockito-core:5.3.1")
-
-
-    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
-
 
     testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
     testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.hamcrest:hamcrest:2.2")
+
 
 
     implementation(libs.firebase.auth)
