@@ -13,10 +13,16 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="AgendamentoAdapterTest">
+      <SelectionState runConfigName="ChooseOptionTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testTratarErroLogin_GenericException()">
+      <SelectionState runConfigName="MainMenuTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="BarberClientsAdapterTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testOnClickConfirmAndCancel()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
