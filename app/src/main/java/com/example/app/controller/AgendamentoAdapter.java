@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.AgendamentoViewHolder> {
-    private List<Agendamento> agendamentos;
+    List<Agendamento> agendamentos;
     private FirebaseFirestore db;
 
     public AgendamentoAdapter(List<Agendamento> agendamentos) {
@@ -31,7 +31,7 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
         this.db = FirebaseFirestore.getInstance();
     }
 
-    private List<Agendamento> ordenarAgendamentos(List<Agendamento> listaOriginal) {
+    public List<Agendamento> ordenarAgendamentos(List<Agendamento> listaOriginal) {
         List<Agendamento> listaOrdenada = new ArrayList<>(listaOriginal);
         Collections.sort(listaOrdenada, (a1, a2) -> {
             int prioridade1 = getPrioridadeStatus(a1.getStatus());
@@ -41,7 +41,7 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
         return listaOrdenada;
     }
 
-    private int getPrioridadeStatus(String status) {
+    int getPrioridadeStatus(String status) {
         if (status == null) return 3;
         switch (status.toLowerCase()) {
             case "pendente": return 1;
