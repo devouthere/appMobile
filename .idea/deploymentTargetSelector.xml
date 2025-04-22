@@ -16,6 +16,9 @@
       <SelectionState runConfigName="AgendamentoAdapterTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="testTratarErroLogin_GenericException()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
