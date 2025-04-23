@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="AgendamentoActivityTest">
+      <SelectionState runConfigName="testOnCreateViewHolder()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testValidacaoDeCamposDeAgendamento()">
+      <SelectionState runConfigName="testOnBindViewHolder_pendente()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testValidacaoDeInputsEComponentes()">
+      <SelectionState runConfigName="testOrdenarAgendamentos_mesmoStatus()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testControleDeHorariosDisponiveisEIndisponiveis()">
+      <SelectionState runConfigName="testOrdenarAgendamentos_diferentesStatus()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testProcessamentoAgendamentosEControleHorarios()">
+      <SelectionState runConfigName="testOrdenarAgendamentos_comVariosItens()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
