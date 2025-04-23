@@ -1,3 +1,7 @@
+//./gradlew clean
+//./gradlew connectedDebugAndroidTest
+//./gradlew jacocoTestReportAndroid
+
 package com.example.app.controller;
 
 import android.content.Context;
@@ -85,7 +89,6 @@ public class BarbeiroAdapterTest {
 
         adapter = new BarbeiroAdapter(listaBarbeiros);
 
-        // Verifica novamente
         assertEquals(2, adapter.getItemCount());
     }
 

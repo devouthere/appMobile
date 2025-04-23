@@ -1,3 +1,7 @@
+//./gradlew clean
+//./gradlew connectedDebugAndroidTest
+//./gradlew jacocoTestReportAndroid
+
 package com.example.app.view;
 
 import android.content.Intent;
@@ -80,14 +84,12 @@ public class AgendamentoActivityTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        // Criar um barbeiro de teste
         barbeiroFake = new Barbeiro();
         barbeiroFake.setId("barbeiro123");
         barbeiroFake.setNome("João Barbeiro");
         barbeiroFake.setServicos(Arrays.asList("Corte", "Barba"));
         barbeiroFake.setDiasDisponiveis(Arrays.asList("Segunda", "Terça"));
 
-        // Configurar mocks do Firebase
         when(mockAuth.getCurrentUser()).thenReturn(mockUser);
         when(mockUser.getUid()).thenReturn("cliente123");
         when(mockDb.collection("agendamentos")).thenReturn(mockCollectionReference);
@@ -97,7 +99,6 @@ public class AgendamentoActivityTest {
         when(mockDocumentReference.getId()).thenReturn("agendamento123");
     }
 
-    // Método auxiliar para acessar o horário selecionado na activity
     private String getHorarioSelecionado(AgendamentoActivity activity) {
         try {
             java.lang.reflect.Field field = AgendamentoActivity.class.getDeclaredField("horarioSelecionado");
@@ -108,7 +109,6 @@ public class AgendamentoActivityTest {
         }
     }
 
-    // Método auxiliar para definir o horário selecionado na activity
     private void setHorarioSelecionado(AgendamentoActivity activity, String horario) {
         try {
             java.lang.reflect.Field field = AgendamentoActivity.class.getDeclaredField("horarioSelecionado");
@@ -187,12 +187,10 @@ public class AgendamentoActivityTest {
                 "com.example.app.view.AgendamentoActivity"
         ))) {
             scenario.onActivity(activity -> {
-                // Aguarda o layout ser totalmente carregado
                 activity.findViewById(R.id.gridLayoutHorarios).post(() -> {
                     GridLayout gridLayoutHorarios = activity.findViewById(R.id.gridLayoutHorarios);
                     Button primeiroBtn = (Button) gridLayoutHorarios.getChildAt(0);
 
-                    // Verifica se o botão não é null antes de interagir
                     if (primeiroBtn != null) {
                         primeiroBtn.setEnabled(true);
                         primeiroBtn.performClick();
@@ -218,7 +216,7 @@ public class AgendamentoActivityTest {
         ))) {
             scenario.onActivity(activity -> {
                 Spinner spinner = activity.findViewById(R.id.spinnerDias);
-                spinner.setSelection(1); // "Terça"
+                spinner.setSelection(1);
                 assertEquals("Terça", spinner.getSelectedItem());
             });
         }

@@ -1,3 +1,7 @@
+//./gradlew clean
+//./gradlew connectedDebugAndroidTest
+//./gradlew jacocoTestReportAndroid
+
 package com.example.app.controller;
 
 import com.example.app.model.Agendamento;

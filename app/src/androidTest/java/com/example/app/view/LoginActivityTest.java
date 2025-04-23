@@ -99,7 +99,6 @@ public class LoginActivityTest {
     @Test
     public void testLoginSuccess_shouldCallVerificarTipoDeUsuario() {
         activityRule.getScenario().onActivity(activity -> {
-            // MOCKS
             FirebaseAuth mockAuth = org.mockito.Mockito.mock(FirebaseAuth.class);
             @SuppressWarnings("unchecked")
             com.google.android.gms.tasks.Task<com.google.firebase.auth.AuthResult> mockTask =
@@ -122,7 +121,6 @@ public class LoginActivityTest {
             activity.mAuth = mockAuth;
         });
 
-        // Agora simula o clique com dados válidos fora do onActivity
         onView(withId(R.id.edtEmail)).perform(typeText("test@example.com"), closeSoftKeyboard());
         onView(withId(R.id.edtSenha)).perform(typeText("password123"), closeSoftKeyboard());
         onView(withId(R.id.btnLogin)).perform(click());
@@ -132,7 +130,6 @@ public class LoginActivityTest {
     @Test
     public void testVerificarTipoDeUsuario_redirecionaParaBarbeiro() {
         activityRule.getScenario().onActivity(activity -> {
-            // Mocks
             FirebaseFirestore mockFirestore = Mockito.mock(FirebaseFirestore.class);
             DocumentReference mockDocRef = Mockito.mock(DocumentReference.class);
             Task<DocumentSnapshot> mockTask = Mockito.mock(Task.class);
@@ -197,12 +194,11 @@ public class LoginActivityTest {
     public void testTratarErroLogin_InvalidUserException() {
 
         activityRule.getScenario().onActivity(activity -> {
-            // Chamar diretamente o método que exibe o diálogo com a mensagem específica
             activity.showErrorDialog("E-mail não cadastrado ou conta desativada");
         });
 
         try {
-            Thread.sleep(1000); // 1 segundo
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
