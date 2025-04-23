@@ -44,7 +44,7 @@ public class ChooseOption extends AppCompatActivity {
         btnCliente.setOnClickListener(v -> abrirTelaRegistro(false));
     }
 
-    private void abrirTelaRegistro(boolean isBarbeiro) {
+    public void abrirTelaRegistro(boolean isBarbeiro) {
         Intent intent = new Intent(ChooseOption.this, RegisterActivity.class);
         intent.putExtra("isBarbeiro", isBarbeiro);
         startActivity(intent);
