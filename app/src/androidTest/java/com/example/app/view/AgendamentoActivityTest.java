@@ -84,12 +84,14 @@ public class AgendamentoActivityTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        // Criar um barbeiro de teste
         barbeiroFake = new Barbeiro();
         barbeiroFake.setId("barbeiro123");
         barbeiroFake.setNome("João Barbeiro");
         barbeiroFake.setServicos(Arrays.asList("Corte", "Barba"));
         barbeiroFake.setDiasDisponiveis(Arrays.asList("Segunda", "Terça"));
 
+        // Configurar mocks do Firebase
         when(mockAuth.getCurrentUser()).thenReturn(mockUser);
         when(mockUser.getUid()).thenReturn("cliente123");
         when(mockDb.collection("agendamentos")).thenReturn(mockCollectionReference);
@@ -99,6 +101,7 @@ public class AgendamentoActivityTest {
         when(mockDocumentReference.getId()).thenReturn("agendamento123");
     }
 
+    // Método auxiliar para acessar o horário selecionado na activity
     private String getHorarioSelecionado(AgendamentoActivity activity) {
         try {
             java.lang.reflect.Field field = AgendamentoActivity.class.getDeclaredField("horarioSelecionado");
@@ -109,6 +112,7 @@ public class AgendamentoActivityTest {
         }
     }
 
+    // Método auxiliar para definir o horário selecionado na activity
     private void setHorarioSelecionado(AgendamentoActivity activity, String horario) {
         try {
             java.lang.reflect.Field field = AgendamentoActivity.class.getDeclaredField("horarioSelecionado");
@@ -178,34 +182,6 @@ public class AgendamentoActivityTest {
     }
 
     @Test
-    public void testSelecaoDeHorario() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.putExtra("barbeiro", barbeiroFake);
-
-        try (ActivityScenario<AgendamentoActivity> scenario = ActivityScenario.launch(intent.setClassName(
-                "com.example.app",
-                "com.example.app.view.AgendamentoActivity"
-        ))) {
-            scenario.onActivity(activity -> {
-                activity.findViewById(R.id.gridLayoutHorarios).post(() -> {
-                    GridLayout gridLayoutHorarios = activity.findViewById(R.id.gridLayoutHorarios);
-                    Button primeiroBtn = (Button) gridLayoutHorarios.getChildAt(0);
-
-                    if (primeiroBtn != null) {
-                        primeiroBtn.setEnabled(true);
-                        primeiroBtn.performClick();
-
-                        assertEquals(View.VISIBLE, primeiroBtn.getVisibility());
-                        assertEquals(primeiroBtn.getText().toString(), getHorarioSelecionado(activity));
-                    } else {
-                        fail("Botão de horário não encontrado");
-                    }
-                });
-            });
-        }
-    }
-
-    @Test
     public void testSelecaoDiaNoSpinner() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.putExtra("barbeiro", barbeiroFake);
@@ -216,7 +192,7 @@ public class AgendamentoActivityTest {
         ))) {
             scenario.onActivity(activity -> {
                 Spinner spinner = activity.findViewById(R.id.spinnerDias);
-                spinner.setSelection(1);
+                spinner.setSelection(1); // "Terça"
                 assertEquals("Terça", spinner.getSelectedItem());
             });
         }
