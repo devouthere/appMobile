@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="BarberClientsAdapterTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="AgendamentoActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AgendamentoActivity">
+      <SelectionState runConfigName="testValidacaoDeCamposDeAgendamento()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testSelecaoDeHorario()">
+      <SelectionState runConfigName="testValidacaoDeInputsEComponentes()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="LoginActivityTest">
+      <SelectionState runConfigName="testControleDeHorariosDisponiveisEIndisponiveis()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testProcessamentoAgendamentosEControleHorarios()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
