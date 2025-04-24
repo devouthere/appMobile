@@ -7,9 +7,6 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -21,13 +18,6 @@
         android:theme="@style/Theme.AppDelivery"
         tools:targetApi="31">
 
-        <!-- Suas activities existentes... -->
-        <activity
-            android:name=".view.CodeVerifyLogin"
-            android:exported="false" />
-        <activity
-            android:name=".view.LogarPhone"
-            android:exported="false" />
         <activity
             android:name=".view.AlterarAgendamentoActivity"
             android:exported="false" />
@@ -47,12 +37,6 @@
             android:name=".view.BarberDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".view.VerifyCodeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.SendCodeActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
@@ -65,7 +49,6 @@
             android:name=".controller.MainMenu"
             android:exported="false" />
 
-        <!-- Adicione a ConfirmationActivity AQUI, como uma activity separada -->
         <activity
             android:name=".view.ConfirmationActivity"
             android:exported="false"
@@ -81,7 +64,6 @@
             android:label="Meus Clientes"
             android:parentActivityName=".view.BarberDashboardActivity"/>
 
-        <!-- MainActivity (LAUNCHER) deve ficar por último -->
         <activity
             android:name=".view.MainActivity"
             android:exported="true">

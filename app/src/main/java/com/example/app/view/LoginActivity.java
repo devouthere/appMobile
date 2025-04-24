@@ -25,11 +25,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText edtEmail, edtSenha;
-    private Button btnLogin;
-    private TextView txtRegistrar;
-    private FirebaseFirestore db;
-    private FirebaseAuth mAuth;
+    public EditText edtEmail;
+    public EditText edtSenha;
+    public Button btnLogin;
+    public TextView txtRegistrar;
+    public FirebaseFirestore db;
+    public FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void verificarTipoDeUsuario(String userId) {
+    void verificarTipoDeUsuario(String userId) {
         showLoading("Verificando perfil...");
 
         DocumentReference docRef = db.collection("usuarios").document(userId);
@@ -144,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void tratarErroLogin(Exception exception) {
+    public void tratarErroLogin(Exception exception) {
         try {
             throw exception;
         } catch (FirebaseAuthInvalidUserException e) {
@@ -156,38 +157,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void showResetPasswordDialog() {
-        String email = edtEmail.getText().toString().trim();
-
-        new AlertDialog.Builder(this)
-                .setTitle("Redefinir senha")
-                .setMessage("Enviar e-mail de redefinição para " + (email.isEmpty() ? "seu endereço?" : email))
-                .setPositiveButton("Enviar", (dialog, which) -> {
-                    if (email.isEmpty()) {
-                        edtEmail.setError("Digite seu e-mail para redefinir");
-                        return;
-                    }
-                    enviarEmailRedefinicao(email);
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
-    }
-
-    private void enviarEmailRedefinicao(String email) {
-        showLoading("Enviando e-mail...");
-
-        mAuth.sendPasswordResetEmail(email)
-                .addOnCompleteListener(task -> {
-                    dismissLoading();
-
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "E-mail de redefinição enviado!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        showErrorDialog("Falha ao enviar e-mail: " + task.getException().getMessage());
-                    }
-                });
-    }
-
     private void showLoading(String mensagem) {
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
@@ -195,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
     private void dismissLoading() {
     }
 
-    private void showErrorDialog(String mensagem) {
+    void showErrorDialog(String mensagem) {
         new AlertDialog.Builder(this)
                 .setTitle("Erro")
                 .setMessage(mensagem)
