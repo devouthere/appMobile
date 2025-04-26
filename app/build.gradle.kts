@@ -1,4 +1,11 @@
 import org.gradle.testing.jacoco.tasks.JacocoReport
+import java.io.FileInputStream
+import java.util.Properties
+
+// Lê as propriedades do keystore
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,18 +15,25 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
 
     namespace = "com.example.app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.gobarber"
+        applicationId = "visionary.gobarber"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,20 +44,20 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
+
         debug {
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
         }
-        getByName("debug") {
-            enableAndroidTestCoverage = true  // Habilita cobertura de código para o buildType debug
-        }
-        packagingOptions {
-            exclude("META-INF/LICENSE.md")
-            exclude("META-INF/LICENSE-notice.md")
-            exclude("META-INF/DEPENDENCIES")
-            exclude("META-INF/ASL2.0")
-        }
+    }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/LICENSE-notice.md")
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/ASL2.0")
     }
 
     compileOptions {
@@ -56,7 +70,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
 }
 
 tasks.register<JacocoReport>("jacocoTestReportAndroid") {
@@ -65,13 +78,11 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for androidTest"
 
-    // Diretórios de origem
     val coverageSourceDirs = listOf(
         "${project.projectDir}/src/main/java",
         "${project.projectDir}/src/main/kotlin"
     )
 
-    // Arquivos de classes
     val classFiles = fileTree("${buildDir}") {
         include(
             "intermediates/javac/debug/**/*.class",
@@ -87,7 +98,6 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
         )
     }
 
-    // Arquivos de execução
     val executionDataFiles = fileTree(buildDir) {
         include(
             "outputs/code_coverage/debugAndroidTest/connected/**/*.ec",
@@ -95,7 +105,6 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
         )
     }
 
-    // Use a sintaxe com from()
     sourceDirectories.from(files(coverageSourceDirs))
     classDirectories.from(files(classFiles))
     executionData.from(files(executionDataFiles))
@@ -106,7 +115,6 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
         html.outputLocation.set(file("${buildDir}/reports/jacoco/androidTest/html"))
     }
 }
-
 
 dependencies {
     implementation(libs.core.ktx)
@@ -138,22 +146,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.4")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.hamcrest:hamcrest:2.2")
-
-
-
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
-
-
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
 }
 
-
-jacoco{
+jacoco {
     toolVersion = "0.8.8"
 }
-
-
-
-
