@@ -13,21 +13,21 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-        <SelectionState runConfigName="testServicoCheckboxesCreatedCorrectly()">
-          <option name="selectionMode" value="DROPDOWN" />
-        </SelectionState>
-        <SelectionState runConfigName="testSpinnerDiasPreenchidoCorretamente()">
-          <option name="selectionMode" value="DROPDOWN" />
-        </SelectionState>
-        <SelectionState runConfigName="testBackButtonNavigation()">
-          <option name="selectionMode" value="DROPDOWN" />
-        </SelectionState>
-        <SelectionState runConfigName="testSelecaoDiaNoSpinner()">
-          <option name="selectionMode" value="DROPDOWN" />
-        </SelectionState>
-        <SelectionState runConfigName="AgendamentoActivityTest">
+      <SelectionState runConfigName="testServicoCheckboxesCreatedCorrectly()">
         <option name="selectionMode" value="DROPDOWN" />
-        </SelectionState>
+      </SelectionState>
+      <SelectionState runConfigName="testSpinnerDiasPreenchidoCorretamente()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testBackButtonNavigation()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testSelecaoDiaNoSpinner()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="AgendamentoActivityTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
