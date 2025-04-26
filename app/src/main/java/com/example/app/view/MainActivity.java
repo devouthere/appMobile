@@ -2,7 +2,9 @@ package com.example.app.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -16,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +30,25 @@ public class MainActivity extends AppCompatActivity {
                 imageView.animate().alpha(1f).setDuration(1000);
             }
         });
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                // Verifica se os termos já foram aceitos
+                SharedPreferences sharedPref = getSharedPreferences("app_preferences", Context.MODE_PRIVATE);
+                boolean termsAccepted = sharedPref.getBoolean("terms_accepted", false);
 
-                Intent intent = new Intent(MainActivity.this, MainMenu.class);
+                Intent intent;
+                if (!termsAccepted) {
+                    // Se for a primeira execução, mostra os termos e condições
+                    intent = new Intent(MainActivity.this, TermsConditionsActivity.class);
+                } else {
+                    // Se não for a primeira execução, vai para o menu principal
+                    intent = new Intent(MainActivity.this, MainMenu.class);
+                }
+
                 startActivity(intent);
                 finish();
-
             }
         }, 3000);
     }
