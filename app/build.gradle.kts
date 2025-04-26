@@ -2,7 +2,6 @@ import org.gradle.testing.jacoco.tasks.JacocoReport
 import java.io.FileInputStream
 import java.util.Properties
 
-// Lê as propriedades do keystore
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
@@ -31,8 +30,8 @@ android {
         applicationId = "visionary.gobarber"
         minSdk = 24
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 4
+        versionName = "1.0.3"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -135,6 +134,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.firestore)
     implementation(libs.androidx.espresso.intents)
+    implementation("org.mindrot:jbcrypt:0.4")
 
     androidTestImplementation("org.mockito:mockito-android:5.11.0")
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
