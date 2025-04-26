@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import com.example.app.controller.MainMenu;
 import com.example.app.model.Barbeiro;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -73,12 +75,63 @@ public class ClientesBarbeiroActivity extends AppCompatActivity {
             }
             else if (id == R.id.nav_logout) {
                 realizarLogout();
+            }else if (id == R.id.excluir_conta) {
+                excluirConta();
             }
 
             drawerLayout.closeDrawers();
             return true;
         });
     }
+
+
+    private void excluirConta() {
+        new AlertDialog.Builder(this)
+                .setTitle("Excluir Conta")
+                .setMessage("Tem certeza de que deseja excluir sua conta?")
+                .setPositiveButton("Sim", (dialog, which) -> {
+                    deletarConta();
+                })
+                .setNegativeButton("Não", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
+    }
+
+    private void deletarConta() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String userId = user.getUid();
+
+            db.collection("usuarios").document(userId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+
+                        user.delete()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        FirebaseAuth.getInstance().signOut();
+                                        startActivity(new Intent(ClientesBarbeiroActivity.this, MainMenu.class));
+                                        finish();
+                                        Toast.makeText(ClientesBarbeiroActivity.this, "Conta excluída com sucesso", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ClientesBarbeiroActivity.this, "Falha ao excluir conta. Tente novamente.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(ClientesBarbeiroActivity.this, "Falha ao excluir dados na Firestore. Tente novamente.", Toast.LENGTH_SHORT).show();
+                        Log.e("Firebase", "Erro ao excluir dados na Firestore", e);
+                    });
+        } else {
+            Toast.makeText(this, "Nenhum usuário logado", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private void configurarRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
