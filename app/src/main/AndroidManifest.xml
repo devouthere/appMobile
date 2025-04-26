@@ -65,6 +65,10 @@
             android:parentActivityName=".view.BarberDashboardActivity"/>
 
         <activity
+            android:name=".view.TermsConditionsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
