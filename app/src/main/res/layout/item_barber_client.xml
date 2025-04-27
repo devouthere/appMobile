@@ -24,6 +24,7 @@
             android:id="@+id/tv_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:layout_marginTop="4dp"
             android:text="Serviço"/>
 
@@ -31,7 +32,8 @@
             android:id="@+id/tv_date_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
             android:text="Data • Hora"/>
 
         <!-- Botões de ação -->

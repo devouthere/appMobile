@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -195,11 +196,62 @@ public class BarberDashboardActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_logout) {
             realizarLogout();
+        }else if (id == R.id.excluir_conta) {
+            excluirConta();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    private void excluirConta() {
+        new AlertDialog.Builder(this)
+                .setTitle("Excluir Conta")
+                .setMessage("Tem certeza de que deseja excluir sua conta?")
+                .setPositiveButton("Sim", (dialog, which) -> {
+                    deletarConta();
+                })
+                .setNegativeButton("Não", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
+    }
+
+    private void deletarConta() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String userId = user.getUid();
+
+            db.collection("usuarios").document(userId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+
+                        user.delete()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        FirebaseAuth.getInstance().signOut();
+                                        startActivity(new Intent(BarberDashboardActivity.this, MainMenu.class));
+                                        finish();
+                                        Toast.makeText(BarberDashboardActivity.this, "Conta excluída com sucesso", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(BarberDashboardActivity.this, "Falha ao excluir conta. Tente novamente.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(BarberDashboardActivity.this, "Falha ao excluir dados na Firestore. Tente novamente.", Toast.LENGTH_SHORT).show();
+                        Log.e("Firebase", "Erro ao excluir dados na Firestore", e);
+                    });
+        } else {
+            Toast.makeText(this, "Nenhum usuário logado", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     private void realizarLogout() {
         mAuth.signOut();

@@ -62,7 +62,6 @@
 
         <activity
             android:name=".view.BarberClientsActivity"
-            android:label="Meus Clientes"
             android:parentActivityName=".view.BarberDashboardActivity"/>
 
         <activity

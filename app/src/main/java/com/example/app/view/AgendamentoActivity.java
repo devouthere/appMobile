@@ -12,13 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.app.R;
 import com.example.app.model.Agendamento;
 import com.example.app.model.Barbeiro;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class AgendamentoActivity extends AppCompatActivity {
     private Button btnHorarioSelecionado;
     private String barbeiroId, nomeBarbeiro, horarioSelecionado;
     private FirebaseFirestore db;
+    private GridLayout gridLayoutHorarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class AgendamentoActivity extends AppCompatActivity {
         llServicos = findViewById(R.id.llServicos);
         spinnerDias = findViewById(R.id.spinnerDias);
         btnConfirmar = findViewById(R.id.btnConfirmar);
+        gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
         db = FirebaseFirestore.getInstance();
 
         Barbeiro barbeiro = (Barbeiro) getIntent().getSerializableExtra("barbeiro");
@@ -76,6 +81,8 @@ public class AgendamentoActivity extends AppCompatActivity {
 
         spinnerDias.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, diasDisponiveis));
 
+        // *** Mudança Importante ***
+        // Só chama criarBotoesDeHorario() quando mudar o spinner
         spinnerDias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -83,25 +90,23 @@ public class AgendamentoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
-
-        criarBotoesDeHorario();
 
         btnConfirmar.setOnClickListener(v -> salvarAgendamento());
     }
 
     private void criarBotoesDeHorario() {
-        String[] horarios = new String[]{"08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
-                "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"};
+        String[] horarios = new String[] {
+                "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+                "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+                "16:00", "16:30", "17:00", "17:30"
+        };
 
-        GridLayout gridLayoutHorarios = findViewById(R.id.gridLayoutHorarios);
         gridLayoutHorarios.removeAllViews();
-        gridLayoutHorarios.setColumnCount(4);
+        gridLayoutHorarios.setColumnCount(3);
 
         String diaSelecionado = spinnerDias.getSelectedItem().toString();
-
         btnHorarioSelecionado = null;
         horarioSelecionado = null;
 
@@ -120,46 +125,54 @@ public class AgendamentoActivity extends AppCompatActivity {
                         }
                     }
 
-                    for (String horario : horarios) {
-                        Button btnHorario = new Button(this);
-                        btnHorario.setText(horario);
-
-                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                        params.setMargins(16, 16, 16, 16);
-                        params.width = 200;
-                        params.height = 100;
-                        btnHorario.setLayoutParams(params);
-
-                        if (horariosReservados.contains(horario)) {
-                            btnHorario.setEnabled(false);
-                            btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-                            btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                        } else {
-                            btnHorario.setBackgroundResource(R.drawable.btntwo);
-                            btnHorario.setTextColor(getResources().getColor(android.R.color.black));
-
-                            btnHorario.setOnClickListener(v -> {
-                                if (btnHorarioSelecionado != null) {
-                                    btnHorarioSelecionado.setBackgroundResource(R.drawable.btntwo);
-                                    btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
-                                }
-
-                                btnHorarioSelecionado = btnHorario;
-                                horarioSelecionado = horario;
-
-                                btnHorarioSelecionado.setBackgroundResource(R.drawable.btn);
-                                btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.white));
-
-                                Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
-                            });
-                        }
-
-                        gridLayoutHorarios.addView(btnHorario);
-                    }
+                    criarBotoesDisponiveis(horarios, horariosReservados);
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(AgendamentoActivity.this, "Erro ao carregar horários", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AgendamentoActivity.this, "Erro ao buscar horários: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    criarBotoesDisponiveis(horarios, new ArrayList<>());
                 });
+    }
+
+    private void criarBotoesDisponiveis(String[] horarios, List<String> horariosReservados) {
+        for (String horario : horarios) {
+            Button btnHorario = new Button(this);
+            btnHorario.setText(horario);
+
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.width = 0;
+            params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+            params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
+            params.setMargins(8, 8, 8, 8);
+
+            btnHorario.setLayoutParams(params);
+
+            if (horariosReservados.contains(horario)) {
+                btnHorario.setEnabled(false);
+                btnHorario.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            } else {
+                btnHorario.setBackgroundResource(R.drawable.botao_select);
+                btnHorario.setTextColor(getResources().getColor(android.R.color.black));
+
+                btnHorario.setOnClickListener(v -> {
+                    if (btnHorarioSelecionado != null) {
+                        btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_select);
+                        btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
+                    }
+
+                    btnHorarioSelecionado = btnHorario;
+                    horarioSelecionado = horario;
+
+                    btnHorarioSelecionado.setBackgroundResource(R.drawable.btn);
+                    btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.white));
+
+                    Toast.makeText(AgendamentoActivity.this, "Horário selecionado: " + horarioSelecionado, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            gridLayoutHorarios.addView(btnHorario);
+        }
     }
 
     private void salvarAgendamento() {
