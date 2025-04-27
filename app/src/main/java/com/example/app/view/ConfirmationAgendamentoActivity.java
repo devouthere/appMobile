@@ -37,11 +37,9 @@ public class ConfirmationAgendamentoActivity extends AppCompatActivity {
             return;
         }
 
-        TextView tvBarbeiroNome = findViewById(R.id.tvBarbeiroNome);
         TextView tvServico = findViewById(R.id.tvServico);
         TextView tvDataHora = findViewById(R.id.tvDataHora);
 
-        tvBarbeiroNome.setText("Barbeiro: " + barbeiroNome);
         tvServico.setText("Serviço: " + servico);
         tvDataHora.setText("Data/Hora: " + dataHora);
 
