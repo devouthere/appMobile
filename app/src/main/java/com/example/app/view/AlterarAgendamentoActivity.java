@@ -73,7 +73,7 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!inicializacaoEmAndamento) {
                     if (btnHorarioAtualmenteSelecionado != null) {
-                        btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.btntwo);
+                        btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.botao_select);
                         btnHorarioAtualmenteSelecionado.setTextColor(getResources().getColor(android.R.color.black));
                         btnHorarioAtualmenteSelecionado = null;
                     }
@@ -289,12 +289,12 @@ public class AlterarAgendamentoActivity extends AppCompatActivity {
                 holder.btnHorario.setBackgroundColor(getResources().getColor(android.R.color.background_light));
                 holder.btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
             } else {
-                holder.btnHorario.setBackgroundResource(R.drawable.btntwo);
+                holder.btnHorario.setBackgroundResource(R.drawable.botao_select);
                 holder.btnHorario.setTextColor(getResources().getColor(android.R.color.black));
 
                 holder.btnHorario.setOnClickListener(v -> {
                     if (btnHorarioAtualmenteSelecionado != null) {
-                        btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.btntwo);
+                        btnHorarioAtualmenteSelecionado.setBackgroundResource(R.drawable.botao_select);
                         btnHorarioAtualmenteSelecionado.setTextColor(getResources().getColor(android.R.color.black));
                     }
 

@@ -80,7 +80,7 @@
                 android:layout_marginStart="8dp"
                 android:text="Alterar"
                 android:textSize="14sp"
-                android:backgroundTint="@color/blueish"
+                android:backgroundTint="@color/colorAccent"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
 

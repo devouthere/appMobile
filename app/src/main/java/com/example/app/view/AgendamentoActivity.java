@@ -152,12 +152,12 @@ public class AgendamentoActivity extends AppCompatActivity {
                 btnHorario.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 btnHorario.setTextColor(getResources().getColor(android.R.color.darker_gray));
             } else {
-                btnHorario.setBackgroundResource(R.drawable.btntwo);
+                btnHorario.setBackgroundResource(R.drawable.botao_select);
                 btnHorario.setTextColor(getResources().getColor(android.R.color.black));
 
                 btnHorario.setOnClickListener(v -> {
                     if (btnHorarioSelecionado != null) {
-                        btnHorarioSelecionado.setBackgroundResource(R.drawable.btntwo);
+                        btnHorarioSelecionado.setBackgroundResource(R.drawable.botao_select);
                         btnHorarioSelecionado.setTextColor(getResources().getColor(android.R.color.black));
                     }
 
