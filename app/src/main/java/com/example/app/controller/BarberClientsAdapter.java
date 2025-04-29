@@ -70,7 +70,7 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
         });
     }
 
-    private void setupStatusUI(ViewHolder holder, Agendamento agendamento) {
+    protected void setupStatusUI(ViewHolder holder, Agendamento agendamento) {
         String status = agendamento.getStatus();
 
         if ("pendente".equalsIgnoreCase(status)) {
@@ -86,13 +86,13 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
 
             switch (status.toLowerCase()) {
                 case "confirmado":
-                    holder.tvStatus.setTextColor(Color.parseColor("#4CAF50")); // verde
+                    holder.tvStatus.setTextColor(Color.parseColor("#4CAF50"));
                     break;
                 case "cancelado":
-                    holder.tvStatus.setTextColor(Color.parseColor("#F44336")); // vermelho
+                    holder.tvStatus.setTextColor(Color.parseColor("#F44336"));
                     break;
                 default:
-                    holder.tvStatus.setTextColor(Color.GRAY); // fallback
+                    holder.tvStatus.setTextColor(Color.GRAY);
                     break;
             }
         }
@@ -121,7 +121,7 @@ public class BarberClientsAdapter extends RecyclerView.Adapter<BarberClientsAdap
             tvClientName = itemView.findViewById(R.id.tv_client_name);
             tvService = itemView.findViewById(R.id.tv_service);
             tvDateTime = itemView.findViewById(R.id.tv_date_time);
-            tvStatus = itemView.findViewById(R.id.tv_status); // Certifique-se de ter esse ID no layout
+            tvStatus = itemView.findViewById(R.id.tv_status);
             btnConfirm = itemView.findViewById(R.id.btn_confirm);
             btnCancel = itemView.findViewById(R.id.btn_cancel);
         }
