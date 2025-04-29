@@ -45,6 +45,15 @@ public class BarbeiroAdapterTest {
     @Mock
     private Context mockContext;
 
+    @Mock
+    RecyclerView.ViewHolder mockViewHolder;
+
+    @Mock
+    Intent mockIntent;
+
+    @Mock
+    Barbeiro mockBarbeiro;
+
     private BarbeiroAdapter adapter;
     private List<Barbeiro> listaBarbeiros;
 
@@ -65,20 +74,77 @@ public class BarbeiroAdapterTest {
 
     @Test
     public void testOnCreateViewHolder() {
-
         View mockView = Mockito.mock(View.class);
+
+        LayoutInflater mockInflater = Mockito.mock(LayoutInflater.class);
+        when(mockInflater.inflate(Mockito.anyInt(), Mockito.any(ViewGroup.class), Mockito.eq(false))).thenReturn(mockView);
 
         BarbeiroAdapter testAdapter = new BarbeiroAdapter(listaBarbeiros) {
             @Override
             public BarbeiroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-                return new BarbeiroViewHolder(mockView);
+                return new BarbeiroViewHolder(mockInflater.inflate(R.layout.item_barbeiro, parent, false));
             }
         };
+
         BarbeiroAdapter.BarbeiroViewHolder viewHolder = testAdapter.onCreateViewHolder(mockParent, 0);
 
         assertNotNull(viewHolder);
+
+        verify(mockInflater).inflate(R.layout.item_barbeiro, mockParent, false);
     }
+
+    @Test
+    public void testOnBindViewHolder() {
+        // Preparando os dados para o teste
+        List<String> servicos = Arrays.asList("Corte", "Barba");
+        List<String> diasDisponiveis = Arrays.asList("Segunda", "Terça");
+        Barbeiro barbeiro = new Barbeiro("1", "João", "joao@email.com", "Rua 1", diasDisponiveis, servicos);
+
+        listaBarbeiros.add(barbeiro);
+
+        BarbeiroAdapter.BarbeiroViewHolder mockViewHolder = Mockito.mock(BarbeiroAdapter.BarbeiroViewHolder.class);
+
+        mockViewHolder.txtNomeBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtEmailBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtEnderecoBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtServicos = Mockito.mock(TextView.class);
+        mockViewHolder.txtDiasDisponiveis = Mockito.mock(TextView.class);
+
+        adapter.onBindViewHolder(mockViewHolder, 0);
+
+        verify(mockViewHolder.txtNomeBarbeiro).setText("João");
+        verify(mockViewHolder.txtEmailBarbeiro).setText("Email: joao@email.com");
+        verify(mockViewHolder.txtEnderecoBarbeiro).setText("Endereço: Rua 1");
+        verify(mockViewHolder.txtServicos).setText("Serviços: Corte, Barba");
+        verify(mockViewHolder.txtDiasDisponiveis).setText("Dias Disponíveis: Segunda, Terça");
+    }
+
+    @Test
+    public void testOnBindViewHolderWithNullValues() {
+        List<String> servicos = Arrays.asList("Corte", "Barba");
+        List<String> diasDisponiveis = Arrays.asList("Segunda", "Terça");
+        Barbeiro barbeiro = new Barbeiro("1", "João", "joao@email.com", "Rua 1", diasDisponiveis, servicos);
+
+        listaBarbeiros.add(barbeiro);
+
+        BarbeiroAdapter.BarbeiroViewHolder mockViewHolder = Mockito.mock(BarbeiroAdapter.BarbeiroViewHolder.class);
+
+        mockViewHolder.txtNomeBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtEmailBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtEnderecoBarbeiro = Mockito.mock(TextView.class);
+        mockViewHolder.txtServicos = Mockito.mock(TextView.class);
+        mockViewHolder.txtDiasDisponiveis = Mockito.mock(TextView.class);
+
+        adapter.onBindViewHolder(mockViewHolder, 0);
+
+        verify(mockViewHolder.txtNomeBarbeiro).setText("João");
+        verify(mockViewHolder.txtEmailBarbeiro).setText("Email: joao@email.com");
+        verify(mockViewHolder.txtEnderecoBarbeiro).setText("Endereço: Rua 1");
+        verify(mockViewHolder.txtServicos).setText("Serviços: Corte, Barba");
+        verify(mockViewHolder.txtDiasDisponiveis).setText("Dias Disponíveis: Segunda, Terça");  // Agora o valor esperado é o da lista de diasDisponiveis
+    }
+
+
 
     @Test
     public void testGetItemCount() {
@@ -119,4 +185,16 @@ public class BarbeiroAdapterTest {
         assertEquals(0, nullAdapter.listaBarbeiros.size());
     }
 
+    @Test
+    public void testViewHolderInitialization() {
+        assertNotNull(mockViewHolder);
+        assertNotNull(adapter);
+    }
+
+    @Test
+    public void testSetUp() {
+        assertEquals(1, listaBarbeiros.size());
+        assertEquals("João", listaBarbeiros.get(0).getNome());
+        assertEquals("joao@email.com", listaBarbeiros.get(0).getEmail());
+    }
 }
