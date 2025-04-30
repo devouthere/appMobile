@@ -5,19 +5,19 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="BarbeiroAdapterTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="testOnBindViewHolderWithNullValues()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="BarberClientsAdapterTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testOnBindViewHolder_setsCorrectTextValues()">
+      <SelectionState runConfigName="LoginActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="testSetupStatusUI_pendente_onConfirmClick_callsOnConfirm()">
+      <SelectionState runConfigName="ChooseOptionTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testAbrirTelaRegistro_barbeiro_chamaStartActivityComCorretoExtra()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="testBackArrowClick_withEspresso()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
