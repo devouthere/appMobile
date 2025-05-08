@@ -93,6 +93,7 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
             "**/BuildConfig.*",
             "**/Manifest*.*",
             "**/*Test*.*",
+            "**/*Binding*.*",
             "**/com/example/app/controller/AgendamentoAdapter\$AgendamentoViewHolder.class"
         )
     }
