@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Verifica se os termos já foram aceitos
                 SharedPreferences sharedPref = getSharedPreferences("app_preferences", Context.MODE_PRIVATE);
                 boolean termsAccepted = sharedPref.getBoolean("terms_accepted", false);
 
