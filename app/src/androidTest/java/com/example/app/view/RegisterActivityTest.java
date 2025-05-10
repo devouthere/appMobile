@@ -47,12 +47,8 @@ public class RegisterActivityTest {
         intent.putExtra("isBarbeiro", false);
 
         try (ActivityScenario<RegisterActivity> scenario = ActivityScenario.launch(intent)) {
-            // Deixa os campos vazios e clica no botão
             onView(withId(R.id.btnRegistrar)).perform(click());
 
-            // Verifica se a mensagem de Toast de campos obrigatórios aparece
-            // ⚠️ Toasts não são diretamente testáveis com Espresso sem IdlingResource,
-            // mas você pode garantir que não houve crash e que ficou na tela.
             onView(withId(R.id.btnRegistrar)).check(matches(isDisplayed()));
         }
     }
@@ -65,8 +61,6 @@ public class RegisterActivityTest {
         try (ActivityScenario<RegisterActivity> scenario = ActivityScenario.launch(intent)) {
             onView(withId(R.id.backArrow)).perform(click());
 
-            // Verifique se a atividade ChooseOption foi iniciada
-            // Isso pode ser feito verificando se a tela inicializou corretamente
             onView(withId(R.id.optionsContainer)).check(matches(isDisplayed()));
         }
     }
@@ -77,7 +71,6 @@ public class RegisterActivityTest {
         intent.putExtra("isBarbeiro", true);
 
         try (ActivityScenario<RegisterActivity> scenario = ActivityScenario.launch(intent)) {
-            // Verifique se o campo de endereço está visível
             onView(withId(R.id.edtEndereco)).check(matches(isDisplayed()));
         }
     }
