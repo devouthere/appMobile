@@ -1,3 +1,7 @@
+//./gradlew clean
+//./gradlew connectedDebugAndroidTest
+//./gradlew jacocoTestReportAndroid
+
 package com.example.app.view;
 
 import android.content.Context;
