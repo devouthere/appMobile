@@ -14,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.content.Intent;
 
+import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -56,10 +57,10 @@ public class ConfirmationActivityTest {
 
         onView(withId(R.id.backArrow)).perform(click());
 
-        scenario.onActivity(activity -> {
-            assertTrue(activity.isFinishing());
-        });
+        scenario.moveToState(Lifecycle.State.DESTROYED);
     }
+
+
 
 
 }

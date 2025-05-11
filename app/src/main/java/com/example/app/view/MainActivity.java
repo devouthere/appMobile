@@ -39,10 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent;
                 if (!termsAccepted) {
-                    // Se for a primeira execução, mostra os termos e condições
                     intent = new Intent(MainActivity.this, TermsConditionsActivity.class);
                 } else {
-                    // Se não for a primeira execução, vai para o menu principal
                     intent = new Intent(MainActivity.this, MainMenu.class);
                 }
 
