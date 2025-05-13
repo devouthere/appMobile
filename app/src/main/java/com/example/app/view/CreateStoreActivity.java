@@ -121,9 +121,11 @@ public class CreateStoreActivity extends AppCompatActivity {
                         db.collection("barbeiro").document(userId)
                                 .set(barbeiroData)
                                 .addOnSuccessListener(aVoid -> {
-                                    setResult(RESULT_OK);
+                                    Intent intent = new Intent(CreateStoreActivity.this, ConfirmationActivity.class);
+                                    startActivity(intent);
                                     finish();
                                 })
+
                                 .addOnFailureListener(e -> {
                                     Log.e(TAG, "Erro ao salvar: " + e.getMessage(), e);
                                     Toast.makeText(this, "Erro ao salvar", Toast.LENGTH_LONG).show();

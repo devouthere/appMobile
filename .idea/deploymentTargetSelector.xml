@@ -13,9 +13,6 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="testBackArrowClickFinishesActivity()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="CreateStoreActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
@@ -25,7 +22,10 @@
       <SelectionState runConfigName="MainActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ConfirmationAgendamentoActivityTest">
+      <SelectionState runConfigName="AlterarAgendamentoActivityTest">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="BarberDashboardActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

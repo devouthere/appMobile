@@ -6,9 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".controller.MainMenu">
+    tools:context=".controller.MainMenu"
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+<LinearLayout
         android:id="@+id/top_section"
         android:layout_width="match_parent"
         android:layout_height="0dp"

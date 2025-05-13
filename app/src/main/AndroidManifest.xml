@@ -46,9 +46,6 @@
         <activity
             android:name=".controller.ChooseOption"
             android:exported="false" />
-        <activity
-            android:name=".controller.MainMenu"
-            android:exported="false" />
 
         <activity
             android:name=".view.ConfirmationActivity"
@@ -65,11 +62,16 @@
             android:parentActivityName=".view.BarberDashboardActivity"/>
 
         <activity
+            android:name=".controller.MainMenu"
+            android:theme="@style/Theme.AppDelivery.NoActionBar" />
+
+        <activity
             android:name=".view.TermsConditionsActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.AppDelivery.NoActionBar" />
 
         <activity
             android:name=".view.MainActivity"
+            android:theme="@style/Theme.AppDelivery.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
