@@ -65,6 +65,8 @@
             android:name=".controller.MainMenu"
             android:theme="@style/Theme.AppDelivery.NoActionBar" />
 
+        <activity android:name=".view.TransparentStatusBarActivity" />
+
         <activity
             android:name=".view.TermsConditionsActivity"
             android:theme="@style/Theme.AppDelivery.NoActionBar" />

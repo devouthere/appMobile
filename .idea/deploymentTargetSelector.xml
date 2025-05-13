@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CreateStoreActivityTest">
+      <SelectionState runConfigName="BarberClientsActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ChooseOptionTest">
+      <SelectionState runConfigName="TestableBarberClientsActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivityTest">
+      <SelectionState runConfigName="TestableBarberClientsActivity (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="AlterarAgendamentoActivityTest">
+      <SelectionState runConfigName="TransparentStatusBarActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="BarberDashboardActivityTest">
+      <SelectionState runConfigName="testApplyTopInsetPadding()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
