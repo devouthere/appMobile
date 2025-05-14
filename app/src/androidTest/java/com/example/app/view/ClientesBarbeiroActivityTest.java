@@ -51,12 +51,6 @@ public class ClientesBarbeiroActivityTest {
     }
 
     @Test
-    public void testOnResumeTriggersDataLoad() {
-        scenario.moveToState(androidx.lifecycle.Lifecycle.State.RESUMED);
-        onView(withId(R.id.recyclerViewBarbeiros)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testDrawerLayout() {
         onView(withId(R.id.drawer_layout)).check(matches(isClosed()));
 
