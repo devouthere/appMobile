@@ -24,12 +24,20 @@ public class CreateStoreActivity extends AppCompatActivity {
 
     private static final String TAG = "CreateStoreActivity";
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    protected FirebaseAuth mAuth;
+    protected FirebaseFirestore db;
     private ImageView backArrow;
-    private CheckBox chkCorte, chkBarba, chkSobrancelha;
-    private CheckBox chkDia1, chkDia2, chkDia3, chkDia4, chkDia5, chkDia6, chkDia7;
-    private MaterialButton btnSalvar;
+    protected CheckBox chkCorte;
+    protected CheckBox chkBarba;
+    protected CheckBox chkSobrancelha;
+    protected CheckBox chkDia1;
+    protected CheckBox chkDia2;
+    protected CheckBox chkDia3;
+    protected CheckBox chkDia4;
+    protected CheckBox chkDia5;
+    protected CheckBox chkDia6;
+    protected CheckBox chkDia7;
+    protected MaterialButton btnSalvar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +79,7 @@ public class CreateStoreActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btnSalvar);
     }
 
-    private void salvarRespostas() {
+    protected void salvarRespostas() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(this, "Você precisa estar logado", Toast.LENGTH_LONG).show();
@@ -113,9 +121,11 @@ public class CreateStoreActivity extends AppCompatActivity {
                         db.collection("barbeiro").document(userId)
                                 .set(barbeiroData)
                                 .addOnSuccessListener(aVoid -> {
-                                    setResult(RESULT_OK);
+                                    Intent intent = new Intent(CreateStoreActivity.this, ConfirmationActivity.class);
+                                    startActivity(intent);
                                     finish();
                                 })
+
                                 .addOnFailureListener(e -> {
                                     Log.e(TAG, "Erro ao salvar: " + e.getMessage(), e);
                                     Toast.makeText(this, "Erro ao salvar", Toast.LENGTH_LONG).show();

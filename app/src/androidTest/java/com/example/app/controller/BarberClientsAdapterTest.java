@@ -7,9 +7,16 @@ package com.example.app.controller;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.app.R;
 import com.example.app.model.Agendamento;
@@ -17,6 +24,8 @@ import com.example.app.model.Agendamento;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,14 +33,19 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BarberClientsAdapterTest {
-
+    @Mock
+    private BarberClientsAdapter.ViewHolder mockViewHolder;
     private Agendamento agendamentoPendente;
     private Agendamento agendamentoConfirmado;
+    @Mock
     private BarberClientsAdapter.OnClientActionListener mockListener;
     private BarberClientsAdapter adapter;
+    Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
     @Before
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
         agendamentoPendente = new Agendamento();
         agendamentoPendente.setId("1");
         agendamentoPendente.setClienteNome("Carlos");
@@ -48,7 +62,6 @@ public class BarberClientsAdapterTest {
         agendamentoConfirmado.setHorario("15:00");
         agendamentoConfirmado.setStatus("confirmado");
 
-        mockListener = mock(BarberClientsAdapter.OnClientActionListener.class);
         adapter = new BarberClientsAdapter(Arrays.asList(agendamentoPendente, agendamentoConfirmado), mockListener);
     }
 
@@ -255,5 +268,125 @@ public class BarberClientsAdapterTest {
         } catch (Exception e) {
             fail("Erro ao testar callbacks de ações: " + e.getMessage());
         }
+    }
+
+
+    @Test
+    public void testOnCreateViewHolder_returnsNonNullViewHolder() {
+        ViewGroup parent = new FrameLayout(context);
+
+        BarberClientsAdapter.ViewHolder viewHolder = adapter.onCreateViewHolder(parent, 0);
+
+        assertNotNull("ViewHolder deve ser diferente de null", viewHolder);
+        assertNotNull("itemView deve ser diferente de null", viewHolder.itemView);
+    }
+    @Test
+    public void testOnBindViewHolder_setsCorrectTextValues() {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View itemView = inflater.inflate(R.layout.item_barber_client, null, false);
+        BarberClientsAdapter.ViewHolder holder = new BarberClientsAdapter.ViewHolder(itemView);
+
+        adapter.onBindViewHolder(holder, 0);
+
+        assertEquals("Carlos", holder.tvClientName.getText().toString());
+        assertEquals("Corte", holder.tvService.getText().toString());
+        assertEquals("Segunda • 14:00", holder.tvDateTime.getText().toString());
+    }
+
+    @Test
+    public void testSetupActionButtons_onConfirmClick_callsOnConfirm() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View itemView = inflater.inflate(R.layout.item_barber_client, null, false);
+        BarberClientsAdapter.ViewHolder holder = new BarberClientsAdapter.ViewHolder(itemView);
+
+        adapter.onBindViewHolder(holder, 0);
+
+        holder.btnConfirm.performClick();
+
+        verify(mockListener, times(1)).onConfirm(agendamentoPendente);
+    }
+
+    @Test
+    public void testSetupActionButtons_onCancelClick_callsOnCancel() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View itemView = inflater.inflate(R.layout.item_barber_client, null, false);
+        BarberClientsAdapter.ViewHolder holder = new BarberClientsAdapter.ViewHolder(itemView);
+
+        adapter.onBindViewHolder(holder, 0);
+
+        holder.btnCancel.performClick();
+
+        verify(mockListener, times(1)).onCancel(agendamentoPendente);
+    }
+
+    @Test
+    public void testSetupStatusUI_confirmado() {
+        View mockView = LayoutInflater.from(context).inflate(R.layout.item_barber_client, null);
+        Button mockBtnConfirm = mockView.findViewById(R.id.btn_confirm);
+        Button mockBtnCancel = mockView.findViewById(R.id.btn_cancel);
+        TextView mockTvStatus = mockView.findViewById(R.id.tv_status);
+
+        BarberClientsAdapter.ViewHolder viewHolder = new BarberClientsAdapter.ViewHolder(mockView);
+        adapter.setupStatusUI(viewHolder, agendamentoConfirmado);
+
+        assertEquals(View.GONE, mockBtnConfirm.getVisibility());
+        assertEquals(View.GONE, mockBtnCancel.getVisibility());
+        assertEquals(View.VISIBLE, mockTvStatus.getVisibility());
+        assertEquals("Confirmado", mockTvStatus.getText());
+        assertEquals(Color.parseColor("#4CAF50"), mockTvStatus.getCurrentTextColor());
+    }
+
+    @Test
+    public void testSetupStatusUI_cancelado() {
+        View mockView = LayoutInflater.from(context).inflate(R.layout.item_barber_client, null);
+        Button mockBtnConfirm = mockView.findViewById(R.id.btn_confirm);
+        Button mockBtnCancel = mockView.findViewById(R.id.btn_cancel);
+        TextView mockTvStatus = mockView.findViewById(R.id.tv_status);
+
+        Agendamento agendamentoCancelado = new Agendamento();
+        agendamentoCancelado.setId("3");
+        agendamentoCancelado.setClienteNome("João");
+        agendamentoCancelado.setServico("Corte");
+        agendamentoCancelado.setDia("Quarta");
+        agendamentoCancelado.setHorario("16:00");
+        agendamentoCancelado.setStatus("cancelado");
+
+        BarberClientsAdapter.ViewHolder viewHolder = new BarberClientsAdapter.ViewHolder(mockView);
+        adapter.setupStatusUI(viewHolder, agendamentoCancelado);
+
+        assertEquals(View.GONE, mockBtnConfirm.getVisibility());
+        assertEquals(View.GONE, mockBtnCancel.getVisibility());
+        assertEquals(View.VISIBLE, mockTvStatus.getVisibility());
+        assertEquals("Cancelado", mockTvStatus.getText());
+        assertEquals(Color.parseColor("#F44336"), mockTvStatus.getCurrentTextColor());
+    }
+
+    @Test
+    public void testSetupStatusUI_default() {
+        View mockView = LayoutInflater.from(context).inflate(R.layout.item_barber_client, null);
+        Button mockBtnConfirm = mockView.findViewById(R.id.btn_confirm);
+        Button mockBtnCancel = mockView.findViewById(R.id.btn_cancel);
+        TextView mockTvStatus = mockView.findViewById(R.id.tv_status);
+
+        Agendamento agendamentoOutro = new Agendamento();
+        agendamentoOutro.setId("4");
+        agendamentoOutro.setClienteNome("Rafael");
+        agendamentoOutro.setServico("Barba e Corte");
+        agendamentoOutro.setDia("Quinta");
+        agendamentoOutro.setHorario("17:00");
+        agendamentoOutro.setStatus("outro");
+
+        BarberClientsAdapter.ViewHolder viewHolder = new BarberClientsAdapter.ViewHolder(mockView);
+        adapter.setupStatusUI(viewHolder, agendamentoOutro);
+
+        assertEquals(View.GONE, mockBtnConfirm.getVisibility());
+        assertEquals(View.GONE, mockBtnCancel.getVisibility());
+        assertEquals(View.VISIBLE, mockTvStatus.getVisibility());
+        assertEquals("Outro", mockTvStatus.getText());
+        assertEquals(Color.GRAY, mockTvStatus.getCurrentTextColor());
     }
 }

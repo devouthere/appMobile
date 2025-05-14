@@ -93,6 +93,7 @@ tasks.register<JacocoReport>("jacocoTestReportAndroid") {
             "**/BuildConfig.*",
             "**/Manifest*.*",
             "**/*Test*.*",
+            "**/*Binding*.*",
             "**/com/example/app/controller/AgendamentoAdapter\$AgendamentoViewHolder.class"
         )
     }
@@ -140,6 +141,12 @@ dependencies {
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0")
+
+    androidTestImplementation ("androidx.test.espresso.idling:idling-concurrent:3.4.0")
+
+    androidTestImplementation ("androidx.test.uiautomator:uiautomator:2.2.0")
 
     testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
     testImplementation("org.powermock:powermock-module-junit4:2.0.9")
