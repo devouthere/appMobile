@@ -4,6 +4,7 @@
 
 package com.example.app.view;
 
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.GrantPermissionRule;
@@ -111,6 +112,7 @@ public class CreateStoreActivityTest {
         onView(withId(R.id.chkBarba)).check(matches(isNotChecked()));
         onView(withId(R.id.chkSobrancelha)).check(matches(isNotChecked()));
     }
+
     @Test
     public void testToggleAllDiasDaSemanaCheckboxes() {
         int[] diasIds = {
@@ -118,12 +120,20 @@ public class CreateStoreActivityTest {
                 R.id.chkDia4, R.id.chkDia5, R.id.chkDia6, R.id.chkDia7
         };
 
+        // Marca todos os checkboxes
         for (int id : diasIds) {
-            onView(withId(id)).perform(click()).check(matches(isChecked()));
+            onView(withId(id))
+                    .check(matches(isDisplayed()))
+                    .perform(click())
+                    .check(matches(isChecked()));
         }
 
+        // Desmarca todos os checkboxes
         for (int id : diasIds) {
-            onView(withId(id)).perform(click()).check(matches(isNotChecked()));
+            onView(withId(id))
+                    .check(matches(isDisplayed()))
+                    .perform(click())
+                    .check(matches(isNotChecked()));
         }
     }
 

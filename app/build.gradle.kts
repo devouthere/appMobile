@@ -31,8 +31,8 @@ android {
         minSdk = 24
         targetSdk = 35
         // ./gradlew bundleRelease
-        versionCode = 7
-        versionName = "1.0.7"
+        versionCode = 8
+        versionName = "1.0.8"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -143,10 +143,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0")
-
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0") {
+        exclude(group = "com.google.protobuf", module = "protobuf-lite")
+    }
     androidTestImplementation ("androidx.test.espresso.idling:idling-concurrent:3.4.0")
-
     androidTestImplementation ("androidx.test.uiautomator:uiautomator:2.2.0")
 
     testImplementation("org.powermock:powermock-api-mockito2:2.0.9")

@@ -1,7 +1,3 @@
-//./gradlew clean
-//./gradlew connectedDebugAndroidTest
-//./gradlew jacocoTestReportAndroid
-
 package com.example.app.view;
 
 import android.content.Context;
@@ -151,11 +147,9 @@ public class AgendamentoActivityTest {
 
     @Test
     public void testSpinnerDiasPreenchidoCorretamente() {
-        // Prepara o Intent
-        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), AgendamentoActivity.class);
-        intent.putExtra("barbeiro", barbeiroFake); // Verifique se barbeiroFake é serializável ou parcelável
 
-        // Lança a activity
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), AgendamentoActivity.class);
+        intent.putExtra("barbeiro", barbeiroFake);
         try (ActivityScenario<AgendamentoActivity> scenario = ActivityScenario.launch(intent)) {
             scenario.onActivity(activity -> {
                 Spinner spinnerDias = activity.findViewById(R.id.spinnerDias);
@@ -174,17 +168,11 @@ public class AgendamentoActivityTest {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), AgendamentoActivity.class);
         intent.putExtra("barbeiro", barbeiroFake);
 
-        // Iniciando a activity usando ActivityScenario
         try (ActivityScenario<AgendamentoActivity> scenario = ActivityScenario.launch(intent)) {
             scenario.onActivity(activity -> {
-                // Encontrando o botão de "Voltar" na activity
                 View backArrow = activity.findViewById(R.id.backArrow);
-                assertNotNull(backArrow); // Verificando se o botão existe
-
-                // Simulando o clique no botão de "Voltar"
+                assertNotNull(backArrow);
                 backArrow.performClick();
-
-                // Verificando se a activity foi finalizada
                 assertTrue("A activity não foi finalizada após o clique no botão de 'Voltar'", activity.isFinishing());
             });
         }
@@ -198,9 +186,7 @@ public class AgendamentoActivityTest {
         try (ActivityScenario<AgendamentoActivity> scenario = ActivityScenario.launch(intent)) {
             scenario.onActivity(activity -> {
                 Spinner spinner = activity.findViewById(R.id.spinnerDias);
-                // Aguardando o carregamento do spinner antes de definir a seleção
                 activity.runOnUiThread(() -> spinner.setSelection(1));
-                // Aguardar a atualização do spinner
                 assertEquals("Terça", spinner.getSelectedItem());
             });
         }
@@ -470,6 +456,4 @@ public class AgendamentoActivityTest {
             });
         }
     }
-
-
 }

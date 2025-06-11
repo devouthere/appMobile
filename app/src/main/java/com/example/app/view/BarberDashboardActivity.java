@@ -226,15 +226,12 @@ public class BarberDashboardActivity extends AppCompatActivity
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             String userId = user.getUid();
 
-            // Exclui o documento da coleção "usuarios"
             db.collection("usuarios").document(userId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
-                        // Exclui o documento da coleção "barbeiros" (ajuste aqui conforme o nome real)
                         db.collection("barbeiro").document(userId)
                                 .delete()
                                 .addOnSuccessListener(aVoid2 -> {
-                                    // Agora exclui o usuário do Firebase Auth
                                     user.delete()
                                             .addOnCompleteListener(task -> {
                                                 if (task.isSuccessful()) {

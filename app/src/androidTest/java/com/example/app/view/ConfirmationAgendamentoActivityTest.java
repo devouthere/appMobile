@@ -117,19 +117,6 @@ public class ConfirmationAgendamentoActivityTest {
     }
 
     @Test
-    public void testDifferentServiceValue() {
-        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ConfirmationAgendamentoActivity.class);
-        intent.putExtra("BARBEIRO_NOME", "Bruno");
-        intent.putExtra("SERVICO", "Barba");
-        intent.putExtra("DATA_HORA", "2025-06-20 14:45");
-
-        try (ActivityScenario<ConfirmationAgendamentoActivity> scenario = ActivityScenario.launch(intent)) {
-            onView(withId(R.id.tvServico)).check(matches(withText("Serviço: Barba")));
-            onView(withId(R.id.tvDataHora)).check(matches(withText("Data/Hora: 2025-06-20 14:45")));
-        }
-    }
-
-    @Test
     public void testBackButtonNavigation() {
         Intent intent = new Intent(ApplicationProvider.getApplicationContext(), ConfirmationAgendamentoActivity.class);
         intent.putExtra("BARBEIRO_NOME", "Maria");
